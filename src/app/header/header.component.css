@@ -1,0 +1,50 @@
+.navbar-brand {
+    font-size: 24px;
+    color: #212529;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .navbar-nav .nav-link {
+    font-size: 18px;
+    font-weight: bold;
+    color: #212529;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .navbar-nav .nav-link {
+  font-size: 18px;
+  font-weight: bold;
+  color: #212529;
+  transition: color 0.3s ease-in-out; /* Smooth effect */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #c45f00; /* Highlight color */
+}
+
+  
+  .btn-outline-dark {
+    border: 2px solid #212529;
+    font-weight: bold;
+    padding: 12px 20px;
+  }
+  
+  .btn-outline-dark:hover {
+    background-color: #c45f00;
+    color: white;
+  }
+  
+  .btn-dark {
+    background-color: #212529;
+    color: white;
+    padding: 12px 20px;
+    font-weight: bold;
+  }
+  
+  .btn-dark:hover {
+    background-color: #c45f00;
+    border-color: #c45f00;
+  }
+  

@@ -1,0 +1,36 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    margin-top: 80px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.login-title {
+    text-align: center;
+    color: #c45f00;
+    font-weight: bold;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.btn-login {
+    background-color: #c45f00;
+    color: white;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+}
+
+.btn-login:hover {
+    background-color: #ff7b42;
+}
