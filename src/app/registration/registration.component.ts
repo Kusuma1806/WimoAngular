@@ -24,10 +24,7 @@ export class RegistrationComponent implements OnInit {
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#])[A-Za-z\\d@$!%*?&#]{8,}$') // Strong password
       ]],
       passwordRepeat: ['', Validators.required],
-      contactNumber: ['', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]], // Ensures valid phone numbers (India format)
       role: ['', Validators.required], // Ensures the role is selected
-      gender: ['', Validators.required],
-      qualification: ['', Validators.required]
     }, { validators: this.passwordMatchValidator });
   }
 
@@ -39,12 +36,14 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log("hello")
     if (this.registrationForm.valid) {
       console.log('Form Submitted!', this.registrationForm.value);
       localStorage.setItem("uname", this.registrationForm.value.username);
       localStorage.setItem("password", this.registrationForm.value.password);
       this.router.navigate(["/login"]);
+    }
+    else{
+      alert("Enter the valid details")
     }
   }
 
