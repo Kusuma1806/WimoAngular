@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { RegisterService } from '../register.service';
 
 @Component({
   selector: 'app-registration',
@@ -12,11 +13,12 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 export class RegistrationComponent implements OnInit {
   registrationForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router,private registerService: RegisterService) { }
+  errorMessage: string = '';
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern('^[a-zA-Z0-9_]+$')]],
+      name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern('^[a-zA-Z0-9_]+$')]],
       email: ['', [Validators.required, Validators.email, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$')]],
       password: ['', [
         Validators.required,
@@ -24,7 +26,7 @@ export class RegistrationComponent implements OnInit {
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#])[A-Za-z\\d@$!%*?&#]{8,}$') // Strong password
       ]],
       passwordRepeat: ['', Validators.required],
-      role: ['', Validators.required], // Ensures the role is selected
+      roles: ['', Validators.required], // Ensures the role is selected
     }, { validators: this.passwordMatchValidator });
   }
 
@@ -38,12 +40,18 @@ export class RegistrationComponent implements OnInit {
   onSubmit(): void {
     if (this.registrationForm.valid) {
       console.log('Form Submitted!', this.registrationForm.value);
-      localStorage.setItem("uname", this.registrationForm.value.username);
+      localStorage.setItem("uname", this.registrationForm.value.name);
       localStorage.setItem("password", this.registrationForm.value.password);
-      this.router.navigate(["/login"]);
-    }
-    else{
-      alert("Enter the valid details")
+      this.registerService.register(this.registrationForm.value).subscribe(
+        response => {
+          console.log('Registration successfull', response);
+          this.router.navigate(['/login']); // Redirect to login after successful registration
+        },
+        error => {
+          this.errorMessage = 'Registration failed. Please try again.';
+          console.error(error);
+        }
+      );
     }
   }
 

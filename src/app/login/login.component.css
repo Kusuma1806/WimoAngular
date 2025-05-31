@@ -1,36 +1,181 @@
-body {
-    background-color: #f8f9fa;
+/* styles.css (or similar global CSS file) */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrollbars from blur effect */
+    font-family: 'Arial', sans-serif;
+    background-color: #333; /* Fallback background color if image fails */
 }
 
-.login-container {
+/* Full-screen blurred background using a pseudo-element on body */
+body::before {
+    content: '';
+    position: fixed; /* Fixed to viewport */
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 400px;
-    margin: auto;
-    margin-top: 80px;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    background-image: url('/ware-land.jpg'); /* <<<-- IMPORTANT: Verify this path for the blurred background! */
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px); /* Apply the blur effect here */
+    transform: scale(1.02); /* Slightly scale to hide blur edges */
+    z-index: -2; /* Place it far behind all content */
+}
+/* login.component.css */
+
+/* Reset filter for content to avoid inheriting blur from body::before */
+.login-container {
+    filter: none; /* Ensure no inherited blur from body::before */
+    position: relative; /* Needed for z-index and internal ::after overlay */
+    z-index: 1; /* Ensure this container is above the blurred body background */
+
+    /* Positioning and Sizing the Main Container */
+    width: 90%; /* Example width, adjust as needed */
+    max-width: 1200px; /* Max width for larger screens */
+    height: 90vh; /* Example height, adjust as needed */
+    margin: 5vh auto; /* Vertical margins and horizontal auto to center the container on the page */
+    border-radius: 20px; /* Rounded corners for the container itself */
+    overflow: hidden; /* Important to contain the image and its overlay */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); /* Shadow for the container */
+
+    /* Unblurred Background Image for this Container */
+    background-image: url('/ware-land.jpg'); /* <<<-- IMPORTANT: Verify this path for the unblurred image! */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; /* Ensure it doesn't repeat */
+
+    /* Flexbox for internal layout (now only login-form) */
+    display: flex;
+    justify-content: center; /* <<<--- CENTERS THE LOGIN FORM HORIZONTALLY */
+    align-items: center; /* <<<--- CENTERS THE LOGIN FORM VERTICALLY */
+    padding: 0 5%; /* Keep some overall padding within the container */
 }
 
-.login-title {
+/* Overlay for the image *within* the container */
+/* This creates a semi-transparent dark layer over the container's background image */
+.login-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay over the container's background image */
+    z-index: 0; /* Place it behind the login-form */
+}
+
+/* --- Login Form Styling --- */
+.login-form {
+    background-color: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
+    padding: 30px;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Stronger shadow for depth */
+    width: 380px; /* Fixed width for the form */
+    z-index: 1; /* Ensure it's above the ::after overlay */
+    backdrop-filter: blur(8px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(8px); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle light border */
+}
+
+.login-form h2 {
     text-align: center;
-    color: #c45f00;
-    font-weight: bold;
+    color: white; /* White text for headings */
+    font-size: 2.2em;
+    margin-bottom: 30px;
 }
 
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-.btn-login {
-    background-color: #c45f00;
-    color: white;
+.input-group label {
+    display: block;
+    color: white; /* White text for labels */
+    margin-bottom: 8px;
     font-weight: bold;
-    border: none;
-    width: 100%;
 }
 
-.btn-login:hover {
-    background-color: #ff7b42;
+.input-group input {
+    width: calc(100% - 20px); /* Adjust width for padding */
+    padding: 12px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Light transparent border */
+    border-radius: 8px; /* Rounded input fields */
+    background-color: rgba(255, 255, 255, 0.1); /* Very subtle transparent background */
+    color: white; /* Input text color */
+    font-size: 1em;
+    outline: none; /* Remove outline on focus */
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Lighter placeholder text */
+}
+
+.input-group input:focus {
+    border-color: #5bb3f0; /* A soft blue on focus */
+    box-shadow: 0 0 0 3px rgba(91, 179, 240, 0.3);
+}
+
+button[type="submit"] {
+    background-color: #5bb3f0; /* Blue button color */
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Space above button */
+}
+
+button[type="submit"]:hover {
+    background-color: #3a98e0; /* Darker blue on hover */
+}
+
+/* --- Create Account Text --- */
+.create-account {
+    text-align: center;
+    margin-top: 30px;
+    color: white; /* White text */
+    font-size: 0.95em;
+}
+
+.create-account a {
+    color: #a8d7ff; /* Lighter blue for link */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.create-account a:hover {
+    color: #f0f0f0;
+    text-decoration: underline;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .login-container {
+        /* On smaller screens, form might still be centered,
+           but remove specific flex directions if only one child */
+        flex-direction: column; /* This is still fine if you want to stack future elements */
+        padding: 5%;
+        justify-content: center;
+        height: auto;
+        min-height: 90vh;
+    }
+
+    .login-form {
+        width: 100%; /* Allow form to take full width up to max-width */
+        max-width: 380px; /* Maintain max-width */
+    }
+}
+
+@media (max-width: 480px) {
+    .login-form {
+        padding: 20px;
+    }
 }

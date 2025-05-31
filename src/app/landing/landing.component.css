@@ -1,118 +1,226 @@
+/* Ensure full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+/* --- Section Spacing --- */
+ .section-padding {
+  padding-top: 80px; /* Spacing above each major section */
+  padding-bottom: 80px; /* Spacing below each major section */
+}
+/* Background Image Setup */
 .landing-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-image:
-    url("C:/Users/2400899/Documents/warehouse.jpg");
+  height: 100vh; /* Full viewport height for landing section */
+  background-image: url('/ware-land.jpg'); /* Replace with your actual background image */
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  padding: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
-.hero-content {
-  background-color: rgba(0, 0, 0, 0.75); 
-  padding: 50px;
-  border-radius: 16px;
-  text-align: center;
+/* Centered Content */
+.content {
+  background: rgba(0, 0, 0, 0.1); /* Reduced opacity for more transparency */
+  margin-top: 150px;
+  padding: 40px;
+  border-radius: 10px;
   color: white;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-  transition: transform 0.4s ease, background-color 0.4s ease;
-  opacity: 0; /* Initially hidden */
-  transform: translateY(20px); /* Slight downward shift */
-  animation: fadeInAnimation 1s ease-out forwards;
+  align-items: center;
+  text-align: center;
+  /* --- Add these for initial page load transition (fade-in) --- */
+  opacity: 0; /* Start invisible */
+  transform: translateY(20px); /* Start slightly below final position */
+  animation: fadeInSlideUp 1.5s ease-out forwards; /* Apply the animation */
+
+  /* --- Add these for hover transition --- */
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
 }
 
-/* Fade-in animation */
-@keyframes fadeInAnimation {
+/* Keyframes for the fade-in and slide-up animation */
+@keyframes fadeInSlideUp {
   from {
-    opacity: 0;
-    transform: translateY(20px);
+      opacity: 0;
+      transform: translateY(40px); /* Start further down */
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+      opacity: 1;
+      transform: translateY(0); /* End at original position */
   }
 }
 
-.hero-content:hover {
-  background-color: rgba(34, 34, 34, 0.9);
-  transform: scale(1.05);
+/* Hover effect for the content */
+.content:hover {
+  background: rgba(0, 0, 0, 0.2); /* Slightly more opaque on hover */
+  transform: translateY(-5px); /* Lift the content slightly */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
 }
 
-.hero-content h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
+/*
 
-.hero-content p {
-  font-size: 1.2rem;
-  margin-top: 10px;
-  opacity: 0.8;
-  transition: opacity 0.4s ease;
-}
 
-.hero-content:hover p {
-  opacity: 1;
-}
-
-.hero-content button {
-  margin-top: 20px;
-  padding: 14px 28px;
-  font-size: 18px;
-  background-color:  #c45f00 ;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.hero-content button:hover {
-  background-color: #00c4b4;
-  transform: translateY(-3px);
-}
-.service-card {
-  border: 2px solid #c45f00; /* Outline only */
-  background-color: white; /* Keeps the card background neutral */
-  color: #212529;
-  text-align: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  transition: transform 0.3s ease-in-out;
-  padding: 20px;
-}
-
-.service-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-.icon {
-  font-size: 40px;
-  color: #c45f00; /* Matches the outline color */
-}
-
-.card-title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
+/* CTA Button */
 .btn {
-  background-color: #c45f00;
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #c45f00;
   color: white;
-  font-weight: bold;
-  border: 2px solid #c45f00;
-  transition: all 0.3s ease-in-out;
+  font-size: 18px;
+  text-decoration: none;
+  border-radius: 5px;
 }
 
 .btn:hover {
-  background-color: white;
-  color: #c45f00;
-  border-color: #c45f00;
+  background: #a24e00;
+}
+/* Features Section */
+.features {
+  text-align: center;
+  padding: 60px;
+  background: #f4f4f4;
+}
+
+/* Card Layout */
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* Increased space between cards */
+}
+
+/* Card Layout with Floating Effect */
+.feature-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out, opacity 0.3s;
+}
+
+/* Hover Effect */
+.feature-card:hover {
+  transform: translateY(-10px) scale(1.05); /* Floating + Slight Zoom */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Increased shadow */
+}
+
+/* Click Effect */
+.feature-card:active {
+  transform: scale(0.95); /* Shrinks slightly when clicked */
+  opacity: 0.8; /* Adds subtle fade effect */
+}
+
+/* Heading Styles */
+h2 {
+  font-family: 'Montserrat', sans-serif; /* New modern font */
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 40px; /* Adds space between heading and cards */
+  text-align: center;
+}
+/* Heading Styles for h3 */
+h3 {
+  color: #c45f00; /* Matches warehouse theme */
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Icons */
+.feature-card i {
+  font-size: 45px; /* Increased icon size */
+  margin-bottom: 15px; /* More space below the icon */
+}
+ /* --- Services Carousel Section Styles --- */
+ .services-carousel {
+  background-color: #ecf0f1; /* Another light background for differentiation */
+  text-align: center; /* Center the heading */
+}
+
+.services-carousel h2 {
+  font-size: 2.5em;
+  margin-bottom: 50px; /* Space between heading and carousel */
+  color: #2c3e50;
+}
+/* Carousel Item Styling */
+.carousel-item {
+  height: 450px; /* Fixed height for consistency */
+  background-size: cover; /* Image covers the entire area */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent image repetition */
+  position: relative; /* Needed for positioning the caption */
+  width: 100%; /* Ensure it takes full width */
+  background-color: #333; /* Fallback background color */
+}
+
+/* Set specific background images for each carousel item */
+.carousel-item:nth-child(1) { /* Zone Management */
+  background-image: url('/zones.jpg');
+}
+.carousel-item:nth-child(2) { /* Vendor Management */
+  background-image: url('/vendors.jpg');
+}
+.carousel-item:nth-child(3) { /* Stock Item Tracking */
+  background-image: url('/stocks.jpg');
+}
+.carousel-item:nth-child(4) { /* Transaction History */
+  background-image: url('/transinboun1.jpg');
+}
+.carousel-item:nth-child(5) { /* Performance Insights */
+  background-image: url('/performance.jpg');
+}
+.carousel-item:nth-child(6) { /* Notifications Center */
+  background-image: url('/notification.jpg');
+}
+
+
+/* Caption Styling */
+/* Bootstrap's .carousel-caption by default is positioned absolutely.
+ We'll rely on its default positioning and add styling for its content. */
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  padding: 15px 25px; /* More padding for better look */
+  border-radius: 8px;
+  max-width: 80%; /* Limit width of caption */
+  /* Using Bootstrap's text-center for centering text within caption */
+  /* Using Bootstrap's d-none d-md-block to hide caption on small screens if desired, or remove */
+  left: 50%; /* Position from left center */
+  transform: translateX(-50%); /* Adjust to truly center horizontally */
+  bottom: 20px; /* Adjust vertical position */
+  width: fit-content; /* Adjust width to content, or a fixed max-width */
+  box-sizing: border-box; /* Include padding in width */
+  text-align: center; /* Ensure text within caption is centered */
+  color: white; /* Ensure caption text is visible on dark backgrounds */
+}
+
+.carousel-caption h3 {
+  font-size: 2.2em;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.carousel-caption p {
+  font-size: 1.1em;
+  line-height: 1.5;
+  color: #f0f0f0;
+}
+
+/* Carousel controls and indicators for better visibility */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5); /* Make icons more visible */
+  border-radius: 50%;
+  padding: 15px;
+}
+
+.carousel-indicators button {
+  background-color: #fff; /* White indicators */
+  opacity: 0.6;
+}
+
+.carousel-indicators button.active {
+  opacity: 1;
 }

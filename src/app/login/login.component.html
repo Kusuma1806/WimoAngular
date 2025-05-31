@@ -1,39 +1,24 @@
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card shadow-sm w-100" style="max-width: 400px; border: 2px solid #c45f00;">
-      <div class="card-header bg-white text-dark text-center">
-        <h4><i class="fas fa-sign-in-alt" style="color: #c45f00;"></i> Login</h4>
-      </div>
-      <div class="card-body bg-light">
-        <form #LoginForm="ngForm" (ngSubmit)="val(LoginForm)">
-          <div class="mb-3">
-            <label for="uname" class="form-label text-dark">Username</label>
-            <div class="input-group">
-              <span class="input-group-text" style="background-color: #c45f00; color: white;">
-                <i class="fas fa-user"></i>
-              </span>
-              <input type="text" class="form-control" ngModel name="uname" placeholder="Enter your name" required>
-            </div>
+<div class="login-container mt-5 pt-5">
+  <div class="login-form">
+    <h2><i class="fa-solid fa-right-to-bracket"></i> Sign In</h2>
+      <form #LoginForm="ngForm" (ngSubmit)="onSubmit(LoginForm)">
+          <div class="input-group">
+              <label for="username"><i class="fas fa-user"></i> Username</label>
+              <input type="text" id="username" name="username" ngModel placeholder="Enter your name" required>
           </div>
-          <div class="mb-3">
-            <label for="password" class="form-label text-dark">Password</label>
-            <div class="input-group">
-              <span class="input-group-text" style="background-color: #c45f00; color: white;">
-                <i class="fas fa-lock"></i>
-              </span>
-              <input type="password" class="form-control" ngModel name="password" placeholder="Enter your password" required>
-            </div>
+          <div class="input-group">
+              <label for="password"><i class="fas fa-lock"></i> Password</label>
+              <input type="password" id="password" name="password" ngModel placeholder="Enter your password" required>
           </div>
-          <div class="d-grid gap-2">
-            <button type="submit" class="btn text-white fw-bold" style="background-color: #c45f00;">
-              <i class="fas fa-lock"></i> Login
-            </button>
+          <button type="submit">Sign In</button>
+           <!-- Error Message -->
+           <div *ngIf="errorMessage">
+            <p class="error">{{ errorMessage }}</p>
           </div>
-        </form>
-        <div class="card-footer text-center bg-white">
-          <p class="mb-0">Don't have an account? 
-            <a routerLink="/register" class="fw-semibold" style="color: #c45f00;">Register here</a>
-          </p>
-        </div>
-      </div>
-    </div>
+          
+      </form>
+      <p class="create-account">
+          Are you new? <a routerLink="/register">Create an Account</a>
+      </p>
+  </div>
 </div>

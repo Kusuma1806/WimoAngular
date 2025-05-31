@@ -1,2 +1,3 @@
-<header></header>
-<footer1></footer1>
+<header *ngIf="!isDashboardRoute()"></header>
+<router-outlet></router-outlet>
+<footer1 *ngIf="!isDashboardRoute()"></footer1>

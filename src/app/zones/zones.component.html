@@ -1,0 +1,77 @@
+<h2 class="text-center mb-4">Warehouse Zones</h2>
+
+<!-- Create Zone Button -->
+<button class="btn btn-primary mb-3" (click)="toggleCreateForm()">Create Zone</button>
+
+<!-- Create Zone Form (Hidden by Default, Shown When Button Clicked) -->
+<div *ngIf="showCreateForm">
+  <h3>Create New Zone</h3>
+  <form (ngSubmit)="createZone()">
+    <label>Zone Name:</label>
+    <input type="text" [(ngModel)]="newZone.zoneName" name="zoneName"  required class="form-control">
+    
+    <label>Total Capacity:</label>
+    <input type="number" [(ngModel)]="newZone.totalCapacity" name="totalCapacity" required class="form-control">
+
+    <label>Stored Capacity:</label>
+    <input type="number" [(ngModel)]="newZone.storedCapacity" name="storedCapacity" required class="form-control">
+
+    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="button" class="btn btn-secondary" (click)="toggleCreateForm()">Cancel</button>
+  </form>
+</div>
+
+<!-- Zones List (Always Visible) -->
+<div class="container">
+  <div class="table-responsive shadow-lg rounded">
+    <table class="table table-striped table-bordered zone-table">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>Zone ID</th>
+          <th>Zone Name</th>
+          <th>Total Capacity</th>
+          <th>Stored Capacity</th>
+          <th>Available Space</th>
+          <th>Edit User</th> 
+          <th>Delete User</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let zone of zones">
+          <td class="text-center">{{ zone.zoneId }}</td>
+          <td>{{ zone.zoneName }}</td>
+          <td class="text-center">{{ zone.totalCapacity }}</td>
+          <td class="text-center">{{ zone.storedCapacity }}</td>
+          <td class="text-center text-success font-weight-bold">{{ zone.totalCapacity - zone.storedCapacity }}</td>
+          <td class="text-center">
+            <i class="fas fa-edit text-warning cursor-pointer" (click)="editZone(zone)"></i>
+          </td>
+          <td class="text-center">
+            <i class="fas fa-trash text-danger cursor-pointer" (click)="delete(zone)"></i>             
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Update Zone Form (Hidden by Default, Shown When Clicking Edit) -->
+<div *ngIf="editingZone">
+  <h3>Update Zone</h3>
+  <form (ngSubmit)="updateZone()">
+    <label>Zone ID:</label>
+    <input type="text" [(ngModel)]="editingZone.zoneId" name="zoneId" class="form-control" readonly>
+    
+    <label>Zone Name:</label>
+    <input type="text" [(ngModel)]="editingZone.zoneName" name="zoneName" required class="form-control">
+
+    <label>Total Capacity:</label>
+    <input type="number" [(ngModel)]="editingZone.totalCapacity" name="totalCapacity" required class="form-control">
+
+    <label>Stored Capacity:</label>
+    <input type="number" [(ngModel)]="editingZone.storedCapacity" name="storedCapacity" required class="form-control">
+
+    <button type="submit" class="btn btn-warning">Update</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Close</button>
+  </form>
+</div>

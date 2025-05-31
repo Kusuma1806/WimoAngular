@@ -1,89 +1,98 @@
-<div class="landing-container">
-  <div class="hero-content">
-    <h1>Welcome to Our WareHouse</h1>
-    <p>Your journey starts here. Discover amazing features.</p>
-    <button class="btn btn-primary" routerLink="/login"> Get Started
-    </button>    
+<div class="landing-container section-padding">
+  <div class="content">
+      <h1>Welcome to Our Warehouse</h1>
+      <p>Efficient inventory tracking, real-time updates, and seamless warehouse operations.</p>
+      <a href="/login" class="btn"><i class="fas fa-box"></i> Get Started</a>
   </div>
 </div>
-<section id="services" class="container py-5">
-  <h2 class="text-center mb-4">Our Services</h2>
-  <!-- Your service cards here -->
 
-  
-  <div class="row">
-    <!-- Zone Management -->
-    <div class="col-md-4">
-      <div class="card service-card">
-        <div class="card-body">
-          <i class="bi bi-geo-alt icon"></i>
-          <h5 class="card-title">Zone Management</h5>
-          <p class="card-text">Optimize warehouse space with smart zoning strategies.</p>
-          <a href="#" class="btn btn-primary">Learn More</a>
-        </div>
+<section class="features section-padding">
+  <div class="container">
+      <h2>Why Choose Our Inventory System?</h2>
+      <div class="card-container">
+          <div class="feature-card">
+              <i class="fas fa-warehouse"></i>
+              <h3>Automated Inventory</h3>
+              <p>Track inventory levels automatically, reducing manual errors.</p>
+          </div>
+          <div class="feature-card">
+              <i class="fas fa-chart-line"></i>
+              <h3>Real-Time Analytics</h3>
+              <p>Monitor stock levels and warehouse activity in real time.</p>
+          </div>
+          <div class="feature-card">
+              <i class="fas fa-truck-moving"></i>
+              <h3>Optimized Logistics</h3>
+              <p>Improve supply chain management for faster deliveries.</p>
+          </div>
       </div>
-    </div>
-
-    <!-- Vendor Management -->
-    <div class="col-md-4">
-      <div class="card service-card">
-        <div class="card-body">
-          <i class="bi bi-people icon"></i>
-          <h5 class="card-title">Vendor Management</h5>
-          <p class="card-text">Seamlessly connect with vendors for efficient inventory flow.</p>
-          <a href="#" class="btn btn-success">Learn More</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Stock Item Tracking -->
-    <div class="col-md-4">
-      <div class="card service-card">
-        <div class="card-body">
-          <i class="bi bi-box-seam icon"></i>
-          <h5 class="card-title">Stock Item Tracking</h5>
-          <p class="card-text">Monitor inventory levels in real time with advanced analytics.</p>
-          <a href="#" class="btn btn-warning">Learn More</a>
-        </div>
-      </div>
-    </div>
   </div>
+</section>
 
-  <div class="row mt-4">
-    <!-- Transaction History -->
-    <div class="col-md-4">
-      <div class="card service-card">
-        <div class="card-body">
-          <i class="bi bi-journal-text icon"></i>
-          <h5 class="card-title">Transaction History</h5>
-          <p class="card-text">Keep track of purchases, sales, and stock movements.</p>
-          <a href="#" class="btn btn-danger">Learn More</a>
-        </div>
-      </div>
-    </div>
+<section class="services-carousel section-padding">
+  <div class="container">
+      <h2 class="text-center">Explore Our Services</h2>
+      <div id="serviceCarousel" class="carousel slide" data-bs-ride="carousel">
 
-    <!-- Performance Insights -->
-    <div class="col-md-4">
-      <div class="card service-card">
-        <div class="card-body">
-          <i class="bi bi-graph-up-arrow icon"></i>
-          <h5 class="card-title">Performance Insights</h5>
-          <p class="card-text">Analyze key metrics to optimize your warehouse efficiency.</p>
-          <a href="#" class="btn btn-info">Learn More</a>
-        </div>
-      </div>
-    </div>
+          <div class="carousel-indicators">
+              <button type="button" data-bs-target="#serviceCarousel" data-bs-slide-to="0" class="active"></button>
+              <button type="button" data-bs-target="#serviceCarousel" data-bs-slide-to="1"></button>
+              <button type="button" data-bs-target="#serviceCarousel" data-bs-slide-to="2"></button>
+              <button type="button" data-bs-target="#serviceCarousel" data-bs-slide-to="3"></button>
+              <button type="button" data-bs-target="#serviceCarousel" data-bs-slide-to="4"></button>
+              <button type="button" data-bs-target="#serviceCarousel" data-bs-slide-to="5"></button>
+          </div>
 
-    <!-- Notifications Center -->
-    <div class="col-md-4">
-      <div class="card service-card">
-        <div class="card-body">
-          <i class="bi bi-bell icon"></i>
-          <h5 class="card-title">Notifications Center</h5>
-          <p class="card-text">Get instant alerts on stock updates and vendor interactions.</p>
-          <a href="#" class="btn btn-dark">Learn More</a>
-        </div>
+          <div class="carousel-inner">
+              <div class="carousel-item active">
+                  <div class="carousel-caption">
+                      <h3>Zone Management</h3>
+                      <p>Optimize warehouse space with smart zoning strategies.</p>
+                  </div>
+              </div>
+
+              <div class="carousel-item">
+                  <div class="carousel-caption">
+                      <h3>Vendor Management</h3>
+                      <p>Seamlessly connect with vendors for efficient inventory flow.</p>
+                  </div>
+              </div>
+
+              <div class="carousel-item">
+                  <div class="carousel-caption">
+                      <h3>Stock Item Tracking</h3>
+                      <p>Monitor inventory levels in real time with advanced analytics.</p>
+                  </div>
+              </div>
+
+              <div class="carousel-item">
+                  <div class="carousel-caption">
+                      <h3>Transaction History</h3>
+                      <p>Keep track of purchases, sales, and stock movements.</p>
+                  </div>
+              </div>
+
+              <div class="carousel-item">
+                  <div class="carousel-caption">
+                      <h3>Performance Insights</h3>
+                      <p>Analyze key metrics to optimize your warehouse efficiency.</p>
+                  </div>
+              </div>
+
+              <div class="carousel-item">
+                  <div class="carousel-caption">
+                      <h3>Notifications Center</h3>
+                      <p>Get instant alerts on stock updates and vendor interactions.</p>
+                  </div>
+              </div>
+          </div>
+
+          <button class="carousel-control-prev" type="button" data-bs-target="#serviceCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#serviceCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+          </button>
       </div>
-    </div>
   </div>
 </section>

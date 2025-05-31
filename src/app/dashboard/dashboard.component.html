@@ -1,0 +1,15 @@
+<!-- Sidebar -->
+<nav class="sidebar">
+    <ul>
+      <li *ngFor="let item of menuItems">
+        <a (click)="navigateTo(item.route)">{{ item.name }}</a>
+      </li>
+    </ul>
+  </nav>
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <router-outlet></router-outlet> <!-- Displays routed components -->
+  </div>
+  
+  

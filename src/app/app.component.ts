@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { LandingComponent } from './landing/landing.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { AboutUsComponent } from './about-us/about-us.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -13,4 +13,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
 })
 export class AppComponent {
   title = 'WimoAngular';
+  constructor(private router: Router) {}
+  isDashboardRoute(): boolean {
+    return this.router.url.includes('/dashboard'); // Returns true when on the dashboard
+  }
 }

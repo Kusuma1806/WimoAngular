@@ -1,0 +1,54 @@
+/* Center the heading */
+h2 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 20px;
+  }
+  
+  /* Style the table */
+  .zone-table {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Table Header */
+  .zone-table thead th {
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* Table Rows Hover Effect */
+  .zone-table tbody tr:hover {
+    background-color: rgba(52, 58, 64, 0.1); /* Subtle hover effect */
+  }
+  
+  /* Delete & Edit Icons */
+  .zone-table .fa-trash {
+    color: #dc3545; /* Bootstrap danger color */
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .zone-table .fa-trash:hover {
+    color: #bd2130; /* Darker red for hover effect */
+  }
+  
+  .zone-table .fa-edit {
+    color: #ffc107; /* Bootstrap warning color */
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .zone-table .fa-edit:hover {
+    color: #e0a800; /* Darker yellow for hover effect */
+  }
+  
+  /* Responsive Table Adjustments */
+  @media (max-width: 768px) {
+    .zone-table thead th {
+      font-size: 16px;
+    }
+  }
+  
