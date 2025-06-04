@@ -1,27 +1,28 @@
-<!-- Bootstrap Navbar -->
-<nav class="navbar navbar-expand-lg bg-white shadow py-3 fixed-top">
+<nav *ngIf="!isLoggedIn" class="navbar navbar-expand-lg bg-white shadow py-3 fixed-top">
   <div class="container">
-    <!-- Logo -->
-    <a class="navbar-brand fw-bold" href="#">
-      <i class="fa-solid fa-warehouse"></i> WIMO
-    </a>
+      <a class="navbar-brand fw-bold" href="#">
+          <i class="fa-solid fa-warehouse"></i> WIMO
+      </a>
 
-    <!-- Navbar Toggle (for mobile) -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <!-- Navbar Links (Centered) -->
-    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="#footer">About</a></li>
-      </ul>
-    </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+              <li class="nav-item">
+                  <a class="nav-link fw-bold fs-5" href="#footer">About</a>
+              </li>
+          </ul>
 
-    <!-- Login and Register Buttons (Right) -->
-    <div class="d-flex gap-2">
-      <a routerLink="/login" class="btn btn-outline-dark fw-bold px-4 py-2">Login</a>
-      <a routerLink="/register" class="btn btn-dark text-white fw-bold px-4 py-2">Register</a>
-    </div>
+          <div class="d-flex gap-2 ms-auto">
+              <a routerLink="/login" class="btn btn-outline-dark fw-bold px-4 py-2">Login</a>
+              <a routerLink="/register" class="btn btn-dark text-white fw-bold px-4 py-2">Register</a>
+          </div>
+      </div>
   </div>
 </nav>
+
+<div class="main-content mt-5">
+  <router-outlet></router-outlet>
+</div>

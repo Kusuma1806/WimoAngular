@@ -1,1 +1,107 @@
-<p>vendors works!</p>
+<div class="container">
+  <h2 class="text-center mb-4">Vendor Management</h2>
+
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <button mat-raised-button color="primary" (click)="toggleCreateForm()">
+      <mat-icon>add</mat-icon> Create Vendor
+    </button>
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search vendors</mat-label>
+      <input matInput type="text" [(ngModel)]="searchQuery" (input)="searchVendors()" placeholder="Search by name...">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="showCreateForm" class="overlay">
+    <div class="modal-content mat-elevation-z8">
+      <h3>Create New Vendor</h3>
+      <form (ngSubmit)="createVendor()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Vendor Name</mat-label>
+          <input matInput type="text" [(ngModel)]="newVendor.vendorName" name="vendorName" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contact Info</mat-label>
+          <input matInput type="number" [(ngModel)]="newVendor.contactInfo" name="contactInfo" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Vendor Email</mat-label>
+          <input matInput type="email" [(ngModel)]="newVendor.vendorEmail" name="vendorEmail" required>
+        </mat-form-field>
+
+        <div class="d-flex justify-content-end gap-2 mt-3">
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+          <button mat-raised-button color="warn" type="button" (click)="toggleCreateForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="vendor-cards-container">
+    <mat-card *ngFor="let vendor of filteredVendors" class="vendor-card mat-elevation-z4">
+      <mat-card-header>
+        <mat-card-title>{{ vendor.vendorName }}</mat-card-title>
+        <mat-card-subtitle>ID: {{ vendor.vendorId }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p><i class="fa-solid fa-phone-volume"></i> {{ vendor.contactInfo }}</p>
+        <p><i class="fa-solid fa-envelope"></i> {{ vendor.vendorEmail }}</p>
+      </mat-card-content>
+      <mat-card-actions class="d-flex justify-content-end gap-2">
+        <button mat-icon-button color="primary" (click)="editVendor(vendor)" aria-label="Edit Vendor">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteVendor(vendor)" aria-label="Delete Vendor">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div *ngIf="filteredVendors.length === 0" class="no-vendors-message text-center py-4">
+      No vendors found matching your criteria.
+    </div>
+  </div>
+
+  <mat-paginator
+    [length]="totalVendors"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[3, 5, 10, 20, 50]"
+    (page)="onPageChange($event)"
+    aria-label="Select page of vendors">
+  </mat-paginator>
+
+  <div *ngIf="editingVendor" class="overlay">
+    <div class="modal-content mat-elevation-z8">
+      <h3>Update Vendor</h3>
+      <form (ngSubmit)="updateVendor()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Vendor ID</mat-label>
+          <input matInput type="text" [(ngModel)]="editingVendor.vendorId" name="vendorId" readonly>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Vendor Name</mat-label>
+          <input matInput type="text" [(ngModel)]="editingVendor.vendorName" name="vendorName" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contact Info</mat-label>
+          <input matInput type="number" [(ngModel)]="editingVendor.contactInfo" name="contactInfo" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Vendor Email</mat-label>
+          <input matInput type="email" [(ngModel)]="editingVendor.vendorEmail" name="vendorEmail" required>
+        </mat-form-field>
+
+        <div class="d-flex justify-content-end gap-2 mt-3">
+          <button mat-raised-button color="accent" type="submit">Update</button>
+          <button mat-raised-button color="warn" type="button" (click)="cancelEdit()">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

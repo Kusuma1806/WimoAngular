@@ -1,36 +1,33 @@
-<router-outlet></router-outlet>
 <style>
-  a {
-      text-decoration: none;
-      color: inherit;
-  }
-   
-  a:hover {
-      color: darkturquoise;
-  }
-  </style>
-  <body>
-     
-      <footer id="footer" class=" footer sticky-bottom bg-dark text-white py-3">        
-          <div class="container ">
-              <div class="row">
-                  <div class="col-md-4">
-                      <h4>About Us</h4>
-                      <p><span style="color: #c45f00;">WIMO</span>: Streamlining warehouse operations for a smarter tomorrow.</p>
-                  </div>
-                  <div class="col-md-4">
-                    <h4>Contact Us</h4>
-                    <p><i class="fa-solid fa-envelope"></i> &nbsp;<a href="#">wimo&#64;gmail.com</a></p>
-                    <p><i class="fa-solid fa-phone"></i>&nbsp;<a href="#">+91 9876543211</a></p>
-                    <p><i class="fa-solid fa-location-dot"></i>&nbsp; P-31, Pondi Street, Chennai, India</p>
-                </div>
-                  <div class="col-md-4">
-                      <h4>Follow Us</h4>
-                      <i class="fa-brands fa-facebook"></i> &nbsp; &nbsp;
-                      <i class="fa-brands fa-youtube"></i> &nbsp; &nbsp;
-                      <i class="fa-brands fa-instagram"></i>
-                  </div>
-              </div>
-          </div>
-      </footer>
-  </body>
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    a:hover {
+        color: darkturquoise;
+    }
+</style>
+<footer id="footer" *ngIf="!isLoggedIn" class=" footer bg-dark text-white py-3">
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>About Us</h4>
+                <p><span style="color: #c45f00;">WIMO</span>: Streamlining warehouse operations for a smarter tomorrow.
+                </p>
+            </div>
+            <div class="col-md-4">
+                <h4>Contact Us</h4>
+                <p><i class="fa-solid fa-envelope"></i> &nbsp;<a href="#">wimo&#64;gmail.com</a></p>
+                <p><i class="fa-solid fa-phone"></i>&nbsp;<a href="#">+91 9876543211</a></p>
+                <p><i class="fa-solid fa-location-dot"></i>&nbsp; P-31, Pondi Street, Chennai, India</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Follow Us</h4>
+                <i class="fa-brands fa-facebook"></i> &nbsp; &nbsp;
+                <i class="fa-brands fa-youtube"></i> &nbsp; &nbsp;
+                <i class="fa-brands fa-instagram"></i>
+            </div>
+        </div>
+    </div>
+</footer>

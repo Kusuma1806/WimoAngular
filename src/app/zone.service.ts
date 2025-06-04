@@ -26,8 +26,8 @@ export class ZoneService {
   }
 
   //👉 Delete a Zone
-  deleteZone(zoneId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/deleteById/${zoneId}`);
+  deleteZone(zoneId: number): Observable<string> {
+    return this.http.delete<string>(`${this.apiUrl}/deleteById/${zoneId}`, { responseType: 'text' as 'json' });
   }
 }
 
@@ -36,7 +36,7 @@ export class Zone {
     zoneName: string
     totalCapacity: number
     storedCapacity: number
-   constructor(zoneId: number,zoneName: string, totalCapacity: number,storedCapacity: number) {
+    constructor(zoneId: number,zoneName: string, totalCapacity: number,storedCapacity: number) {
     this.zoneId=zoneId
     this.zoneName=zoneName
     this.totalCapacity=totalCapacity

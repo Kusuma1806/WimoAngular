@@ -1,1 +1,49 @@
-<p>performance works!</p>
+<div class="container">
+    <h2 class="text-center">📊 Performance Metrics</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <!-- Dropdown on Left -->
+      <div>
+        <label class="fw-bold">Select Metric Type:</label>
+        <select [(ngModel)]="selectedType" (change)="loadMetrics()" class="form-select">
+          <option value="Turnover">Inventory Turnover</option>
+          <option value="Space Utilization">Space Utilization</option>
+        </select>
+      </div>
+  
+      <!-- Button on Right -->
+      <button class="btn btn-primary" (click)="triggerCalculation()">Calculate Metrics</button>
+    </div>
+
+    <button class="btn btn-primary mb-3" (click)="toggleView()">
+        {{ showTable ? 'Show Chart' : 'Show Table' }}
+      </button>
+     <!-- Chart View -->
+  <div class="chart-container mb-3" *ngIf="!showTable">
+    <canvas #performanceChart></canvas>
+  </div>
+  <!-- Performance Metrics Table -->
+  <div class="table-responsive shadow-sm rounded"*ngIf="showTable">
+    <table class="table table-striped table-bordered text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>Type</th>
+          <th>Value</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let metric of metrics">
+          <td>{{ metric.type }}</td>
+          <td>{{ metric.value }}</td>
+          <td>{{ metric.timestamp | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+    <!-- No Metrics Found Message -->
+    <div *ngIf="metrics.length === 0" class="alert alert-warning text-center">
+      ⚠ No metrics found. Try refreshing or selecting a different type.
+    </div>
+  </div>
+  

@@ -1,0 +1,117 @@
+/* src/app/vendors/vendors.component.css */
+
+/* General Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  color: #3f51b5; /* Angular Material primary color for headings */
+}
+
+/* Search Field Styling */
+.search-field {
+  min-width: 250px; /* Ensures search field isn't too small */
+  max-width: 350px; /* Prevents it from getting too wide */
+  width: 100%; /* Allows it to shrink on smaller screens */
+}
+
+/* Vendor Cards Container - CSS Grid */
+.vendor-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid for cards */
+  gap: 20px; /* Space between cards */
+  padding: 20px 0;
+}
+
+/* Individual Vendor Card Styling */
+.vendor-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.vendor-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+.vendor-card mat-card-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #3f51b5; /* Primary color for card titles */
+}
+
+.vendor-card mat-card-subtitle {
+  color: #757575; /* Gray for subtitles */
+}
+
+.vendor-card mat-card-content p {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.vendor-card mat-card-actions {
+  padding-top: 10px;
+  border-top: 1px solid #eee; /* Separator for actions */
+}
+
+/* No Vendors Found Message */
+.no-vendors-message {
+  grid-column: 1 / -1; /* Span across all columns in the grid */
+  color: #757575;
+  font-size: 1.1rem;
+}
+
+/* Modal Overlays (Reusing your existing overlay concept) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  width: 450px;
+  max-width: 90%; /* Responsive width */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content h3 {
+  margin-bottom: 20px;
+  color: #3f51b5; /* Primary color for modal titles */
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between form fields */
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Small screen adjustments */
+@media (max-width: 768px) {
+  .d-flex.justify-content-between.flex-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-field {
+    margin-top: 15px;
+    max-width: 100%;
+  }
+}

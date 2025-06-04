@@ -1,0 +1,241 @@
+/* Center the heading */
+h2 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 20px;
+}
+label {
+  font-weight: bold;
+  margin-right: 5px;
+  color: #343a40;
+}
+
+
+/* Custom width for filter inputs in the new layout */
+.custom-filter-input {
+  width: 120px; /* Or adjust to your preferred fixed width */
+  max-width: 100%; /* Ensures it doesn't overflow on very small screens */
+}
+
+/* Make the general search box take full width of its column */
+.search-box {
+  width: 100%; /* Important: Makes it fill its assigned column */
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+}
+
+/* Style the stock table */
+.stock-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Table Header */
+.stock-table thead th {
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Table Rows Hover Effect */
+.stock-table tbody tr:hover {
+  background-color: rgba(52, 58, 64, 0.1);
+}
+
+/* Delete & Edit Icons */
+.stock-table .fa-trash {
+  color: #dc3545; /* Bootstrap danger color */
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.stock-table .fa-trash:hover {
+  color: #bd2130;
+}
+
+.stock-table .fa-edit {
+  color: #ffc107; /* Bootstrap warning color */
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.stock-table .fa-edit:hover {
+  color: #e0a800;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.ms-auto {
+  margin-left: auto; /* Pushes items to the right edge */
+}
+
+.mx-2 {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.w-25 {
+  width: 25%;
+} 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.form-group {
+  margin-bottom: 15px; /* Adds space between form fields */
+}
+
+/* Responsive Table Adjustments */
+@media (max-width: 768px) {
+  .stock-table thead th {
+      font-size: 16px;
+  }
+}
+
+/* Dropdown Container */
+.form-group {
+  margin-bottom: 15px; /* Ensure spacing between form inputs */
+}
+
+/* Dropdown Labels */
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Dropdown Options */
+select option {
+  padding: 8px;
+  font-size: 16px;
+}
+
+/* Ensure Dropdown Visibility */
+select:focus {
+  border-color: #007bff; /* Highlight selection */
+  outline: none;
+}
+
+/* Zone & Vendor Details Styling */
+.zone-details, .vendor-details {
+  padding: 10px;
+  border-radius: 5px;
+  border-left: 4px solid #007bff; /* Highlights zone details */
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .form-group select {
+      font-size: 14px;
+      padding: 8px;
+  }
+
+  .zone-details, .vendor-details {
+      font-size: 12px;
+      padding: 8px;
+  }
+}
+/* Ensure Dropdown Arrow Visibility */
+select {
+  appearance: none; /* Removes browser-specific styling */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23007bff' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 30px; /* Ensures space for the arrow */
+}
+
+/* --- New Card View Specific Styles --- */
+
+/* Main container for the card view, ensures overall padding and layout */
+.card-view-container {
+  padding: 15px 0; /* Add vertical padding around the whole card section */
+}
+
+.card-category-heading {
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  margin-bottom: 25px !important;
+  font-weight: bold;
+  color: #007bff !important; /* Ensure it's blue */
+}
+
+.stock-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.125); /* Default Bootstrap card border */
+}
+
+.stock-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-img-custom {
+  height: 180px; /* Fixed height for consistency */
+  object-fit: cover; /* Ensures image covers the area without distortion */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125); /* Separator from body */
+}
+
+.stock-card .card-body {
+  padding: 15px;
+}
+
+.stock-card .card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #343a40;
+}
+
+.stock-card .card-text small {
+  font-size: 0.85em;
+}
+
+.stock-card .list-group-item {
+  font-size: 0.9em;
+  background-color: transparent !important; /* Override default list-group-item background */
+  border-color: rgba(0, 0, 0, 0.08); /* Lighter border for list items */
+}
+
+.stock-card .card-actions button {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  margin: 0 4px; /* Adjust spacing between buttons */
+}
+
+/* Quantity color indicators */
+.text-danger {
+  color: #dc3545 !important; /* Low stock */
+}
+.text-warning {
+  color: #ffc107 !important; /* Medium stock */
+}

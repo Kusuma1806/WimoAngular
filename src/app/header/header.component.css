@@ -1,50 +1,98 @@
+/* header.component.css (or global styles if preferred, but component-specific is best practice) */
+
+/* Basic Navbar Styling */
+.navbar {
+  background-color: #fff; /* Ensure white background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding-top: 0.8rem; /* Adjust padding for better look */
+  padding-bottom: 0.8rem;
+  z-index: 1030; /* Bootstrap's default z-index for fixed navbars */
+}
+
+/* Logo Styling */
 .navbar-brand {
-    font-size: 24px;
-    color: #212529;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .navbar-nav .nav-link {
-    font-size: 18px;
-    font-weight: bold;
-    color: #212529;
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .navbar-nav .nav-link {
-  font-size: 18px;
-  font-weight: bold;
-  color: #212529;
-  transition: color 0.3s ease-in-out; /* Smooth effect */
+  font-size: 1.5rem; /* Larger font size for brand */
+  font-weight: 500; /* Bold font weight */
+  display: flex; /* Use flexbox for icon and text alignment */
+  align-items: center; /* Center vertically */
 }
 
-.navbar-nav .nav-link:hover {
-  color: #c45f00; /* Highlight color */
+.navbar-brand i {
+  margin-right: 8px; /* Space between icon and text */
+  font-size: 1.5em; /* Slightly larger icon */
 }
 
-  
-  .btn-outline-dark {
-    border: 2px solid #212529;
-    font-weight: bold;
-    padding: 12px 20px;
+/* Navbar Toggle for Mobile */
+.navbar-toggler {
+  border-color: rgba(0, 0, 0, 0.1); /* Lighter border for toggler */
+}
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Centered Navigation Item (About/Dashboard) */
+.navbar-nav.mx-auto .nav-item .nav-link {
+  font-size: 1.3rem; /* Adjusted font size for prominence */
+  font-weight: 600; /* Semi-bold */
+  color: #007bff; /* Primary color for active links */
+  transition: color 0.3s ease; /* Smooth transition on hover */
+  padding: 0.5rem 1rem; /* Standard nav link padding */
+}
+
+.navbar-nav.mx-auto .nav-item .nav-link:hover {
+  color: #0056b3; /* Darker blue on hover */
+}
+
+/* User Actions (Login/Register Buttons) */
+.navbar .d-flex.gap-2 .btn {
+  border-radius: 5px; /* Slightly rounded buttons */
+  font-weight: 600; /* Semi-bold text */
+  padding: 0.4rem 1.2rem; /* Adjusted padding */
+  transition: all 0.3s ease; /* Smooth transitions */
+}
+
+.navbar .btn-outline-dark {
+  border-color: #343a40;
+  color: #343a40;
+}
+.navbar .btn-outline-dark:hover {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.navbar .btn-dark {
+  background-color: #343a40;
+  border-color: #343a40;
+  color: #fff;
+}
+.navbar .btn-dark:hover {
+  background-color: #23272b;
+  border-color: #1d2124;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) { /* Applies to screens smaller than large (lg) breakpoint */
+  .navbar-collapse {
+      text-align: center; /* Center content when collapsed */
   }
-  
-  .btn-outline-dark:hover {
-    background-color: #c45f00;
-    color: white;
+
+  .navbar-nav.mx-auto {
+      margin-left: 0 !important; /* Remove auto margins when stacked */
+      margin-right: 0 !important;
+      width: 100%; /* Take full width */
+      justify-content: center; /* Center nav items when stacked */
+      padding-top: 10px; /* Add some space above nav items */
+      padding-bottom: 10px;
   }
-  
-  .btn-dark {
-    background-color: #212529;
-    color: white;
-    padding: 12px 20px;
-    font-weight: bold;
+
+  .navbar .d-flex.gap-2.ms-auto {
+      margin-left: 0 !important; /* Remove auto margin when stacked */
+      justify-content: center; /* Center buttons when stacked */
+      width: 100%; /* Take full width */
+      padding-bottom: 10px;
   }
-  
-  .btn-dark:hover {
-    background-color: #c45f00;
-    border-color: #c45f00;
+
+  .navbar-toggler {
+      margin-left: auto; /* Push toggler to the right on small screens */
   }
-  
+}

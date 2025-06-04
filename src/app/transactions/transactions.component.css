@@ -1,0 +1,399 @@
+/* General Component Styling */
+.container-fluid {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+h2 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+/* Search and Filter Inputs */
+.search-box, .filter-input {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.search-box {
+    border: 2px solid #007bff; /* Primary color */
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: bold;
+}
+
+.search-box:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.filter-input {
+    width: 140px; /* Adjusted fixed width for date/price inputs for better consistency */
+    max-width: 100%; /* Ensures responsiveness */
+    background-color: #f8f9fa; /* Consistent background */
+    border: 1px solid #ced4da;
+    text-align: center;
+}
+/* Ensure price inputs have appropriate border colors */
+input[type="number"].filter-input {
+    border-color: #28a745; /* Green for price inputs */
+}
+input[type="date"].filter-input {
+    border-color: #007bff; /* Blue for date inputs */
+}
+
+
+/* Input Number appearance fixes */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: auto; /* Webkit (Chrome, Edge, Safari) restores up/down arrows */
+    margin: 0;
+}
+
+/* Hover Effect for number and date inputs */
+input[type="number"]:hover,
+input[type="date"]:hover {
+    box-shadow: 0px 4px 6px rgba(0, 123, 255, 0.2); /* Unified hover shadow */
+}
+
+/* Focus Effect for number and date inputs */
+input[type="number"]:focus,
+input[type="date"]:focus {
+    border-color: #0056b3;
+    background-color: #e9ecef;
+    outline: none;
+}
+
+
+label {
+    font-weight: bold;
+    margin-right: 5px;
+    color: #343a40;
+}
+
+/* Adjust Date & Price Inputs spacing */
+.row .d-flex {
+    gap: 10px; /* Consistent gap between elements in the flex container */
+}
+
+
+/* Table Styling */
+.transaction-table {
+    margin-bottom: 0; /* Remove default table margin */
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners apply to content */
+}
+
+.transaction-table th,
+.transaction-table td {
+    vertical-align: middle;
+    padding: 0.75rem;
+}
+
+.transaction-table thead th {
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: #343a40; /* Darker header */
+    color: white;
+}
+
+/* Table Rows Hover Effect */
+.transaction-table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05); /* Subtle primary blue hover effect */
+}
+
+/* Delete Icon */
+.transaction-table .fa-trash {
+    color: #dc3545; /* Bootstrap danger color */
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+.transaction-table .fa-trash:hover {
+    color: #a71d2a; /* Darker red for hover effect */
+}
+
+/* Price Highlighting */
+.highlight-blue {
+    color: #007bff; /* Bootstrap primary blue */
+    font-weight: bold;
+}
+
+/* Cursor pointer for all action icons */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Modal Overlay and Content */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Slightly darker overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050; /* Above most other content */
+}
+
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 700px; /* Max width for larger screens */
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Form control adjustments in modal */
+.modal-content .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa; /* Consistent background */
+}
+.modal-content .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+
+.modal-content .btn {
+    min-width: 100px;
+}
+
+/* Pagination Styles */
+.pagination .page-item .page-link {
+    border-radius: 5px;
+    margin: 0 5px;
+    border: 1px solid #007bff;
+    color: #007bff;
+}
+
+.pagination .page-item .page-link.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination .page-item .page-link:hover:not(.active) {
+    background-color: #e9ecef;
+}
+
+/* --- NEW: View Toggle Buttons --- */
+.btn-group .btn.active {
+    background-color: #17a2b8 !important; /* Bootstrap info color for active */
+    color: white !important;
+    border-color: #17a2b8 !important;
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5); /* Info color shadow */
+}
+.btn-group .btn i {
+    margin-right: 5px; /* Space between icon and text */
+}
+
+/* --- NEW: Timeline View Styles --- */
+.timeline-container {
+    padding: 20px;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+/* The vertical line */
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: #007bff; /* Primary blue for the line */
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+}
+
+/* Containers for timeline items */
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+
+/* The circles on the timeline */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: -17px;
+    background-color: white;
+    border: 4px solid #007bff;
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+/* Place the timeline items to the left and right */
+.timeline-item.left {
+    left: 0;
+}
+
+.timeline-item.right {
+    left: 50%;
+}
+
+/* Fix the circle for left side */
+.timeline-item.left::after {
+    left: -16px;
+}
+
+/* The actual timeline content */
+.timeline-content {
+    padding: 20px 30px;
+    background-color: #f8f9fa; /* Light background for card */
+    position: relative;
+    border-radius: 6px;
+    border-left: 5px solid #17a2b8; /* Info color border */
+}
+
+.timeline-content h5 {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.timeline-content .timeline-date {
+    font-size: 0.85em;
+    color: #6c757d; /* Muted text */
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Arrows for timeline content pointing to the line */
+.timeline-item.left .timeline-content::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    right: -15px;
+    border: medium solid #f8f9fa;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #f8f9fa;
+}
+
+.timeline-item.right .timeline-content::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    left: -15px;
+    border: medium solid #f8f9fa;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #f8f9fa transparent transparent;
+}
+
+/* Responsive timeline on small screens */
+@media screen and (max-width: 768px) {
+    .timeline::after {
+        left: 31px; /* Move line to the left */
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px; /* Make space for the line and circle */
+        padding-right: 25px;
+    }
+
+    .timeline-item.right {
+        left: 0%; /* All items to the left */
+    }
+
+    /* Move all circles to the left */
+    .timeline-item::after {
+        left: 15px;
+    }
+
+    /* Adjust content arrows for all items to point right */
+    .timeline-item.left .timeline-content::before,
+    .timeline-item.right .timeline-content::before {
+        border: medium solid #f8f9fa; /* Same color as content background */
+        border-width: 10px 10px 10px 0;
+        border-color: transparent #f8f9fa transparent transparent;
+        left: -15px;
+        right: auto;
+    }
+}
+
+/* --- NEW: Summary View Styles --- */
+.summary-card {
+    height: 100%; /* Ensure cards in a row have same height */
+    text-align: center;
+    background-color: #343a40; /* Dark background */
+    border: none;
+}
+
+.summary-card .card-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.summary-card .card-text {
+    font-weight: bold;
+}
+
+.summary-card .fs-2 {
+    font-size: 2rem !important; /* Larger font size for numbers */
+}
+
+/* Ensure icons are visible */
+.summary-card .fas {
+    margin-right: 8px;
+}
+
+/* List group in summary */
+.list-group-item {
+    background-color: #f8f9fa; /* Light background */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Responsive adjustments for filters */
+@media (max-width: 767.98px) {
+    .filter-input {
+        width: 100% !important; /* Make inputs full width on small screens */
+        margin-right: 0 !important; /* Remove margin right for stacking */
+        margin-bottom: 10px; /* Add margin bottom for spacing when stacked */
+    }
+    .row .d-flex {
+        flex-direction: column; /* Stack date/price filters vertically */
+        align-items: center; /* Center them */
+    }
+}

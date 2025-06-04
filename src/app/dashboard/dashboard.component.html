@@ -1,15 +1,110 @@
-<!-- Sidebar -->
-<nav class="sidebar">
-    <ul>
-      <li *ngFor="let item of menuItems">
-        <a (click)="navigateTo(item.route)">{{ item.name }}</a>
-      </li>
-    </ul>
-  </nav>
-  
-  <!-- Main Content -->
-  <div class="main-content">
-    <router-outlet></router-outlet> <!-- Displays routed components -->
-  </div>
-  
-  
+<div class="dashboard-container">
+    <div class="sidebar shadow-lg">
+        <div class="sidebar-header">
+            <h4 class="text-white mb-0">Navigation</h4>
+        </div>
+        <ul class="sidebar-nav">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/zones" routerLinkActive="active">
+                    <i class="fas fa-boxes"></i> Zones
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/vendors" routerLinkActive="active">
+                    <i class="fas fa-handshake"></i> Vendors
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/stocks" routerLinkActive="active">
+                    <i class="fas fa-warehouse"></i> Stocks
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/transactions" routerLinkActive="active">
+                    <i class="fas fa-exchange-alt"></i> Transactions
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/notifications" routerLinkActive="active">
+                    <i class="fas fa-bell"></i> Notifications
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/performance" routerLinkActive="active">
+                    <i class="fas fa-chart-line"></i> Performance
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <button class="btn btn-danger btn-block w-100"(click)="logout()" >
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <h2 class="dashboard-title">Welcome to Your Dashboard!</h2>
+
+        <div class="dashboard-overview row g-4">
+            <div class="col-md-4">
+                <div class="card overview-card shadow">
+                    <div class="card-body">
+                        <div class="icon-wrapper bg-primary">
+                            <i class="fas fa-cubes"></i>
+                        </div>
+                        <h5 class="card-title">Total Stocks</h5>
+                        <p class="card-text">5,200 units</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card overview-card shadow">
+                    <div class="card-body">
+                        <div class="icon-wrapper bg-success">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <h5 class="card-title">Recent Inbound</h5>
+                        <p class="card-text">250 units today</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card overview-card shadow">
+                    <div class="card-body">
+                        <div class="icon-wrapper bg-warning">
+                            <i class="fas fa-truck-loading"></i>
+                        </div>
+                        <h5 class="card-title">Pending Outbound</h5>
+                        <p class="card-text">12 orders</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        <div class="card shadow mt-5">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body quick-actions-grid">
+                <button class="btn btn-outline-primary btn-lg" routerLink="/transactions">
+                    <i class="fas fa-plus-circle"></i> Add Transaction
+                </button>
+                <button class="btn btn-outline-success btn-lg" routerLink="/stocks">
+                    <i class="fas fa-search"></i> View Stock Levels
+                </button>
+                <button class="btn btn-outline-warning btn-lg" routerLink="/zones">
+                    <i class="fas fa-map-marked-alt"></i> Manage Zones
+                </button>
+                <button class="btn btn-outline-dark btn-lg" routerLink="/notifications">
+                    <i class="fas fa-exclamation-triangle"></i> Check Alerts
+                </button>
+            </div>
+        </div>
+
+        </div>
+</div>

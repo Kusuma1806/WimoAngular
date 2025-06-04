@@ -1,0 +1,110 @@
+.d-flex {
+    gap: 15px; /* ✅ Adds spacing between dropdown & button */
+}
+
+/* Dropdown Styling */
+select.form-control {
+    width: 250px;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #007bff;
+    transition: 0.3s ease-in-out;
+    background-color: #f8f9fa;
+}
+
+/* Heading Styling */
+h2 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Dropdown and Button Row */
+.d-flex {
+    display: flex;
+    justify-content: space-between; /* ✅ Align dropdown left & button right */
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+
+/* Hover Effect on Dropdown */
+select.form-control:hover {
+    box-shadow: 0px 3px 6px rgba(0, 123, 255, 0.3);
+}
+
+/* Button Styling */
+.btn-primary {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Table Header */
+.table thead th {
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: #343a40;
+    color: white;
+    padding: 12px;
+}
+
+/* Table Rows */
+.table tbody tr {
+    transition: 0.3s ease-in-out;
+}
+
+/* Table Hover Effect */
+.table tbody tr:hover {
+    background-color: rgba(52, 58, 64, 0.1);
+}
+
+/* Alert Styling */
+.alert-warning {
+    text-align: center;
+    font-size: 16px;
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 8px;
+    color: #856404;
+    background-color: #fff3cd;
+    border: 2px solid #ffeeba;
+}
+/* Chart Container */
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px; /* ✅ Keeps chart size reasonable */
+    margin: auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Canvas Styling */
+canvas {
+    width: 100% !important; /* ✅ Ensures responsiveness */
+    height: 400px !important; /* ✅ Fixed height for consistent display */
+}

@@ -1,10 +1,17 @@
 <div class="landing-container section-padding">
-  <div class="content">
-      <h1>Welcome to Our Warehouse</h1>
-      <p>Efficient inventory tracking, real-time updates, and seamless warehouse operations.</p>
-      <a href="/login" class="btn"><i class="fas fa-box"></i> Get Started</a>
+    <div class="content">
+      <h1 *ngIf="!isLoggedIn">Welcome to Our Warehouse</h1>
+      <h1 *ngIf="isLoggedIn">Welcome, {{ userName }}!</h1>
+  
+      <p *ngIf="!isLoggedIn">Efficient inventory tracking, real-time updates, and seamless warehouse operations.</p>
+      <p *ngIf="isLoggedIn">You're logged in—ready to optimize inventory and streamline warehouse services!</p>
+  
+      <a *ngIf="!isLoggedIn" routerLink="/login" class="btn">
+        <i class="fas fa-box"></i> Get Started
+      </a>
+    </div>
   </div>
-</div>
+  
 
 <section class="features section-padding">
   <div class="container">
@@ -29,7 +36,7 @@
   </div>
 </section>
 
-<section class="services-carousel section-padding">
+<section class="services-carousel section-padding mb-3">
   <div class="container">
       <h2 class="text-center">Explore Our Services</h2>
       <div id="serviceCarousel" class="carousel slide" data-bs-ride="carousel">

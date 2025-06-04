@@ -1,54 +1,293 @@
-/* Center the heading */
+/* src/app/zones/zones.component.css */
+
+/* General Container & Heading */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* We're replacing the old h2 with the new toolbar, so this rule might become less relevant for the main title */
 h2 {
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-    color: #343a40;
-    margin-bottom: 20px;
+  color: #3f51b5; /* Angular Material primary color for headings */
+  font-weight: 600;
+}
+
+/* --- NEW: Toolbar Styling --- */
+.zones-toolbar {
+  margin-bottom: 20px; /* Space below the toolbar */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px; /* Space between toolbar items */
+  padding: 0 20px; /* Adjust padding if needed */
+  border-radius: 8px; /* Slightly rounded corners for the toolbar */
+  height: 64px; /* Standard Material toolbar height */
+}
+
+.zones-toolbar span {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(63, 63, 218); /* Text color for the toolbar title */
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto; /* Pushes other items to the ends */
+}
+/* --- END NEW: Toolbar Styling --- */
+
+
+/* Search Field Styling */
+.search-field {
+  min-width: 250px;
+  max-width: 350px;
+  width: 100%;
+  /* NEW: Adjust font size for better fit in toolbar */
+  font-size: 1rem;
+}
+
+/* NEW: Adjust spacing for mat-form-field within toolbar */
+.search-field .mat-form-field-wrapper {
+  padding-bottom: 0; /* Remove extra padding below input */
+}
+
+/* Zone Cards Container - CSS Grid */
+.zone-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Responsive grid for cards */
+  gap: 20px; /* Space between cards */
+  padding: 20px 0;
+}
+
+
+/* Individual Zone Card Styling */
+.zone-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: default; /* Keep cursor default as actions are in menu */
+  display: flex; /* Use flexbox for internal card layout */
+  flex-direction: column;
+}
+
+.zone-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+.zone-card mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0; /* Adjust padding as needed */
+  /* NEW: Add some bottom padding if needed, or rely on gap in content */
+  padding-bottom: 10px;
+}
+
+.zone-card mat-card-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #3f51b5; /* Primary color for card titles */
+}
+
+.zone-card mat-card-subtitle {
+  color: #757575; /* Gray for subtitles */
+}
+
+.zone-actions-menu {
+  margin-left: auto; /* Push to the right */
+}
+
+/* NEW: Status Chip Positioning */
+.zone-status-chip {
+  margin-left: 10px; /* Space from subtitle */
+}
+
+.zone-card-content {
+  display: flex;
+  /* NEW: Change to column for better stacking with new progress bar */
+  flex-direction: column;
+  align-items: center; /* Align items horizontally in the column */
+  gap: 20px; /* Space between visual, details, and progress bar */
+  padding-top: 10px;
+  flex-grow: 1; /* Allow content to grow */
+}
+
+/* Capacity Visual - Container for Spinner and Overlay Text */
+.capacity-visual-container {
+  position: relative;
+  width: 100px; /* Width of the spinner */
+  height: 100px; /* Height of the spinner */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0; /* Prevent container from shrinking */
+}
+
+.available-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.spinner-text-overlay {
+  position: absolute;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  z-index: 1; /* Ensure text is above spinner */
+}
+
+/* Capacity Details (Total & Stored) */
+.capacity-details {
+  flex-grow: 1; /* Allow details to take remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center text vertically */
+  text-align: center; /* NEW: Center text if it's in a column layout */
+}
+
+.capacity-details p {
+  margin: 0 0 5px 0; /* Small margin between paragraphs */
+  font-size: 0.95rem;
+}
+
+.capacity-details p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- NEW: Linear Progress Bar Styling --- */
+.zone-progress-bar-container {
+  margin-top: 15px; /* Space above the progress bar */
+  width: 100%; /* Make it span the width of the card content */
+  padding: 0 10px; /* Add some horizontal padding inside the card */
+  box-sizing: border-box; /* Include padding in element's total width/height */
+}
+
+mat-progress-bar {
+  height: 10px; /* Set a fixed height for the bar */
+  border-radius: 5px; /* Rounded corners for the bar */
+  overflow: hidden; /* Ensures content respects border-radius */
+  --mdc-linear-progress-track-color: #e0e0e0; /* Light gray track */
+}
+
+.progress-bar-label {
+  text-align: center;
+  font-size: 0.85em; /* Smaller font for the label */
+  color: #555;
+  margin-top: 5px; /* Space above the label */
+}
+/* --- END NEW: Linear Progress Bar Styling --- */
+
+
+/* --- ENHANCED: No Zones Found/Loading Message --- */
+.no-zones-message {
+  grid-column: 1 / -1; /* Span across all columns in the grid */
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f5f5f5; /* Light gray background */
+  border-radius: 8px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  color: #757575;
+}
+
+.no-zones-message .no-zones-icon,
+.no-zones-message .loading-icon {
+  font-size: 48px; /* Large icon size */
+  color: #9e9e9e; /* Gray icon color */
+  margin-bottom: 10px;
+}
+
+.no-zones-message h3 {
+  color: #424242; /* Darker gray for heading */
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.no-zones-message p {
+  font-size: 1.1em;
+  margin-top: 0;
+}
+
+/* Specific style for loading icon */
+.loading-icon {
+  animation: spin 2s linear infinite; /* Simple spin animation */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* --- END ENHANCED --- */
+
+
+/* Modal Overlays (Reusing existing structure, updated with Material styling) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  width: 450px;
+  max-width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content h3 {
+  margin-bottom: 20px;
+  color: #3f51b5;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  /* Removed old d-flex .justify-content-between.flex-wrap rules as toolbar handles it */
+  .zones-toolbar {
+    flex-direction: column;
+    height: auto; /* Allow height to adjust */
+    padding: 10px; /* Adjust padding for stacked items */
+    gap: 10px;
   }
-  
-  /* Style the table */
-  .zone-table {
-    border-radius: 8px;
-    overflow: hidden;
+  .search-field {
+    margin-top: 0; /* No top margin needed inside flex column toolbar */
+    max-width: 100%;
   }
-  
-  /* Table Header */
-  .zone-table thead th {
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  .zone-card-content {
+    flex-direction: column; /* Stack visual and details on small screens */
+    align-items: center;
+    text-align: center;
   }
-  
-  /* Table Rows Hover Effect */
-  .zone-table tbody tr:hover {
-    background-color: rgba(52, 58, 64, 0.1); /* Subtle hover effect */
-  }
-  
-  /* Delete & Edit Icons */
-  .zone-table .fa-trash {
-    color: #dc3545; /* Bootstrap danger color */
-    cursor: pointer;
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .zone-table .fa-trash:hover {
-    color: #bd2130; /* Darker red for hover effect */
-  }
-  
-  .zone-table .fa-edit {
-    color: #ffc107; /* Bootstrap warning color */
-    cursor: pointer;
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .zone-table .fa-edit:hover {
-    color: #e0a800; /* Darker yellow for hover effect */
-  }
-  
-  /* Responsive Table Adjustments */
-  @media (max-width: 768px) {
-    .zone-table thead th {
-      font-size: 16px;
-    }
-  }
-  
+}
+
+/* --- Spinner Color Overrides (already provided, keeping for completeness) --- */
+/* This targets the actual spinning part and forces the color */
+.available-spinner .mat-progress-spinner-stroke {
+  stroke: var(--mdc-circular-progress-active-indicator-color) !important;
+}
+
+/* Include this as a fallback in case the above selector doesn't work for your specific Material version */
+.available-spinner .mat-spinner-wrapper path {
+  stroke: var(--mdc-circular-progress-active-indicator-color) !important;
+}
+/* --- END Spinner Color Overrides --- */
