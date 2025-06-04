@@ -4,12 +4,16 @@ import { ZoneService, Zone } from '../zone.service'; // Import Zone interface
 import { StockService, Stock } from '../stock.service'; // Import Stock interface
 import { CommonModule, CurrencyPipe, DatePipe, TitleCasePipe, KeyValuePipe } from '@angular/common'; // Import necessary pipes
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router'; // Assuming you have a router if you uncomment the "Back to Dashboard" button
+import { Router, RouterModule } from '@angular/router'; // Assuming you have a router if you uncomment the "Back to Dashboard" button
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-transaction',
-  standalone: true, // Mark as standalone
-  imports: [CommonModule, FormsModule, CurrencyPipe, DatePipe, TitleCasePipe, KeyValuePipe], // Add pipes here
+  imports: [CommonModule, FormsModule, 
+       CurrencyPipe, DatePipe,
+       TitleCasePipe, RouterModule,
+       KeyValuePipe,MatIconModule,MatButtonModule], // Add pipes here
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.css']
 })

@@ -21,6 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; /
 import { MatToolbarModule } from '@angular/material/toolbar'; // NEW: For the header toolbar
 import { MatProgressBarModule } from '@angular/material/progress-bar'; // NEW: For linear loading bar
 import { MatChipsModule } from '@angular/material/chips'; // NEW: For status chips
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-zone',
@@ -28,6 +29,9 @@ import { MatChipsModule } from '@angular/material/chips'; // NEW: For status chi
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
+    MatIconModule,
+    MatButtonModule,
     ReactiveFormsModule, // NEW: Needed for FormControl
     MatInputModule,
     MatButtonModule,

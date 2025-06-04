@@ -1,39 +1,44 @@
 <div class="container-fluid">
-  <h2 class="text-center text-info mb-4">Transaction Management</h2>
-
-  <div class="row align-items-center mb-3">
-      <div class="col-md-6 col-sm-12">
-          <input type="text" [(ngModel)]="searchQuery" class="form-control search-box"
-                 placeholder="🔍 Search Transactions by Type" (input)="searchTransactions()">
-      </div>
-      <div class="col-md-6 col-sm-12 text-end">
-          <button class="btn btn-primary" (click)="toggleCreateForm()">Save Transaction</button>
-          </div>
+  
+  <div class="header-with-back-button">
+    <button mat-icon-button routerLink="/dashboard" aria-label="Back to Dashboard">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2 class="text-center text-primary mb-4 flex-grow-1">Transaction Management</h2>
   </div>
 
-  <div class="row align-items-center mb-3">
-      <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-start justify-content-center mb-2 mb-md-0">
-          <label for="startDate" class="me-1 fw-bold">📅Start Date:</label>
-          <input type="date" id="startDate" [(ngModel)]="startDate" class="form-control me-3 filter-input"
-                 (change)="searchTransactions()">
+<div class="row align-items-center mb-3">
+    <div class="col-md-6 col-sm-12">
+        <input type="text" [(ngModel)]="searchQuery" class="form-control search-box"
+               placeholder="🔍 Search Transactions by Type" (input)="searchTransactions()">
+    </div>
+    <div class="col-md-6 col-sm-12 text-end">
+        <button class="btn btn-primary" (click)="toggleCreateForm()">Save Transaction</button>
+        </div>
+</div>
 
-          <label for="endDate" class="me-1 fw-bold">📅End Date:</label>
-          <input type="date" id="endDate" [(ngModel)]="endDate" class="form-control filter-input"
-                 (change)="searchTransactions()">
-      </div>
+<div class="row align-items-center mb-2">
+    <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-start justify-content-center mb-2 mb-md-0">
+        <label for="startDate" class="me-1 fw-bold">📅Start Date:</label>
+        <input type="date" id="startDate" [(ngModel)]="startDate" class="form-control me-3 filter-input"
+               (change)="searchTransactions()">
 
-      <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-end justify-content-center">
-          <label for="minPrice" class="me-1 fw-bold">💰Min Price:</label>
-          <input type="number" id="minPrice" [(ngModel)]="minPrice" class="form-control me-3 filter-input"
-                 placeholder="Min Price" (input)="searchTransactions()">
+        <label for="endDate" class="me-1 fw-bold">📅End Date:</label>
+        <input type="date" id="endDate" [(ngModel)]="endDate" class="form-control filter-input"
+               (change)="searchTransactions()">
+    </div>
 
-          <label for="maxPrice" class="me-1 fw-bold">💰Max Price:</label>
-          <input type="number" id="maxPrice" [(ngModel)]="maxPrice" class="form-control filter-input"
-                 placeholder="Max Price" (input)="searchTransactions()">
-      </div>
-  </div>
+    <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-end justify-content-center">
+        <label for="minPrice" class="me-1 fw-bold">💰Min Price:</label>
+        <input type="number" id="minPrice" [(ngModel)]="minPrice" class="form-control me-3 filter-input"
+               placeholder="Min Price" (input)="searchTransactions()">
 
-  <div class="d-flex justify-content-center mb-4">
+        <label for="maxPrice" class="me-1 fw-bold">💰Max Price:</label>
+        <input type="number" id="maxPrice" [(ngModel)]="maxPrice" class="form-control filter-input"
+               placeholder="Max Price" (input)="searchTransactions()">
+    </div>
+</div>
+  <div class="d-flex justify-content-center mb-2">
       <div class="btn-group" role="group" aria-label="Transaction View Toggle">
           <button type="button" class="btn btn-outline-info" [class.active]="activeView === 'table'" (click)="toggleView('table')">
               <i class="fas fa-table"></i> Table View
@@ -135,7 +140,7 @@
       <p *ngIf="pagedTransactions.length === 0" class="text-muted text-center py-3">No transactions found matching your criteria.</p>
   </div>
 
-  <div *ngIf="activeView === 'timeline'" class="timeline-container mt-4">
+  <div *ngIf="activeView === 'timeline'" class="timeline-container mt-2">
       <h3 class="text-center text-info mb-4">Transaction History Timeline</h3>
       <div *ngIf="filteredTransactions.length > 0; else noTransactionsForTimeline">
           <div class="timeline">
@@ -164,7 +169,7 @@
       </ng-template>
   </div>
 
-  <div *ngIf="activeView === 'summary'" class="summary-container mt-4">
+  <div *ngIf="activeView === 'summary'" class="summary-container mt-2">
       <h3 class="text-center text-info mb-4">Transaction Summary</h3>
       <div *ngIf="filteredTransactions.length > 0; else noTransactionsForSummary">
           <div class="row g-4 mb-4">

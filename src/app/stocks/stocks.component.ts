@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Stock, StockService } from '../stock.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ZoneService } from '../zone.service';
 import { VendorService } from '../vendor.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-stock',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterModule,MatIconModule,MatButtonModule],
   templateUrl: './stocks.component.html',
   styleUrls: ['./stocks.component.css']
 })

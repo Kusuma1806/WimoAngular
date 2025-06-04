@@ -31,6 +31,24 @@ label {
   transition: 0.3s ease-in-out;
 }
 
+.header-with-back-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align content to the start */
+  margin-bottom: 1rem; /* Adjust as needed for spacing below the header */
+}
+
+.header-with-back-button h2 {
+  margin-bottom: 0; /* Remove default bottom margin from h2 */
+  flex-grow: 1; /* Allows the h2 to take up available space, pushing it towards center */
+  text-align: center; /* Center the text within its available space */
+}
+
+/* Adjust button margin if needed for better visual spacing */
+.header-with-back-button button {
+  margin-right: 1rem; /* Space between the back button and the heading */
+}
+
 /* Style the stock table */
 .stock-table {
   border-radius: 8px;
