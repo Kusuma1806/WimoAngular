@@ -1,4 +1,4 @@
-<div class="registration-page-container mt-5 pt-5">
+<div class="registration-page-container">
     <div class="card shadow-sm w-100">
         <div class="card-header text-center">
             <h2><i class="fas fa-user-plus"></i> Sign UP</h2>
@@ -13,7 +13,7 @@
                             <small
                                 *ngIf="registrationForm.controls['name'].invalid && registrationForm.controls['name'].touched"
                                 class="text-danger">
-                                Username must be 5-20 characters long and contain only letters, numbers, or underscores.
+                                Username contain only letters, numbers, or underscores [5-20].
                             </small>
                         </div>
                         <div class="mb-3">

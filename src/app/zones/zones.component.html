@@ -1,8 +1,5 @@
 <div class="container">
   <mat-toolbar color="primary" class="zones-toolbar mat-elevation-z2">
-    <span><button mat-icon-button routerLink="/dashboard" aria-label="Back to Dashboard">
-      <mat-icon>arrow_back</mat-icon>
-    </button></span>
     <span>Zone Management Dashboard</span>
     <span class="toolbar-spacer"></span> <mat-form-field appearance="outline" class="search-field">
       <mat-label>Search Zones</mat-label>
@@ -43,7 +40,7 @@
       </form>
     </div>
   </div>
-
+  
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" (selectedTabChange)="onTabChange($event)">
 
     <mat-tab label="All Zones">
@@ -58,7 +55,8 @@
                   {{ getZoneStatus(zone) }}
                 </mat-chip>
               </mat-chip-listbox>
-              <button mat-icon-button [matMenuTriggerFor]="zoneMenu" class="zone-actions-menu">
+              <!-- HIDE THIS BUTTON IF NOT ADMIN -->
+              <button mat-icon-button [matMenuTriggerFor]="zoneMenu" class="zone-actions-menu" *ngIf="isAdmin$ | async">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #zoneMenu="matMenu">
@@ -75,12 +73,8 @@
 
             <mat-card-content class="zone-card-content">
               <div class="capacity-visual-container">
-                <mat-progress-spinner
-                  class="available-spinner"
-                  [mode]="'determinate'"
-                  [value]="getAvailablePercentage(zone)"
-                  [diameter]="100"
-                  [strokeWidth]="10"
+                <mat-progress-spinner class="available-spinner" [mode]="'determinate'"
+                  [value]="getAvailablePercentage(zone)" [diameter]="100" [strokeWidth]="10"
                   [style.--mdc-circular-progress-active-indicator-color]="getUtilizationColor(zone)">
                 </mat-progress-spinner>
                 <div class="spinner-text-overlay">
@@ -94,16 +88,14 @@
               </div>
 
               <div class="zone-progress-bar-container">
-                <mat-progress-bar
-                  mode="determinate"
-                  [value]="getUtilizationPercentage(zone)"
+                <mat-progress-bar mode="determinate" [value]="getUtilizationPercentage(zone)"
                   [style.--mdc-linear-progress-active-indicator-color]="getUtilizationColor(zone)">
                 </mat-progress-bar>
                 <div class="progress-bar-label">
                   {{ getUtilizationPercentage(zone) | number:'1.0-0' }}% Utilized
                 </div>
               </div>
-              </mat-card-content>
+            </mat-card-content>
           </mat-card>
 
           <div *ngIf="filteredZones.length === 0 && !isLoading" class="no-zones-message text-center py-4">
@@ -115,7 +107,7 @@
             <mat-icon class="loading-icon">data_usage</mat-icon>
             <h3>Loading zones...</h3>
           </div>
-          </div>
+        </div>
       </ng-template>
     </mat-tab>
 
@@ -131,7 +123,8 @@
                   {{ getZoneStatus(zone) }}
                 </mat-chip>
               </mat-chip-listbox>
-              <button mat-icon-button [matMenuTriggerFor]="zoneMenu" class="zone-actions-menu">
+              <!-- HIDE THIS BUTTON IF NOT ADMIN -->
+              <button mat-icon-button [matMenuTriggerFor]="zoneMenu" class="zone-actions-menu" *ngIf="isAdmin$ | async">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #zoneMenu="matMenu">
@@ -148,12 +141,8 @@
 
             <mat-card-content class="zone-card-content">
               <div class="capacity-visual-container">
-                <mat-progress-spinner
-                  class="available-spinner"
-                  [mode]="'determinate'"
-                  [value]="getAvailablePercentage(zone)"
-                  [diameter]="100"
-                  [strokeWidth]="10"
+                <mat-progress-spinner class="available-spinner" [mode]="'determinate'"
+                  [value]="getAvailablePercentage(zone)" [diameter]="100" [strokeWidth]="10"
                   [style.--mdc-circular-progress-active-indicator-color]="getUtilizationColor(zone)">
                 </mat-progress-spinner>
                 <div class="spinner-text-overlay">
@@ -167,16 +156,14 @@
               </div>
 
               <div class="zone-progress-bar-container">
-                <mat-progress-bar
-                  mode="determinate"
-                  [value]="getUtilizationPercentage(zone)"
+                <mat-progress-bar mode="determinate" [value]="getUtilizationPercentage(zone)"
                   [style.--mdc-linear-progress-active-indicator-color]="getUtilizationColor(zone)">
                 </mat-progress-bar>
                 <div class="progress-bar-label">
                   {{ getUtilizationPercentage(zone) | number:'1.0-0' }}% Utilized
                 </div>
               </div>
-              </mat-card-content>
+            </mat-card-content>
           </mat-card>
 
           <div *ngIf="filteredZones.length === 0 && !isLoading" class="no-zones-message text-center py-4">
@@ -188,7 +175,7 @@
             <mat-icon class="loading-icon">data_usage</mat-icon>
             <h3>Loading zones...</h3>
           </div>
-          </div>
+        </div>
       </ng-template>
     </mat-tab>
 
@@ -204,7 +191,8 @@
                   {{ getZoneStatus(zone) }}
                 </mat-chip>
               </mat-chip-listbox>
-              <button mat-icon-button [matMenuTriggerFor]="zoneMenu" class="zone-actions-menu">
+              <!-- HIDE THIS BUTTON IF NOT ADMIN -->
+              <button mat-icon-button [matMenuTriggerFor]="zoneMenu" class="zone-actions-menu" *ngIf="isAdmin$ | async">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #zoneMenu="matMenu">
@@ -221,12 +209,8 @@
 
             <mat-card-content class="zone-card-content">
               <div class="capacity-visual-container">
-                <mat-progress-spinner
-                  class="available-spinner"
-                  [mode]="'determinate'"
-                  [value]="getAvailablePercentage(zone)"
-                  [diameter]="100"
-                  [strokeWidth]="10"
+                <mat-progress-spinner class="available-spinner" [mode]="'determinate'"
+                  [value]="getAvailablePercentage(zone)" [diameter]="100" [strokeWidth]="10"
                   [style.--mdc-circular-progress-active-indicator-color]="getUtilizationColor(zone)">
                 </mat-progress-spinner>
                 <div class="spinner-text-overlay">
@@ -240,16 +224,14 @@
               </div>
 
               <div class="zone-progress-bar-container">
-                <mat-progress-bar
-                  mode="determinate"
-                  [value]="getUtilizationPercentage(zone)"
+                <mat-progress-bar mode="determinate" [value]="getUtilizationPercentage(zone)"
                   [style.--mdc-linear-progress-active-indicator-color]="getUtilizationColor(zone)">
                 </mat-progress-bar>
                 <div class="progress-bar-label">
                   {{ getUtilizationPercentage(zone) | number:'1.0-0' }}% Utilized
                 </div>
               </div>
-              </mat-card-content>
+            </mat-card-content>
           </mat-card>
 
           <div *ngIf="filteredZones.length === 0 && !isLoading" class="no-zones-message text-center py-4">
@@ -261,7 +243,7 @@
             <mat-icon class="loading-icon">data_usage</mat-icon>
             <h3>Loading zones...</h3>
           </div>
-          </div>
+        </div>
       </ng-template>
     </mat-tab>
 
@@ -277,7 +259,8 @@
                   {{ getZoneStatus(zone) }}
                 </mat-chip>
               </mat-chip-listbox>
-              <button mat-icon-button [matMenuTriggerFor]="zoneMenu" class="zone-actions-menu">
+              <!-- HIDE THIS BUTTON IF NOT ADMIN -->
+              <button mat-icon-button [matMenuTriggerFor]="zoneMenu" class="zone-actions-menu" *ngIf="isAdmin$ | async">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #zoneMenu="matMenu">
@@ -294,12 +277,8 @@
 
             <mat-card-content class="zone-card-content">
               <div class="capacity-visual-container">
-                <mat-progress-spinner
-                  class="available-spinner"
-                  [mode]="'determinate'"
-                  [value]="getAvailablePercentage(zone)"
-                  [diameter]="100"
-                  [strokeWidth]="10"
+                <mat-progress-spinner class="available-spinner" [mode]="'determinate'"
+                  [value]="getAvailablePercentage(zone)" [diameter]="100" [strokeWidth]="10"
                   [style.--mdc-circular-progress-active-indicator-color]="getUtilizationColor(zone)">
                 </mat-progress-spinner>
                 <div class="spinner-text-overlay">
@@ -313,16 +292,14 @@
               </div>
 
               <div class="zone-progress-bar-container">
-                <mat-progress-bar
-                  mode="determinate"
-                  [value]="getUtilizationPercentage(zone)"
+                <mat-progress-bar mode="determinate" [value]="getUtilizationPercentage(zone)"
                   [style.--mdc-linear-progress-active-indicator-color]="getUtilizationColor(zone)">
                 </mat-progress-bar>
                 <div class="progress-bar-label">
                   {{ getUtilizationPercentage(zone) | number:'1.0-0' }}% Utilized
                 </div>
               </div>
-              </mat-card-content>
+            </mat-card-content>
           </mat-card>
 
           <div *ngIf="filteredZones.length === 0 && !isLoading" class="no-zones-message text-center py-4">
@@ -334,19 +311,14 @@
             <mat-icon class="loading-icon">data_usage</mat-icon>
             <h3>Loading zones...</h3>
           </div>
-          </div>
+        </div>
       </ng-template>
     </mat-tab>
 
   </mat-tab-group>
 
-  <mat-paginator
-    [length]="totalZones"
-    [pageSize]="pageSize"
-    [pageIndex]="pageIndex"
-    [pageSizeOptions]="[3, 5, 10, 20, 50]"
-    (page)="onPageChange($event)"
-    aria-label="Select page of zones">
+  <mat-paginator [length]="totalZones" [pageSize]="pageSize" [pageIndex]="pageIndex"
+    [pageSizeOptions]="[3, 5, 10, 20, 50]" (page)="onPageChange($event)" aria-label="Select page of zones">
   </mat-paginator>
 
   <div *ngIf="editingZone" class="overlay">

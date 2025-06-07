@@ -1,28 +1,86 @@
-<nav *ngIf="!isLoggedIn" class="navbar navbar-expand-lg bg-white shadow py-3 fixed-top">
-  <div class="container">
-      <a class="navbar-brand fw-bold" href="#">
-          <i class="fa-solid fa-warehouse"></i> WIMO
+<nav class="navbar navbar-expand-lg bg-white shadow py-2 fixed-top custom-navbar-height custom-navbar-background">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold">
+        <i class="fa-solid fa-warehouse"></i> WIMO
       </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
+  
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
       </button>
-
+  
       <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav mx-auto">
+        <ul class="navbar-nav mx-auto custom-nav-links">
+          <ng-container *ngIf="isLoggedIn">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/landing" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <i class="fas fa-home"></i> Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/zones" routerLinkActive="active">
+                <i class="fas fa-boxes"></i> Zones
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/vendors" routerLinkActive="active">
+                <i class="fa-solid fa-address-card"></i> Vendors
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/stocks" routerLinkActive="active">
+                <i class="fa-solid fa-cubes-stacked"></i> Stocks
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/transactions" routerLinkActive="active">
+                <i class="fas fa-exchange-alt"></i> Transactions
+              </a>
+            </li>
+            @if(isAdmin$ | async){
               <li class="nav-item">
-                  <a class="nav-link fw-bold fs-5" href="#footer">About</a>
+                <a class="nav-link" routerLink="/performance" routerLinkActive="active">
+                  <i class="fas fa-chart-line"></i> Performance
+                </a>
               </li>
-          </ul>
-
-          <div class="d-flex gap-2 ms-auto">
-              <a routerLink="/login" class="btn btn-outline-dark fw-bold px-4 py-2">Login</a>
-              <a routerLink="/register" class="btn btn-dark text-white fw-bold px-4 py-2">Register</a>
-          </div>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+                  <i class="fa-solid fa-gauge-simple"></i> Dashboard
+                </a>
+              </li>
+            }
+          </ng-container>
+          <li *ngIf="!isLoggedIn" class="nav-item">
+            <a class="nav-link" href="#footer">
+              <i class="fas fa-handshake"></i> About</a>
+          </li>
+        </ul>
+  
+        <div class="d-flex gap-2 ms-auto">
+          <ng-container *ngIf="!isLoggedIn">
+            <a routerLink="/login" class="btn btn-outline-dark fw-bold px-3 py-1 custom-btn-height">Login</a>
+            <a routerLink="/register" class="btn btn-dark text-white fw-bold px-3 py-1 custom-btn-height">Register</a>
+          </ng-container>
+          <ng-container *ngIf="isLoggedIn">
+            <button class="btn btn-danger fw-bold px-3 py-1 custom-btn-height" (click)="logout()">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+          </ng-container>
+        </div>
       </div>
+    </div>
+  </nav>
+  
+  <div class="main-content-offset">
+    <router-outlet></router-outlet>
   </div>
-</nav>
-
-<div class="main-content mt-5">
-  <router-outlet></router-outlet>
-</div>
+  
+  <div class="logout-modal-overlay" *ngIf="showLogoutModal">
+    <div class="logout-modal-card">
+      <h3>Logout Successful!</h3>
+      <p>{{ logoutMessage }}</p>
+      <button class="logout-modal-button" (click)="confirmLogout()">
+        OK
+      </button>
+    </div>
+  </div>

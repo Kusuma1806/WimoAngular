@@ -1,0 +1,75 @@
+<div class="overall-summary-container mt-2">
+    <mat-toolbar color="primary" class="admin-toolbar mat-elevation-z2">
+      <span>Overall Transaction Summary</span>
+      <span class="toolbar-spacer"></span>
+      <button mat-flat-button color="accent" (click)="loadTransactions()">
+        <mat-icon>refresh</mat-icon> Refresh Data
+      </button>
+    </mat-toolbar>
+  
+    <div *ngIf="isLoading" class="loading-spinner">
+      <mat-spinner></mat-spinner>
+      <p>Loading summary data...</p>
+    </div>
+  
+    <div *ngIf="!isLoading && totalTransactionsCount > 0; else noTransactionsForOverallSummary" class="summary-content">
+      <div class="row g-4 mb-4">
+        <!-- Total Inbound/Outbound Quantity Bar Chart (This is the original bar chart for overall totals) -->
+        <div class="col-md-6">
+          <mat-card class="summary-card chart-card shadow-sm">
+            <mat-card-content>
+              <h5 class="card-title"><i class="fas fa-chart-bar"></i> Quantity Overview</h5>
+              <div class="chart-container">
+                <canvas #quantityBarChartCanvas></canvas>
+              </div>
+              <p class="chart-label">Total Inbound: {{ totalInboundQuantity }} | Total Outbound: {{ totalOutboundQuantity }}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+  
+        <!-- Total Transaction Value Card (no chart, as it's a single value) -->
+        <div class="col-md-6">
+          <mat-card class="summary-card chart-card shadow-sm">
+            <mat-card-content>
+              <h5 class="card-title"><i class="fas fa-dollar-sign"></i> Total Transaction Value</h5>
+              <div class="value-representation text-center py-4">
+                <span class="fs-1">{{ totalTransactionValue | currency:'INR':'symbol' }}</span>
+              </div>
+               <p class="chart-label text-muted">Overall monetary value of all transactions.</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+  
+      <!-- Transactions by Type Breakdown (Pie Chart) -->
+      <mat-card class="shadow-sm p-4 mt-4 chart-card">
+        <mat-card-content>
+          <h5 class="card-title text-info mb-3"><i class="fas fa-chart-pie"></i> Transaction Type Distribution</h5>
+          <div class="chart-container-lg">
+            <canvas #typePieChartCanvas></canvas>
+          </div>
+          <div class="d-flex justify-content-around mt-4">
+            <span style="color:purple" class="small"><i class="fas fa-circle"></i> Inbound: {{ transactionsByType['inbound'] || 0 }} ({{ getPercentage(transactionsByType['inbound'] || 0, totalTransactionsCount) | number:'1.0-0' }}%)</span>
+            <span style="color:orange" class="small"><i class="fas fa-circle"></i> Outbound: {{ transactionsByType['outbound'] || 0 }} ({{ getPercentage(transactionsByType['outbound'] || 0, totalTransactionsCount) | number:'1.0-0' }}%)</span>
+          </div>
+          <p class="text-muted text-center mt-3" *ngIf="totalTransactionsCount === 0">No transactions to display breakdown.</p>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- --- NEW: Daily Quantity Trend (Area Chart) --- -->
+      <mat-card class="shadow-sm p-4 mt-4 chart-card">
+        <mat-card-content>
+          <h5 class="card-title text-primary mb-3"><i class="fas fa-chart-area"></i> Daily Inbound & Outbound Quantities (Area Chart)</h5>
+          <div class="chart-container-xl">
+            <canvas #dailyTrendAreaChartCanvas></canvas>
+          </div>
+          <p class="text-muted text-center mt-3" *ngIf="chartData.dailyLabels.length === 0">No daily transaction data to display.</p>
+        </mat-card-content>
+      </mat-card>
+      <!-- --- END NEW --- -->
+  
+    </div>
+    <ng-template #noTransactionsForOverallSummary>
+      <p class="text-muted text-center py-5">No transactions found for the overall summary based on your filters.</p>
+    </ng-template>
+  </div>

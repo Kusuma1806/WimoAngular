@@ -1,11 +1,11 @@
 // src/app/zones/zones.component.ts
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core'; // Added OnDestroy
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Zone, ZoneService } from '../zone.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms'; // Added ReactiveFormsModule, FormControl
+import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 
 // RxJS for debounce and teardown
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs'; // <<< Added Observable import
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 // Angular Material Imports
@@ -15,24 +15,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTabsModule } from '@angular/material/tabs'; // For the tabbed view
-import { MatMenuModule } from '@angular/material/menu'; // For the actions menu
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // For the donut chart effect
-import { MatToolbarModule } from '@angular/material/toolbar'; // NEW: For the header toolbar
-import { MatProgressBarModule } from '@angular/material/progress-bar'; // NEW: For linear loading bar
-import { MatChipsModule } from '@angular/material/chips'; // NEW: For status chips
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatChipsModule } from '@angular/material/chips';
 import { RouterModule } from '@angular/router';
+
+// <<< Import CommonService >>>
+import { CommonService } from '../common.service'; 
 
 @Component({
   selector: 'app-zone',
-  standalone: true, // Assuming it's truly standalone from your imports list
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
     MatIconModule,
     MatButtonModule,
-    ReactiveFormsModule, // NEW: Needed for FormControl
+    ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
@@ -42,17 +45,17 @@ import { RouterModule } from '@angular/router';
     MatTabsModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    MatToolbarModule,      // NEW
-    MatProgressBarModule,  // NEW
-    MatChipsModule         // NEW
+    MatToolbarModule,
+    MatProgressBarModule,
+    MatChipsModule
   ],
   templateUrl: './zones.component.html',
   styleUrls: ['./zones.component.css']
 })
-export class ZoneComponent implements OnInit, OnDestroy { // Added OnDestroy
+export class ZoneComponent implements OnInit, OnDestroy {
   zones: Zone[] = [];
   filteredZones: Zone[] = [];
-  searchTermControl = new FormControl(''); // Using FormControl for search
+  searchTermControl = new FormControl('');
 
   pageSize = 3;
   pageIndex = 0;
@@ -66,61 +69,72 @@ export class ZoneComponent implements OnInit, OnDestroy { // Added OnDestroy
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  isLoading: boolean = false; // Loading indicator
-  private destroy$ = new Subject<void>(); // For unsubscribing RxJS observables
+  isLoading: boolean = false;
+  private destroy$ = new Subject<void>();
 
-  constructor(private zoneService: ZoneService) {}
+  // <<< NEW: Observable for admin status >>>
+  isAdmin$: Observable<boolean>;
+
+  constructor(private zoneService: ZoneService, private commonService: CommonService) { // <<< Injected CommonService
+    // Initialize isAdmin$ here; the subscription will happen in ngOnInit
+    this.isAdmin$ = this.commonService.isAdmin$;
+  }
 
   ngOnInit(): void {
+    // <<< NEW: Subscribe to isAdmin$ to reactively update UI >>>
+    this.isAdmin$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(isAdminStatus => {
+        console.log('ZonesComponent: Admin status updated:', isAdminStatus);
+        // No direct UI changes here, as the template uses async pipe.
+        // This subscription mainly ensures the observable is active.
+      });
+    // <<< END NEW >>>
+
     this.loadZones();
 
-    // Debounce search input for better performance and reactivity
     this.searchTermControl.valueChanges.pipe(
-      debounceTime(300), // Wait 300ms after last keystroke
-      distinctUntilChanged(), // Only emit if value is different from previous value
-      takeUntil(this.destroy$) // Unsubscribe on component destroy
+      debounceTime(300),
+      distinctUntilChanged(),
+      takeUntil(this.destroy$)
     ).subscribe(searchTerm => {
-      this.pageIndex = 0; // Reset to first page on search
+      this.pageIndex = 0;
       this.applyFilters();
     });
   }
 
-  // Lifecycle hook to clean up RxJS subscriptions
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   loadZones(): void {
-    this.isLoading = true; // Set loading to true
+    this.isLoading = true;
     this.zoneService.getZones().subscribe(
       data => {
+        console.log('Zones received from service:', data);
         this.zones = data;
-        this.pageIndex = 0; // Reset to first page when data loads or reloads
+        this.pageIndex = 0;
         this.applyFilters();
-        this.isLoading = false; // Set loading to false on success
+        this.isLoading = false;
       },
       error => {
         console.error('Error fetching zones:', error);
-        this.isLoading = false; // Set loading to false on error
+        this.isLoading = false;
       }
     );
   }
 
   applyFilters(): void {
-    // 1. Filter by Search Query
     const searchTerm = this.searchTermControl.value?.toLowerCase() || '';
     let tempFiltered = this.zones.filter(zone =>
-      // Corrected: Convert zoneId to string before searching
       zone.zoneName.toLowerCase().includes(searchTerm) ||
       String(zone.zoneId).includes(searchTerm)
     );
 
-    // 2. Filter by Active Tab
     tempFiltered = tempFiltered.filter(zone => this.getTabFilterCondition(zone));
 
-    // 3. Apply Pagination
-    this.totalZones = tempFiltered.length; // Update total count for paginator
+    this.totalZones = tempFiltered.length;
 
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -151,7 +165,7 @@ export class ZoneComponent implements OnInit, OnDestroy { // Added OnDestroy
       default:
         this.activeTabFilter = 'all';
     }
-    this.pageIndex = 0; // Reset to first page on tab change
+    this.pageIndex = 0;
     this.applyFilters();
   }
 
@@ -161,44 +175,40 @@ export class ZoneComponent implements OnInit, OnDestroy { // Added OnDestroy
     switch (this.activeTabFilter) {
       case 'all':
         return true;
-      case 'low': // Less than 50% utilized AND not completely empty (to avoid empty zones in low usage unless desired)
+      case 'low':
         return utilization < 0.5 && zone.storedCapacity > 0;
-      case 'moderate': // 50% to less than 80% utilized
+      case 'moderate':
         return utilization >= 0.5 && utilization < 0.8;
-      case 'high': // 80% or more utilized
+      case 'high':
         return utilization >= 0.8;
       default:
         return true;
     }
   }
 
-  // Helper to get available percentage for the progress spinner
   getAvailablePercentage(zone: Zone): number {
     if (zone.totalCapacity === 0) return 0;
     return ((zone.totalCapacity - zone.storedCapacity) / zone.totalCapacity) * 100;
   }
 
-  // Helper to get utilization percentage for the linear progress bar
   getUtilizationPercentage(zone: Zone): number {
     if (zone.totalCapacity === 0) return 0;
     return (zone.storedCapacity / zone.totalCapacity) * 100;
   }
 
-  // Helper to determine the color for the progress spinner AND linear progress bar
   getUtilizationColor(zone: Zone): string {
     if (zone.totalCapacity === 0) {
-      if (zone.storedCapacity === 0) return '#2196F3'; // Blue for empty/no capacity
-      return '#B00020'; // Dark red for error (stored but no total capacity)
+      if (zone.storedCapacity === 0) return '#2196F3';
+      return '#B00020';
     }
     const utilization = zone.storedCapacity / zone.totalCapacity;
-    if (zone.storedCapacity === 0) return '#2196F3'; // Blue (Empty)
-    if (utilization < 0.5) return '#4CAF50'; // Green (Optimal)
-    if (utilization >= 0.5 && utilization < 0.8) return '#FFC107'; // Yellow (Moderate)
-    if (utilization >= 0.8 && utilization <= 1.0) return '#F44336'; // Red (High)
-    return '#9E9E9E'; // Grey fallback
+    if (zone.storedCapacity === 0) return '#2196F3';
+    if (utilization < 0.5) return '#4CAF50';
+    if (utilization >= 0.5 && utilization < 0.8) return '#FFC107';
+    if (utilization >= 0.8 && utilization <= 1.0) return '#F44336';
+    return '#9E9E9E';
   }
 
-  // Helper to get the status text for the chip
   getZoneStatus(zone: Zone): string {
     if (zone.totalCapacity === 0) {
       if (zone.storedCapacity === 0) return 'Empty / No Capacity';
@@ -215,7 +225,6 @@ export class ZoneComponent implements OnInit, OnDestroy { // Added OnDestroy
     return 'Unknown';
   }
 
-  // Helper to get the Material color for the status chip
   getStatusColor(status: string): 'primary' | 'accent' | 'warn' | '' {
     switch (status) {
       case 'Optimal':
@@ -227,26 +236,25 @@ export class ZoneComponent implements OnInit, OnDestroy { // Added OnDestroy
       case 'Error (Invalid Capacity)':
         return 'warn';
       case 'Full':
-        return 'primary'; // Could be 'warn' if full is critical, or 'primary' if full is a goal. Choose based on UX.
+        return 'primary';
       default:
-        return ''; // Default Material theme color
+        return '';
     }
   }
 
-  // Clear search input
   clearSearch(): void {
     this.searchTermControl.setValue('');
   }
 
   toggleCreateForm(): void {
     this.showCreateForm = !this.showCreateForm;
-    this.editingZone = null; // Ensure editing form is closed
-    this.newZone = new Zone(0, '', 0, 0); // Reset new zone form fields
+    this.editingZone = null;
+    this.newZone = new Zone(0, '', 0, 0);
   }
 
   editZone(zone: Zone): void {
-    this.editingZone = { ...zone }; // Create a copy to prevent direct mutation
-    this.showCreateForm = false; // Close create form if open
+    this.editingZone = { ...zone };
+    this.showCreateForm = false;
   }
 
   createZone(): void {

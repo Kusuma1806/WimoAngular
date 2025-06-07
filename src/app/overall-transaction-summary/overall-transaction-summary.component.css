@@ -1,0 +1,170 @@
+.overall-summary-container {
+    padding: 20px;
+    background-color: #f0f2f5; 
+    border-radius: 8px;
+    min-height: calc(100vh - 80px); 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.admin-toolbar {
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #3f51b5; 
+  color: white;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+h3 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.summary-content {
+  padding: 15px;
+}
+
+.summary-card {
+    height: 100%;
+    text-align: center;
+    background-color: #ffffff; 
+    color: #333; 
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex; 
+    flex-direction: column;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.summary-card .mat-card-content {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; 
+}
+
+.summary-card .card-title {
+    color: #007bff; 
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+}
+
+.summary-card .card-title i {
+  margin-right: 10px;
+  font-size: 1.4em;
+  color: #607d8b; 
+}
+
+.summary-card .card-text {
+    font-size: 2.5rem; 
+    font-weight: bold;
+    color: #212529; 
+    margin-bottom: 15px;
+}
+
+/* Chart specific styling */
+.chart-card .mat-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 200px; /* Fixed height for smaller charts */
+    margin-bottom: 15px;
+}
+
+.chart-container-lg {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Taller height for pie chart */
+    margin-bottom: 15px;
+}
+
+/* NEW: Style for the large daily trend chart */
+.chart-container-xl {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Even taller for the line chart */
+    margin-bottom: 15px;
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.chart-label {
+    font-size: 0.9em;
+    color: #6c757d;
+    text-align: center;
+    margin-top: auto; 
+}
+
+/* Value representation for total value card */
+.value-representation {
+    color: #007bff; 
+    font-weight: bold;
+    background-color: #e9ecef; 
+    border: 1px solid #cce5ff; 
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px; 
+    width: 100%; 
+    margin-top: 15px; 
+}
+
+/* Loading spinner styles */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+  color: #607d8b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .summary-card .card-text {
+        font-size: 1.8rem; 
+    }
+    .summary-card .card-title {
+        font-size: 1rem;
+    }
+    .summary-card .card-title i {
+        font-size: 1.1em;
+    }
+    .value-representation {
+        font-size: 1.4rem;
+        height: 50px;
+    }
+    .chart-container, .chart-container-lg, .chart-container-xl {
+        height: 180px; /* Adjust height on small screens */
+    }
+}

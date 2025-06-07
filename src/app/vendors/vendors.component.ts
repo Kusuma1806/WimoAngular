@@ -1,8 +1,12 @@
 // src/app/vendors/vendors.component.ts
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core'; // Added OnDestroy
 import { Vendor, VendorService } from '../vendor.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl } from '@angular/forms'; // FormControl is part of ReactiveFormsModule, but often imported separately if not using a full FormGroup
 import { CommonModule } from '@angular/common';
+
+// RxJS for reactive programming
+import { Subject, Observable } from 'rxjs'; // <<< Added Observable, Subject
+import { takeUntil } from 'rxjs/operators'; // <<< Added takeUntil
 
 // Angular Material Imports
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -13,8 +17,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterModule } from '@angular/router';
 
+// <<< Import CommonService to get admin status >>>
+import { CommonService } from '../common.service'; 
+
 @Component({
   selector: 'app-vendor',
+  standalone: true, // Assuming it's truly standalone from your imports list
   imports: [
     CommonModule,
     FormsModule,
@@ -24,37 +32,78 @@ import { RouterModule } from '@angular/router';
     MatCardModule,
     MatIconModule,
     MatFormFieldModule,
-    MatPaginator // MatPaginator needs to be imported here if standalone
+    MatPaginator, // MatPaginator needs to be imported here if standalone
+    // You'll likely need MatToolbarModule, MatProgressBarModule, MatSnackBarModule if they're used in the template
+    // as per previous conversation. Adding common ones for robustness.
+    // MatToolbarModule,
+    // MatProgressBarModule,
+    // MatSnackBarModule // if using MatSnackBar
   ],
   templateUrl: './vendors.component.html',
   styleUrls: ['./vendors.component.css']
 })
-export class VendorsComponent implements OnInit {
+export class VendorsComponent implements OnInit, OnDestroy { // <<< Implemented OnDestroy
   vendors: Vendor[] = [];
   filteredVendors: Vendor[] = [];
   searchQuery: string = '';
+  
+  // Note: Your HTML uses [(ngModel)]="searchQuery" and (input)="searchVendors()",
+  // so `searchTermControl` is not actively used for filtering based on the provided HTML.
+  // Kept it as it was in your original snippet, but it's redundant if not tied to the input.
+  // searchTermControl = new FormControl(''); 
 
-  pageSize = 3; // Corresponds to itemsPerPage
-  pageIndex = 0; // Corresponds to currentPage - 1 (MatPaginator is 0-based)
-  totalVendors = 0; // Total count of filtered items for MatPaginator
+  pageSize = 3; 
+  pageIndex = 0; 
+  totalVendors = 0; 
 
   showCreateForm = false;
   editingVendor: Vendor | null = null;
   newVendor: Vendor = new Vendor(0, '', 0, '');
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator; // Reference to the Material Paginator
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private vendorService: VendorService) {} // Removed Router as it's not used here
+  // <<< NEW: Observable for admin status >>>
+  isAdmin$: Observable<boolean>; 
+
+  // <<< NEW: Subject for RxJS subscription cleanup >>>
+  private destroy$ = new Subject<void>(); 
+
+  // <<< Injected CommonService >>>
+  constructor(private vendorService: VendorService, private commonService: CommonService) { 
+    // Initialize isAdmin$ observable in the constructor
+    this.isAdmin$ = this.commonService.isAdmin$;
+  }
 
   ngOnInit(): void {
+    // <<< NEW: Subscribe to isAdmin$ for reactive updates >>>
+    // This subscription ensures that the component's internal state (even if not explicitly stored)
+    // is aware of admin role changes, allowing the `*ngIf="isAdmin$ | async"` in the template to react.
+    this.isAdmin$
+      .pipe(takeUntil(this.destroy$)) // Ensures subscription is cleaned up when component is destroyed
+      .subscribe(isAdminStatus => {
+        console.log('VendorsComponent: Admin status updated:', isAdminStatus);
+      });
+    // <<< END NEW >>>
+
     this.loadVendors();
   }
 
+  // <<< NEW: ngOnDestroy lifecycle hook for cleanup >>>
+  ngOnDestroy(): void {
+    // Emit a value to the destroy$ subject to trigger unsubscription for all pipes using takeUntil.
+    this.destroy$.next();
+    // Complete the subject to prevent further emissions.
+    this.destroy$.complete();
+  }
+  // <<< END NEW >>>
+
   loadVendors(): void {
-    this.vendorService.getVendors().subscribe(
+    this.vendorService.getVendors().pipe(
+      takeUntil(this.destroy$) // <<< NEW: Ensure this subscription is also cleaned up
+    ).subscribe(
       data => {
         this.vendors = data;
-        this.pageIndex = 0; // Reset to first page when data loads
+        this.pageIndex = 0; 
         this.applyFilters();
       },
       error => console.error('Error fetching vendors:', error)
@@ -62,7 +111,7 @@ export class VendorsComponent implements OnInit {
   }
 
   searchVendors(): void {
-    this.pageIndex = 0; // Reset to first page on search
+    this.pageIndex = 0; 
     this.applyFilters();
   }
 
@@ -71,14 +120,13 @@ export class VendorsComponent implements OnInit {
       vendor.vendorName.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
 
-    this.totalVendors = filtered.length; // Update total count for paginator
+    this.totalVendors = filtered.length; 
 
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.filteredVendors = filtered.slice(startIndex, endIndex);
   }
 
-  // Handler for MatPaginator's page event
   onPageChange(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
@@ -87,17 +135,19 @@ export class VendorsComponent implements OnInit {
 
   toggleCreateForm(): void {
     this.showCreateForm = !this.showCreateForm;
-    this.editingVendor = null; // Ensure editing form is closed
-    this.newVendor = new Vendor(0, '', 0, ''); // Reset new vendor form fields
+    this.editingVendor = null; 
+    this.newVendor = new Vendor(0, '', 0, ''); 
   }
 
   editVendor(vendor: Vendor): void {
-    this.editingVendor = { ...vendor }; // Create a copy to prevent direct mutation
-    this.showCreateForm = false; // Close create form if open
+    this.editingVendor = { ...vendor }; 
+    this.showCreateForm = false; 
   }
 
   createVendor(): void {
-    this.vendorService.createVendor(this.newVendor).subscribe(() => {
+    this.vendorService.createVendor(this.newVendor).pipe(
+      takeUntil(this.destroy$) // <<< NEW: Ensure this subscription is also cleaned up
+    ).subscribe(() => {
       this.loadVendors();
       this.showCreateForm = false;
     }, error => console.error('Error creating vendor:', error));
@@ -105,7 +155,9 @@ export class VendorsComponent implements OnInit {
 
   updateVendor(): void {
     if (this.editingVendor) {
-      this.vendorService.updateVendor(this.editingVendor).subscribe(() => {
+      this.vendorService.updateVendor(this.editingVendor).pipe(
+        takeUntil(this.destroy$) // <<< NEW: Ensure this subscription is also cleaned up
+      ).subscribe(() => {
         this.loadVendors();
         this.editingVendor = null;
       }, error => console.error('Error updating vendor:', error));
@@ -118,7 +170,9 @@ export class VendorsComponent implements OnInit {
 
   deleteVendor(vendor: Vendor): void {
     if (confirm(`Are you sure you want to delete ${vendor.vendorName}?`)) {
-      this.vendorService.deleteVendor(vendor.vendorId).subscribe(() => {
+      this.vendorService.deleteVendor(vendor.vendorId).pipe(
+        takeUntil(this.destroy$) // <<< NEW: Ensure this subscription is also cleaned up
+      ).subscribe(() => {
         this.loadVendors();
       }, error => console.error('Error deleting vendor:', error));
     }

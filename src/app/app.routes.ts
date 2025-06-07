@@ -4,13 +4,14 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { FooterComponent } from './footer/footer.component';
 import { PerformanceComponent } from './performance/performance.component';
-import { NotificationsComponent } from './notifications/notifications.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { StocksComponent } from './stocks/stocks.component';
 import { VendorsComponent } from './vendors/vendors.component';
 import { ZoneComponent } from './zones/zones.component';
 import { authGuard } from './auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { OverallTransactionSummaryComponent } from './overall-transaction-summary/overall-transaction-summary.component';
+import { ZoneChartsComponent } from './zone-charts/zone-charts.component';
 
 export const routes: Routes = [
     {path:'',component:LandingComponent},
@@ -23,6 +24,7 @@ export const routes: Routes = [
     { path: 'vendors', component: VendorsComponent },
     { path: 'stocks', component: StocksComponent },
     { path: 'transactions', component: TransactionsComponent },
-    { path: 'notifications', component: NotificationsComponent },
     { path: 'performance', component: PerformanceComponent ,canActivate:[authGuard]},
+    { path: 'transactionssummary', component:OverallTransactionSummaryComponent,canActivate:[authGuard]},
+    { path: 'zonessummary', component: ZoneChartsComponent ,canActivate:[authGuard]},
 ];

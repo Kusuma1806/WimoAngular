@@ -1,333 +1,220 @@
-/* dashboard.component.css */
-
-/* Overall Dashboard Container */
-.dashboard-container {
-    display: flex;
-    min-height: calc(100vh - 75px); /* Full viewport height minus header height */
-    background-color: #f0f2f5; /* Light grey background for dashboard area */
-    padding-top: 75px; /* Space for the fixed header */
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    /* Ensure the main-content-area takes remaining space if it exists */
-    /* align-items: flex-start; /* Optional: Align items to the top if sidebar is shorter than main content */
-}
-
-/* Sidebar Styling */
-.sidebar {
-    width: 250px; /* Fixed width for the sidebar */
-    background: linear-gradient(to bottom, #2c3e50, #4a6c8e); /* Dark blue to lighter blue gradient */
-    color: #ecf0f1; /* Light text color */
-    padding: 20px;
-    display: flex;
-    flex-direction: column; /* Arrange header, nav, footer vertically */
-    justify-content: space-between; /* Push footer to bottom */
-    position: sticky; /* Sticky sidebar */
-    top: 75px;  /*Sticks below the header */
-    height: calc(100vh - 75px); /* Full height minus header */
-    transition: all 0.3s ease-in-out; /* Smooth transitions for potential collapse */
-
-    /* Ensure the sidebar itself can scroll if its total content overflows */
-    overflow-y: auto; /* ADDED: Allows the entire sidebar to scroll if its internal content overflows */
-    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
-    scrollbar-width: none; /* Hide scrollbar for Firefox */
-}
-/* Hide scrollbar for Chrome, Safari, Opera */
-.sidebar::-webkit-scrollbar {
-    display: none;
-}
-
-
-.sidebar-header {
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    text-align: center;
-}
-
-.sidebar-nav {
-    list-style: none;
-    padding: 0;
-    flex-grow: 1; /* Allows nav to take available space */
-    margin-top: 20px;
-
-    /* ADDED: Allow only the navigation list to scroll independently if it gets too long */
-    overflow-y: auto;
-    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
-    scrollbar-width: thin; /* Make scrollbar thin for Firefox */
-    scrollbar-color: rgba(255, 255, 255, 0.2) transparent; /* Scrollbar color for Firefox */
-}
-
-/* Custom scrollbar for Webkit browsers (Chrome, Safari) for sidebar-nav */
-.sidebar-nav::-webkit-scrollbar {
-    width: 6px;
-}
-.sidebar-nav::-webkit-scrollbar-track {
-    background: transparent;
-}
-.sidebar-nav::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-}
-
-
-.sidebar-nav .nav-item {
-    margin-bottom: 8px; /* Space between nav items */
-}
-
-.sidebar-nav .nav-link {
-    display: flex; /* Flexbox for icon and text alignment */
-    align-items: center;
-    padding: 12px 15px;
-    color: #ecf0f1; /* Default link color */
-    text-decoration: none;
-    border-radius: 8px; /* Slightly rounded corners */
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-    font-size: 1.05rem;
-    font-weight: 500;
-}
-
-.sidebar-nav .nav-link i {
-    margin-right: 12px; /* Space between icon and text */
-    font-size: 1.2rem;
-    color: #95a5a6; /* Muted icon color */
-}
-
-.sidebar-nav .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.15); /* Lighter background on hover */
-    color: #ffffff; /* White text on hover */
-    transform: translateX(5px); /* Subtle slide effect on hover */
-}
-
-/* Active Nav Link Styling */
-.sidebar-nav .nav-link.active {
-    background-color: #007bff; /* Bootstrap primary blue for active */
-    color: #ffffff;
-    font-weight: 700;
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); /* Stronger shadow for active */
-    border-left: 5px solid #28a745; /* Green highlight for active */
-    transform: translateX(0); /* Remove slide effect for active */
-}
-
-.sidebar-nav .nav-link.active i {
-    color: #ffffff; /* White icon for active */
-}
-
-/* Sidebar Footer (Logout Button) */
-.sidebar-footer {
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    /* No changes needed here, as flexbox handles its position */
-}
-
-.sidebar-footer .btn {
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-/* Main Content Area */
-.main-content-area {
-    flex-grow: 1; /* Takes remaining space */
-    padding: 30px;
-    overflow-y: auto; /* Enable scrolling for main content if needed */
-}
-
-.dashboard-title {
-    color: #34495e; /* Darker blue-grey */
-    margin-bottom: 30px;
-    font-size: 2.2rem;
-    font-weight: 700;
-    text-align: center;
-}
-
-/* Overview Cards */
-.overview-card {
-    border: none; /* Remove default card border */
-    border-radius: 12px; /* More rounded corners */
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: #ffffff;
-    text-align: center;
-    padding: 20px;
-}
-
-.overview-card:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
-}
-
-.overview-card .icon-wrapper {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 15px; /* Center icon and add bottom margin */
-    font-size: 2rem;
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.overview-card .card-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #34495e;
-    margin-bottom: 5px;
-}
-
-.overview-card .card-text {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #007bff; /* Primary color for numbers */
-}
-
-/* Quick Actions Grid */
-.quick-actions-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
-    gap: 20px; /* Space between buttons */
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-}
-
-.quick-actions-grid .btn-lg {
-    padding: 20px;
-    height: 120px; /* Fixed height for consistent button size */
+:host {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    height: 100vh; /* Make dashboard take full viewport height */
+    background-color: #f0f2f5; /* Light background for the whole page */
+    font-family: 'Inter', sans-serif; /* Using Inter font */
+  }
+  
+  .dashboard-toolbar {
+    background-color: #3f51b5; /* Primary color */
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0 20px;
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .dashboard-container {
+    display: flex;
+    flex-grow: 1; /* Allow container to fill remaining space */
+    padding: 20px;
+    gap: 30px; /* Space between left and right sections */
+    overflow: auto; /* Allow scrolling if content overflows */
+    align-items: flex-start; /* Vertically align items to the top */
+    justify-content: center; /* Horizontally center content if space allows */
+  }
+  
+  /* Left Section: User Profile */
+  .profile-card {
+    flex: 0 0 300px; /* Fixed width for profile card */
+    display: flex;
+    flex-direction: column;
+    padding: 15px; /* Reduced padding for a more compact card */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ffffff, #f7f7f7); /* Subtle gradient */
+    display: flex;
+    align-self: flex-start; /* Ensure it stays at the top of the container */
+    text-align: center; /* Center text content inside the card by default */
+  }
+  
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally within the card */
+    width: 100%;
+  }
+  
+  .profile-avatar-row {
+    margin-bottom: 10px; /* Space below avatar */
+  }
+  
+  .profile-avatar {
+    background-color: #e0e0e0;
+    color: #616161;
+    border-radius: 50%; /* Circular */
+    padding: 10px;
+    font-size: 48px; /* Larger icon */
+    width: 70px; /* Adjusted size */
+    height: 70px;
+    display: flex;
     justify-content: center;
-    font-size: 1.1rem;
+    align-items: center;
+  }
+  
+  .profile-details-row {
+    margin-bottom: 15px; /* Space below name/role block */
+  }
+  
+  .profile-card .user-name {
+    font-size: 1.5rem; /* Larger font for name */
     font-weight: 600;
-    text-align: center;
-    border-radius: 10px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border-width: 2px; /* Thicker border for outline buttons */
-}
-
-.quick-actions-grid .btn-lg i {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    transition: color 0.2s ease;
-}
-
-.quick-actions-grid .btn-lg:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.quick-actions-grid .btn-outline-primary:hover { background-color: #007bff; color: white; }
-.quick-actions-grid .btn-outline-primary:hover i { color: white; }
-
-.quick-actions-grid .btn-outline-success:hover { background-color: #28a745; color: white; }
-.quick-actions-grid .btn-outline-success:hover i { color: white; }
-
-.quick-actions-grid .btn-outline-warning:hover { background-color: #ffc107; color: white; }
-.quick-actions-grid .btn-outline-warning:hover i { color: white; }
-
-.quick-actions-grid .btn-outline-dark:hover { background-color: #343a40; color: white; }
-.quick-actions-grid .btn-outline-dark:hover i { color: white; }
-
-
-/* Responsive Design for smaller screens */
-@media (max-width: 768px) {
+    color: #333;
+    margin-bottom: 2px; /* Small gap between name and role */
+  }
+  
+  .profile-card .user-role {
+    color: #777;
+    font-size: 1em; /* Adjusted font size for role */
+    margin-bottom: 0; /* Remove extra margin after role */
+  }
+  
+  .profile-content p {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center email/login time content */
+    margin-bottom: 8px; /* Adjusted margin */
+    color: #555;
+    font-size: 0.95rem; /* Adjusted font size */
+  }
+  
+  .profile-content mat-icon {
+    margin-right: 8px; /* Adjusted margin */
+    color: #616161;
+    font-size: 100px; /* Adjusted icon size */
+  }
+  
+  .profile-content .my-4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-content .w-full {
+    width: 100%;
+  }
+  
+  .profile-content button {
+    padding: 10px 15px; /* Adjusted padding */
+    border-radius: 8px; /* Rounded corners */
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+  }
+  .profile-content button mat-icon.mr-2 {
+    margin-right: 8px;
+  }
+  
+  
+  /* Right Section: Navigation Grids */
+  .navigation-grids {
+    flex: 1; /* Take remaining space */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive grid */
+    gap: 25px; /* Space between grid cards */
+    justify-items: center; /* Horizontally center grid items within their cells */
+    align-content: center; /* Vertically center rows of grid items if space allows */
+  }
+  
+  .nav-grid-card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .nav-grid-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .nav-grid-card .mat-card-header {
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-grid-card .grid-icon {
+    background-color: #c5cae9; /* Light purple */
+    color: #3f51b5; /* Primary color */
+    border-radius: 50%; /* Circular */
+    padding: 10px;
+    margin-right: 15px;
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .nav-grid-card .mat-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .nav-grid-card .mat-card-content p {
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1; /* Allows content to push button to bottom */
+  }
+  
+  .nav-grid-card .flex {
+    display: flex;
+  }
+  .nav-grid-card .justify-end {
+    justify-content: flex-end;
+  }
+  .nav-grid-card .mt-4 {
+    margin-top: 1rem;
+  }
+  
+  .nav-grid-card button {
+    border-radius: 8px; /* Rounded corners */
+    padding: 8px 16px;
+    font-weight: 500;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
     .dashboard-container {
-        flex-direction: column; /* Stack sidebar and main content vertically */
-        padding-top: 60px; /* Adjust padding for smaller header on mobile */
+      flex-direction: column; /* Stack sections vertically */
+      padding: 15px;
+      gap: 20px;
+      align-items: center; /* Center horizontally when stacked */
+      justify-content: flex-start; /* Stacked content usually starts at top */
     }
-
-    .sidebar {
-        width: 100%; /* Sidebar takes full width */
-        height: auto; /* Height adjusts to content */
-        position: relative; /* No longer sticky */
-        top: 0;
-        padding-bottom: 10px; /* Less padding at bottom when stacked */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  
+    .profile-card {
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: none;
+      align-self: center; /* Center profile card when stacked */
     }
-
-    .sidebar-header {
-        padding-bottom: 10px;
+  
+    .navigation-grids {
+      grid-template-columns: 1fr; /* Single column for grids */
+      gap: 20px;
+      justify-items: center; /* Center grid items in single column */
+      align-content: flex-start; /* Start content from top when stacked */
     }
-
-    .sidebar-nav {
-        flex-direction: row; /* Make nav items horizontal for mobile */
-        flex-wrap: wrap; /* Wrap if too many items */
-        justify-content: center; /* Center nav items */
-        margin-top: 10px;
-    }
-
-    .sidebar-nav .nav-item {
-        margin: 5px; /* Smaller margin for horizontal layout */
-    }
-
-    .sidebar-nav .nav-link {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-        flex-direction: column; /* Stack icon and text */
-        text-align: center;
-    }
-
-    .sidebar-nav .nav-link i {
-        margin-right: 0; /* No horizontal margin for icon */
-        margin-bottom: 5px; /* Space below icon */
-        font-size: 1.1rem;
-    }
-
-    .sidebar-footer {
-        padding-top: 10px;
-        border-top: none; /* No top border if nav is above */
-        text-align: center;
-    }
-
-    .sidebar-footer .btn {
-        width: 80%; /* Make logout button a bit smaller */
-        margin: 0 auto; /* Center button */
-    }
-
-    .main-content-area {
-        padding: 20px; /* Reduce main content padding */
-    }
-
-    .dashboard-title {
-        font-size: 1.8rem; /* Smaller title on mobile */
-    }
-
-    .overview-card {
-        padding: 15px; /* Reduce card padding */
-    }
-
-    .overview-card .icon-wrapper {
-        width: 50px; /* Smaller icon wrapper */
-        height: 50px;
-        font-size: 1.8rem;
-    }
-
-    .overview-card .card-text {
-        font-size: 1.5rem;
-    }
-
-    .quick-actions-grid .btn-lg {
-        height: 100px; /* Adjust quick action button height */
-        font-size: 1rem;
-        padding: 15px;
-    }
-
-    .quick-actions-grid .btn-lg i {
-        font-size: 2rem;
-    }
-}
-
-/* Optional: Additional small screen adjustments for very small devices */
-@media (max-width: 576px) {
-    .sidebar-nav .nav-link {
-        font-size: 0.85rem;
-        padding: 6px 10px;
-    }
-    .quick-actions-grid {
-        grid-template-columns: 1fr; /* Stack quick actions vertically */
-    }
-}
+  }
+  

@@ -4,23 +4,13 @@
     padding-right: 20px;
 }
 
-.header-with-back-button {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Align content to the start */
-    margin-bottom: 1rem; /* Adjust as needed for spacing below the header */
-  }
-  
-  .header-with-back-button h2 {
-    margin-bottom: 0; /* Remove default bottom margin from h2 */
-    flex-grow: 1; /* Allows the h2 to take up available space, pushing it towards center */
-    text-align: center; /* Center the text within its available space */
-  }
-  
-  /* Adjust button margin if needed for better visual spacing */
-  .header-with-back-button button {
-    margin-right: 1rem; /* Space between the back button and the heading */
-  }
+h2 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 10px; /* Space below heading */
+}
 
 /* Search and Filter Inputs */
 .search-box, .filter-input {
@@ -245,7 +235,7 @@ label {
     top: 0;
     bottom: 0;
     left: 50%;
-    margin-left: -2px;
+    margin-left: -2px; /* Half of line width to truly center it */
 }
 
 /* Containers for timeline items */
@@ -260,9 +250,8 @@ label {
 .timeline-item::after {
     content: '';
     position: absolute;
-    width: 25px;
+    width: 25px; /* Diameter */
     height: 25px;
-    right: -17px;
     background-color: white;
     border: 4px solid #007bff;
     top: 15px;
@@ -279,10 +268,18 @@ label {
     left: 50%;
 }
 
-/* Fix the circle for left side */
+/* ADJUSTED: Position the circle for left-aligned items to be on the far left of the card */
 .timeline-item.left::after {
-    left: -16px;
+    left: 8px; /* Positions the circle 8px from the left edge of its parent (.timeline-item) */
+    right: auto; /* Ensure no conflicting right property */
 }
+
+/* ADJUSTED: Position the circle for right-aligned items to be on the far right of the card */
+.timeline-item.right::after {
+    right: 8px; /* Positions the circle 8px from the right edge of its parent (.timeline-item) */
+    left: auto; /* Ensure no conflicting left property */
+}
+
 
 /* The actual timeline content */
 .timeline-content {
@@ -305,7 +302,7 @@ label {
     display: block;
 }
 
-/* Arrows for timeline content pointing to the line */
+/* ADJUSTED: Arrows for timeline content pointing outwards towards the new circle positions */
 .timeline-item.left .timeline-content::before {
     content: " ";
     height: 0;
@@ -313,10 +310,11 @@ label {
     top: 22px;
     width: 0;
     z-index: 1;
-    right: -15px;
+    left: -15px; /* Points from the left edge of content outwards to the left */
     border: medium solid #f8f9fa;
-    border-width: 10px 0 10px 10px;
-    border-color: transparent transparent transparent #f8f9fa;
+    border-width: 10px 10px 10px 0; /* Triangle points left */
+    border-color: transparent #f8f9fa transparent transparent;
+    right: auto; /* Ensure no conflicting right property */
 }
 
 .timeline-item.right .timeline-content::before {
@@ -326,10 +324,11 @@ label {
     top: 22px;
     width: 0;
     z-index: 1;
-    left: -15px;
+    right: -15px; /* Points from the right edge of content outwards to the right */
     border: medium solid #f8f9fa;
-    border-width: 10px 10px 10px 0;
-    border-color: transparent #f8f9fa transparent transparent;
+    border-width: 10px 0 10px 10px; /* Triangle points right */
+    border-color: transparent transparent transparent #f8f9fa;
+    left: auto; /* Ensure no conflicting left property */
 }
 
 /* Responsive timeline on small screens */
@@ -348,63 +347,126 @@ label {
         left: 0%; /* All items to the left */
     }
 
-    /* Move all circles to the left */
+    /* Keep circles on the left for mobile */
     .timeline-item::after {
-        left: 15px;
+        left: 15px; /* Position relative to the new left timeline line */
+        right: auto; /* Ensure no conflict */
     }
 
-    /* Adjust content arrows for all items to point right */
+    /* Adjust content arrows for all items to point right on mobile */
     .timeline-item.left .timeline-content::before,
     .timeline-item.right .timeline-content::before {
         border: medium solid #f8f9fa; /* Same color as content background */
         border-width: 10px 10px 10px 0;
         border-color: transparent #f8f9fa transparent transparent;
-        left: -15px;
+        left: -15px; /* Original mobile arrow position */
         right: auto;
     }
 }
 
-/* --- NEW: Summary View Styles --- */
-.summary-card {
-    height: 100%; /* Ensure cards in a row have same height */
-    text-align: center;
-    background-color: #343a40; /* Dark background */
-    border: none;
+/* --- Daily Summary View Styles (NEW) --- */
+.daily-summary-container {
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.summary-card .card-title {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+.daily-summary-card {
+  height: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
 }
 
-.summary-card .card-text {
-    font-weight: bold;
+.daily-summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.summary-card .fs-2 {
-    font-size: 2rem !important; /* Larger font size for numbers */
+.daily-summary-card .mat-card-header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  justify-content: center;
+  align-items: center;
 }
 
-/* Ensure icons are visible */
-.summary-card .fas {
-    margin-right: 8px;
+.daily-summary-card .mat-card-title {
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
-/* List group in summary */
-.list-group-item {
-    background-color: #f8f9fa; /* Light background */
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+.daily-summary-card .mat-card-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8em;
+  margin-left: 10px;
 }
+
+.daily-summary-card-content {
+  padding: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.daily-summary-card-content .row {
+  flex-grow: 1;
+  align-items: center;
+}
+
+.daily-summary-card-content h6 {
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* Chart containers for daily summary cards - Adjusted for more space for bar chart */
+.chart-container-sm {
+  position: relative;
+  width: 100%;
+  height: 200px; /* Increased height for bar chart */
+  margin: 0 auto;
+}
+
+.daily-summary-card canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.daily-summary-card .chart-label {
+  font-size: 0.8em;
+  color: #6c757d;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.daily-summary-card .fs-5 {
+  font-weight: bold;
+  color: #343a40;
+  margin-top: auto;
+}
+
 
 /* Responsive adjustments for filters */
 @media (max-width: 767.98px) {
     .filter-input {
-        width: 100% !important; /* Make inputs full width on small screens */
-        margin-right: 0 !important; /* Remove margin right for stacking */
-        margin-bottom: 10px; /* Add margin bottom for spacing when stacked */
+        width: 100% !important;
+        margin-right: 0 !important;
+        margin-bottom: 10px;
     }
     .row .d-flex {
-        flex-direction: column; /* Stack date/price filters vertically */
-        align-items: center; /* Center them */
+        flex-direction: column;
+        align-items: center;
+    }
+    .daily-summary-card-content {
+        padding: 10px;
+    }
+    .chart-container-sm {
+        height: 150px; /* Adjust height on small screens */
     }
 }

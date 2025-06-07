@@ -35,8 +35,8 @@ body::before {
     /* Positioning and Sizing the Main Container */
     width: 90%; /* Example width, adjust as needed */
     max-width: 1200px; /* Max width for larger screens */
-    height: 90vh; /* Example height, adjust as needed */
-    margin: 5vh auto; /* Vertical margins and horizontal auto to center the container on the page */
+    height: 80vh; /* Example height, adjust as needed */
+    margin: 3vh auto; /* Vertical margins and horizontal auto to center the container on the page */
     border-radius: 20px; /* Rounded corners for the container itself */
     overflow: hidden; /* Important to contain the image and its overlay */
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); /* Shadow for the container */
@@ -70,7 +70,7 @@ body::before {
 /* --- Login Form Styling --- */
 .login-form {
     background-color: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
-    padding: 30px;
+    padding: 10px;
     border-radius: 15px; /* Rounded corners */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Stronger shadow for depth */
     width: 380px; /* Fixed width for the form */
@@ -78,6 +78,7 @@ body::before {
     backdrop-filter: blur(8px); /* Frosted glass effect */
     -webkit-backdrop-filter: blur(8px); /* For Safari */
     border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle light border */
+    transform: translateY(-7%);
 }
 
 .login-form h2 {

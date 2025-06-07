@@ -1,4 +1,4 @@
-<div class="landing-container section-padding">
+<div  class="landing-container section-padding">
     <div class="content">
       <h1 *ngIf="!isLoggedIn">Welcome to Our Warehouse</h1>
       <h1 *ngIf="isLoggedIn">Welcome, {{ userName }}!</h1>
@@ -36,7 +36,7 @@
   </div>
 </section>
 
-<section class="services-carousel section-padding mb-3">
+<section class="services-carousel section-padding">
   <div class="container">
       <h2 class="text-center">Explore Our Services</h2>
       <div id="serviceCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -51,45 +51,38 @@
           </div>
 
           <div class="carousel-inner">
-              <div class="carousel-item active">
+              <div *ngIf="isLoggedIn" routerLink ="/zones" class="carousel-item active">
                   <div class="carousel-caption">
                       <h3>Zone Management</h3>
                       <p>Optimize warehouse space with smart zoning strategies.</p>
                   </div>
               </div>
 
-              <div class="carousel-item">
+              <div *ngIf="isLoggedIn" routerLink ="/vendors"class="carousel-item">
                   <div class="carousel-caption">
                       <h3>Vendor Management</h3>
                       <p>Seamlessly connect with vendors for efficient inventory flow.</p>
                   </div>
               </div>
 
-              <div class="carousel-item">
+              <div *ngIf="isLoggedIn" routerLink ="stocks" class="carousel-item">
                   <div class="carousel-caption">
                       <h3>Stock Item Tracking</h3>
                       <p>Monitor inventory levels in real time with advanced analytics.</p>
                   </div>
               </div>
 
-              <div class="carousel-item">
+              <div *ngIf="isLoggedIn" routerLink ="/transactions" class="carousel-item">
                   <div class="carousel-caption">
                       <h3>Transaction History</h3>
                       <p>Keep track of purchases, sales, and stock movements.</p>
                   </div>
               </div>
 
-              <div class="carousel-item">
+              <div *ngIf="isLoggedIn" routerLink ="/performance" class="carousel-item">
                   <div class="carousel-caption">
                       <h3>Performance Insights</h3>
                       <p>Analyze key metrics to optimize your warehouse efficiency.</p>
-                  </div>
-              </div>
-
-              <div class="carousel-item">
-                  <div class="carousel-caption">
-                      <h3>Notifications Center</h3>
-                      <p>Get instant alerts on stock updates and vendor interactions.</p>
                   </div>
               </div>
           </div>
@@ -103,3 +96,8 @@
       </div>
   </div>
 </section>
+
+@if(!isLoggedIn)
+{
+    <app-footer></app-footer>
+}

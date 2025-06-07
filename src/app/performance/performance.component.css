@@ -1,16 +1,7 @@
-.d-flex {
-    gap: 15px; /* ✅ Adds spacing between dropdown & button */
-}
-
-/* Dropdown Styling */
-select.form-control {
-    width: 250px;
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: 2px solid #007bff;
-    transition: 0.3s ease-in-out;
-    background-color: #f8f9fa;
+/* Container adjustments */
+.container {
+    padding-top: 15px; /* Adjust top padding */
+    padding-bottom: 20px; /* Adjust bottom padding */
 }
 
 /* Heading Styling */
@@ -19,92 +10,263 @@ h2 {
     font-weight: bold;
     color: #343a40;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px; /* Space below heading */
 }
 
-/* Dropdown and Button Row */
-.d-flex {
+/* Combined Controls Row: Dropdown, Date Filters, Calculate Button */
+.controls-row {
+    gap: 15px; /* Consistent gap between main control groups */
+    margin-bottom: 20px !important; /* Space below this row */
+    padding: 15px;
+    background-color: #f8f9fa; /* Light background for the control row */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.control-group {
     display: flex;
-    justify-content: space-between; /* ✅ Align dropdown left & button right */
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
+    flex-direction: column; /* Stack label and input/select */
+    align-items: flex-start; /* Align text to start */
+    gap: 5px; /* Space between label and input/select */
+    flex-grow: 1; /* Allow groups to grow and take available space */
+    min-width: 180px; /* Minimum width for each group */
 }
 
+.control-group.date-filters {
+    flex-direction: row; /* Keep date labels and inputs in a row */
+    flex-wrap: wrap; /* Allow date inputs to wrap on small screens */
+    align-items: center;
+    justify-content: center; /* Center date filters within their group */
+    gap: 10px; /* Space between date label/input pairs */
+    flex-grow: 2; /* Date filters take more space */
+    min-width: 350px; /* Ensure enough space for two date inputs */
+}
 
-/* Hover Effect on Dropdown */
-select.form-control:hover {
+.control-group.date-filters .filter-input {
+    flex-grow: 1; /* Date inputs grow within their flex container */
+    max-width: 140px; /* Constrain individual date input width */
+}
+
+/* Dropdown Styling */
+select.form-select {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #007bff;
+    transition: 0.3s ease-in-out;
+    background-color: #ffffff;
+    color: #343a40;
+}
+
+/* Input filter styling (for date inputs) */
+.filter-input {
+    padding: 8px 12px;
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #007bff;
+    background-color: #ffffff;
+    color: #343a40;
+}
+
+/* Hover Effect on Dropdown and Inputs */
+select.form-select:hover, .filter-input:hover {
     box-shadow: 0px 3px 6px rgba(0, 123, 255, 0.3);
 }
 
 /* Button Styling */
 .btn-primary {
-    padding: 10px 15px;
-    font-size: 16px;
+    padding: 10px 18px;
+    font-size: 15px;
     font-weight: bold;
-    border-radius: 8px;
+    border-radius: 6px;
     background-color: #007bff;
     color: white;
     border: none;
     transition: 0.3s ease-in-out;
+    width: 100%; /* Make button responsive within its group */
+    max-width: 200px; /* Optional: constrain button width */
 }
 
 .btn-primary:hover {
     background-color: #0056b3;
 }
 
+/* Toggle View Button */
+.toggle-view-button {
+    margin-bottom: 15px !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    max-width: 200px;
+}
+
+/* Chart Container */
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px; /* Reduced max-width from 900px */
+    margin: auto;
+    padding: 20px; /* Reduced padding from 25px */
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Canvas Styling */
+canvas {
+    width: 100% !important;
+    height: 400px !important; /* Reduced fixed height from 450px */
+}
+
 /* Table Styling */
+.table-responsive {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
 .table {
     width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 /* Table Header */
 .table thead th {
-    font-size: 18px;
+    font-size: 16px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     background-color: #343a40;
     color: white;
     padding: 12px;
+    border-bottom: none;
+}
+.table thead tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+.table thead tr:first-child th:last-child {
+    border-top-right-radius: 10px;
 }
 
 /* Table Rows */
 .table tbody tr {
-    transition: 0.3s ease-in-out;
+    transition: background-color 0.3s ease;
 }
 
 /* Table Hover Effect */
 .table tbody tr:hover {
-    background-color: rgba(52, 58, 64, 0.1);
+    background-color: rgba(0, 123, 255, 0.03);
+}
+
+/* Table Data Cells */
+.table tbody td {
+    padding: 10px;
+    font-size: 14px;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Pagination Styling */
+.pagination {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.pagination .page-item .page-link {
+    border-radius: 5px !important;
+    margin: 0 3px;
+    color: #007bff;
+    border: 1px solid #007bff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
 }
 
 /* Alert Styling */
 .alert-warning {
     text-align: center;
-    font-size: 16px;
-    padding: 12px;
+    font-size: 15px;
+    padding: 15px;
     font-weight: bold;
     border-radius: 8px;
     color: #856404;
     background-color: #fff3cd;
-    border: 2px solid #ffeeba;
-}
-/* Chart Container */
-.chart-container {
-    position: relative;
-    width: 100%;
-    max-width: 800px; /* ✅ Keeps chart size reasonable */
-    margin: auto;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ffeeba;
+    margin-top: 15px;
 }
 
-/* Canvas Styling */
-canvas {
-    width: 100% !important; /* ✅ Ensures responsiveness */
-    height: 400px !important; /* ✅ Fixed height for consistent display */
+/* Responsive adjustments */
+@media (max-width: 991.98px) { /* Medium to small devices */
+    .controls-row {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .control-group {
+        width: 100%;
+        max-width: 400px; /* Constrain max width for stacked groups */
+        align-items: center; /* Center content within stacked groups */
+    }
+
+    .control-group.date-filters {
+        flex-direction: column; /* Stack date inputs vertically on smaller screens */
+        gap: 10px;
+        min-width: auto; /* Remove min-width to allow stacking */
+    }
+
+    .control-group.date-filters label {
+        width: 100%;
+        text-align: center;
+    }
+
+    select.form-select, .filter-input, .btn-primary {
+        width: 100%;
+        max-width: 300px; /* Adjust max width for inputs and buttons when stacked */
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    canvas {
+        height: 300px !important; /* Reduce chart height on smaller screens */
+    }
+
+    .chart-container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 575.98px) { /* Extra small devices */
+    h2 {
+        font-size: 1.8rem;
+    }
+    .btn-primary {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    .table thead th, .table tbody td {
+        font-size: 12px;
+        padding: 8px;
+    }
 }

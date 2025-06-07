@@ -13,7 +13,7 @@ import { FooterComponent } from '../footer/footer.component';
 })
 export class LandingComponent{
   constructor(private commonService:CommonService){}
-  userName: string | null = null;
+  userName: string;
 
   get isLoggedIn():boolean{
     if(this.commonService.getToken()){

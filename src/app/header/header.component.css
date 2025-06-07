@@ -1,98 +1,296 @@
-/* header.component.css (or global styles if preferred, but component-specific is best practice) */
+/* header.component.css */
 
-/* Basic Navbar Styling */
-.navbar {
-  background-color: #fff; /* Ensure white background */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  padding-top: 0.8rem; /* Adjust padding for better look */
-  padding-bottom: 0.8rem;
-  z-index: 1030; /* Bootstrap's default z-index for fixed navbars */
+/* Custom Variables for consistent styling */
+:root {
+  --wimo-primary: #007bff; /* Standard Bootstrap blue for cohesion */
+  --wimo-dark: #343a40;    /* Standard Bootstrap dark */
+  --wimo-accent: #dc3545;  /* Standard Bootstrap danger for logout */
+  --wimo-text-light: #ffffff;
+  --wimo-text-dark: #212529;
+  --wimo-transition-speed: 0.3s ease;
 }
 
-/* Logo Styling */
+/* --- Base Navbar Overrides --- */
+.navbar {
+  background-color: #fff !important; /* Solid white background */
+  /* Even less padding for reduced height */
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  /* Ensure a fixed minimum height */
+  min-height: 50px; /* Reduced from 55px */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15) !important; /* Refined shadow */
+  z-index: 1030; /* Bootstrap's default z-index */
+  width: 100%;
+}
+
+/* Custom background for the navbar */
+.custom-navbar-background {
+  background-color: #d0e3f4 !important; /* A very light grey, almost white */
+}
+
+/* --- Logo Styling --- */
 .navbar-brand {
-  font-size: 1.5rem; /* Larger font size for brand */
-  font-weight: 500; /* Bold font weight */
-  display: flex; /* Use flexbox for icon and text alignment */
-  align-items: center; /* Center vertically */
+  font-size: 1.3rem !important; /* Slightly smaller for compactness */
+  font-weight: 700 !important;
+  color: var(--wimo-dark) !important;
+  transition: color var(--wimo-transition-speed);
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand:hover {
+  color: var(--wimo-primary) !important;
 }
 
 .navbar-brand i {
-  margin-right: 8px; /* Space between icon and text */
-  font-size: 1.5em; /* Slightly larger icon */
+  margin-right: 6px;
+  font-size: 1.2em; /* Slightly smaller icon */
+  color: var(--wimo-primary);
 }
 
-/* Navbar Toggle for Mobile */
+/* --- Navbar Toggler for Mobile (Hamburger) --- */
+/* If you truly don't want *any* mobile functionality, you can just set display: none; */
+/* However, for Bootstrap collapse to work, it needs to be present, but we can style it subtly */
 .navbar-toggler {
-  border-color: rgba(0, 0, 0, 0.1); /* Lighter border for toggler */
+  border: none !important;
+  padding: 0.2rem 0.4rem !important; /* Reduced padding */
+  outline: none !important; /* Remove blue outline on click */
 }
+
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2852, 58, 64, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
 
-/* Centered Navigation Item (About/Dashboard) */
-.navbar-nav.mx-auto .nav-item .nav-link {
-  font-size: 1.3rem; /* Adjusted font size for prominence */
-  font-weight: 600; /* Semi-bold */
-  color: #007bff; /* Primary color for active links */
-  transition: color 0.3s ease; /* Smooth transition on hover */
-  padding: 0.5rem 1rem; /* Standard nav link padding */
+
+/* --- Central Navigation Items --- */
+.navbar-nav.mx-auto {
+  flex-grow: 1;
+  justify-content: center; /* Centers the actual nav links */
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
-.navbar-nav.mx-auto .nav-item .nav-link:hover {
-  color: #0056b3; /* Darker blue on hover */
+.navbar-nav .nav-item .nav-link {
+  font-size: 0.9rem !important; /* Even smaller font size for nav links */
+  font-weight: 500 !important;
+  color: var(--wimo-text-dark) !important;
+  padding: 0.3rem 0.7rem !important; /* Reduced padding for less height */
+  position: relative;
+  display: flex; /* For icon and text alignment */
+  align-items: center;
+  transition: all var(--wimo-transition-speed);
 }
 
-/* User Actions (Login/Register Buttons) */
-.navbar .d-flex.gap-2 .btn {
-  border-radius: 5px; /* Slightly rounded buttons */
-  font-weight: 600; /* Semi-bold text */
-  padding: 0.4rem 1.2rem; /* Adjusted padding */
-  transition: all 0.3s ease; /* Smooth transitions */
+.navbar-nav .nav-item .nav-link i {
+  margin-right: 5px; /* Space between icon and text */
+  font-size: 1em; /* Keep icon size relative to font size */
+  color: var(--wimo-primary); /* Primary color for the icon */
 }
 
-.navbar .btn-outline-dark {
-  border-color: #343a40;
-  color: #343a40;
-}
-.navbar .btn-outline-dark:hover {
-  background-color: #343a40;
-  color: #fff;
+.navbar-nav .nav-item .nav-link:hover {
+  color: var(--wimo-primary) !important;
+  background-color: rgba(0, 123, 255, 0.05);
+  border-radius: 4px;
 }
 
-.navbar .btn-dark {
-  background-color: #343a40;
-  border-color: #343a40;
-  color: #fff;
-}
-.navbar .btn-dark:hover {
-  background-color: #23272b;
-  border-color: #1d2124;
+/* Unique Underline on Hover for Nav Links */
+.navbar-nav .nav-item .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: var(--wimo-primary);
+  transition: width var(--wimo-transition-speed);
 }
 
-/* Responsive Adjustments */
-@media (max-width: 991.98px) { /* Applies to screens smaller than large (lg) breakpoint */
+.navbar-nav .nav-item .nav-link:hover::after {
+  width: 80%;
+}
+
+/* --- Right-aligned Buttons --- */
+.d-flex.gap-2.ms-auto {
+  align-items: center;
+}
+
+.custom-btn-height {
+  padding: 0.3rem 0.8rem !important; /* Fine-tuned smaller padding for buttons */
+  font-size: 0.8rem !important; /* Smaller button font size */
+  border-width: 1px !important;
+  border-radius: 4px !important;
+}
+
+/* Specific button overrides */
+.btn-dark {
+  background-color: var(--wimo-dark) !important;
+  border-color: var(--wimo-dark) !important;
+  color: var(--wimo-text-light) !important;
+}
+.btn-dark:hover {
+  background-color: #296db1 !important;
+  border-color: #296db1 !important;
+}
+
+.btn-outline-dark {
+  border-color: var(--wimo-dark) !important;
+  color: var(--wimo-dark) !important;
+}
+.btn-outline-dark:hover {
+  background-color: #296db1 !important;
+  border-color: #296db1 !important;
+}
+
+.btn-danger {
+  background-color: var(--wimo-accent) !important;
+  border-color: var(--wimo-accent) !important;
+  color: var(--wimo-text-light) !important;
+}
+.btn-danger:hover {
+  background-color: #c82333 !important;
+  border-color: #bd2130 !important;
+}
+
+/* --- Simplified Responsive Adjustments (No complex mobile menu) --- */
+@media (max-width: 991.98px) {
+  /* For smaller screens, force the navbar to collapse */
+  .navbar {
+      padding-top: 0.4rem !important;
+      padding-bottom: 0.4rem !important;
+      min-height: 45px; /* Even smaller height for mobile */
+  }
+
+  .navbar-brand {
+      font-size: 1.2rem !important;
+  }
+
+  /* If the toggler is active, the content will collapse.
+     We'll make the collapsed content simple and stacked. */
   .navbar-collapse {
-      text-align: center; /* Center content when collapsed */
+      background-color: #f8f9fa; /* Light grey background for collapsed menu */
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
   }
 
-  .navbar-nav.mx-auto {
-      margin-left: 0 !important; /* Remove auto margins when stacked */
-      margin-right: 0 !important;
-      width: 100%; /* Take full width */
-      justify-content: center; /* Center nav items when stacked */
-      padding-top: 10px; /* Add some space above nav items */
-      padding-bottom: 10px;
+  .navbar-nav {
+      flex-direction: column; /* Stack nav items vertically */
+      align-items: center; /* Center items */
+      gap: 5px;
+      margin-top: 10px;
+      margin-bottom: 10px;
   }
 
-  .navbar .d-flex.gap-2.ms-auto {
-      margin-left: 0 !important; /* Remove auto margin when stacked */
-      justify-content: center; /* Center buttons when stacked */
-      width: 100%; /* Take full width */
-      padding-bottom: 10px;
+  .navbar-nav .nav-item {
+      width: 100%;
+      text-align: center;
   }
 
-  .navbar-toggler {
-      margin-left: auto; /* Push toggler to the right on small screens */
+  .navbar-nav .nav-item .nav-link {
+      padding: 0.6rem 1rem !important; /* Larger tap area */
+      font-size: 0.95rem !important; /* Adjust font size */
+  }
+
+  .navbar-nav .nav-item .nav-link::after {
+      display: none; /* Hide custom underline in mobile menu */
+  }
+
+  .d-flex.gap-2.ms-auto {
+      flex-direction: column; /* Stack buttons vertically */
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px !important;
+      width: 100%;
+  }
+
+  .d-flex.gap-2.ms-auto .btn {
+      width: 80%; /* Make buttons wider */
+      max-width: 180px;
+      text-align: center;
+  }
+}
+
+/* Offset for main content to appear below fixed header */
+.main-content-offset {
+  padding-top: 50px; /* Should match the exact height of your fixed navbar */
+}
+
+/* --- Logout Modal Styles (NEWLY ADDED) --- */
+
+.logout-modal-overlay {
+  position: fixed; /* Fixed to viewport */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background: rgba(0, 0, 0, 0.7); /* Dark, semi-transparent background */
+  display: flex; /* Use flexbox to center content */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 2000; /* CRITICAL: Ensure it's on top of EVERYTHING else, higher than navbar's 1030 */
+  backdrop-filter: blur(4px); /* Subtle blur for the background behind the modal */
+  -webkit-backdrop-filter: blur(4px); /* Safari support for backdrop-filter */
+}
+
+.logout-modal-card {
+  background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white card background */
+  padding: 30px 40px; /* Internal spacing */
+  border-radius: 15px; /* Rounded corners for the card */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+  text-align: center; /* Center text within the card */
+  max-width: 400px; /* Maximum width for larger screens */
+  width: 90%; /* Responsive width */
+  transform: scale(0.95); /* Start slightly smaller for animation */
+  animation: modalPopIn 0.3s ease-out forwards; /* Simple animation for appearance */
+  /* Ensure a base text color for the modal content */
+  color: #333; 
+}
+
+.logout-modal-card h3 {
+  color: #333; /* Dark text for heading */
+  font-size: 1.8em;
+  margin-bottom: 15px;
+}
+
+.logout-modal-card p {
+  color: #555; /* Slightly lighter text for message */
+  font-size: 1.1em;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.logout-modal-button {
+  background-color: #5bb3f0; /* Blue button color */
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s active; /* Smooth transitions for hover/active */
+}
+
+.logout-modal-button:hover {
+  background-color: #3a98e0; /* Darker blue on hover */
+}
+
+.logout-modal-button:active {
+  transform: scale(0.98); /* Slightly shrink on click */
+}
+
+/* Modal Pop-in Animation */
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

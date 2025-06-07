@@ -1,245 +1,246 @@
-<div class="container-fluid">
+<div class="container-fluid mt-2">
+    <h2>Transaction Management</h2>
   
-  <div class="header-with-back-button">
-    <button mat-icon-button routerLink="/dashboard" aria-label="Back to Dashboard">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <h2 class="text-center text-primary mb-4 flex-grow-1">Transaction Management</h2>
-  </div>
-
-<div class="row align-items-center mb-3">
-    <div class="col-md-6 col-sm-12">
-        <input type="text" [(ngModel)]="searchQuery" class="form-control search-box"
-               placeholder="🔍 Search Transactions by Type" (input)="searchTransactions()">
-    </div>
-    <div class="col-md-6 col-sm-12 text-end">
-        <button class="btn btn-primary" (click)="toggleCreateForm()">Save Transaction</button>
+    <div class="row align-items-center justify-content-between">
+      <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12 text-center text-lg-start mb-2 mb-lg-0">
+        <button class="btn btn-primary w-auto" (click)="toggleCreateForm()">
+          <i class="fas fa-plus-circle me-2"></i> New Transaction
+        </button>
+      </div>
+  
+      <div style="margin-left: 8%;" class="col-xl-5 col-lg-5 col-md-12 col-sm-12 d-flex justify-content-center mb-lg-0">
+        <div class="btn-group" role="group" aria-label="Transaction View Toggle">
+          <button type="button" class="btn btn-outline-info" [class.active]="activeView === 'table'"
+            (click)="toggleView('table')">
+            <i class="fas fa-table"></i> Table View
+          </button>
+          <button type="button" class="btn btn-outline-info" [class.active]="activeView === 'timeline'"
+            (click)="toggleView('timeline')">
+            <i class="fas fa-stream"></i> Timeline View
+          </button>
+          <!-- Updated button to toggle to 'daily-summary' view -->
+          <button type="button" class="btn btn-outline-info" [class.active]="activeView === 'daily-summary'"
+            (click)="toggleView('daily-summary')">
+            <i class="fas fa-calendar-alt"></i> Daily Summary
+          </button>
+          <!-- Button for Overall Summary Chart View (assuming it's in a separate component/route now) -->
+          <!-- You might want to add a routerLink here instead if it's external -->
+          <!-- <button type="button" class="btn btn-outline-info" routerLink="/admin/overall-summary">
+            <i class="fas fa-chart-pie"></i> Overall Summary
+          </button> -->
         </div>
-</div>
-
-<div class="row align-items-center mb-2">
-    <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-start justify-content-center mb-2 mb-md-0">
-        <label for="startDate" class="me-1 fw-bold">📅Start Date:</label>
-        <input type="date" id="startDate" [(ngModel)]="startDate" class="form-control me-3 filter-input"
-               (change)="searchTransactions()">
-
-        <label for="endDate" class="me-1 fw-bold">📅End Date:</label>
-        <input type="date" id="endDate" [(ngModel)]="endDate" class="form-control filter-input"
-               (change)="searchTransactions()">
-    </div>
-
-    <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-end justify-content-center">
-        <label for="minPrice" class="me-1 fw-bold">💰Min Price:</label>
-        <input type="number" id="minPrice" [(ngModel)]="minPrice" class="form-control me-3 filter-input"
-               placeholder="Min Price" (input)="searchTransactions()">
-
-        <label for="maxPrice" class="me-1 fw-bold">💰Max Price:</label>
-        <input type="number" id="maxPrice" [(ngModel)]="maxPrice" class="form-control filter-input"
-               placeholder="Max Price" (input)="searchTransactions()">
-    </div>
-</div>
-  <div class="d-flex justify-content-center mb-2">
-      <div class="btn-group" role="group" aria-label="Transaction View Toggle">
-          <button type="button" class="btn btn-outline-info" [class.active]="activeView === 'table'" (click)="toggleView('table')">
-              <i class="fas fa-table"></i> Table View
-          </button>
-          <button type="button" class="btn btn-outline-info" [class.active]="activeView === 'timeline'" (click)="toggleView('timeline')">
-              <i class="fas fa-stream"></i> Timeline View
-          </button>
-          <button type="button" class="btn btn-outline-info" [class.active]="activeView === 'summary'" (click)="toggleView('summary')">
-              <i class="fas fa-chart-bar"></i> Summary View
-          </button>
       </div>
-  </div>
-
-  <div *ngIf="showCreateForm" class="overlay">
+  
+      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 text-center text-lg-end mb-2 mb-lg-0">
+        <input type="text" [(ngModel)]="searchQuery" class="form-control search-box mx-auto ms-lg-auto"
+          style="max-width: 300px;" placeholder="🔍 Search by Type, Stock ID, or Trans. ID"
+          (input)="searchTransactions()">
+      </div>
+    </div>
+  
+    <div *ngIf="showCreateForm" class="overlay">
       <div class="modal-content">
-          <h3>Record New Transaction</h3>
-          <form (ngSubmit)="createTransaction()">
-              <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <label>Stock:</label>
-                          <select [(ngModel)]="newTransaction.stockId" name="stockId" required class="form-control">
-                              <option [value]="0" disabled selected>Select Stock</option>
-                              <option *ngFor="let stock of stocks" [value]="stock.stockId">{{ stock.stockId }} - {{ stock.stockName }}</option>
-                          </select>
-                      </div>
-                      <div class="form-group">
-                          <label>User ID:</label>
-                          <input type="number" [(ngModel)]="newTransaction.userId" name="userId" required class="form-control">
-                      </div>
-                      <div class="form-group">
-                          <label>Zone:</label>
-                          <select [(ngModel)]="newTransaction.zoneId" name="zoneId" required class="form-control">
-                              <option [value]="0" disabled selected>Select Zone</option>
-                              <option *ngFor="let zone of zones" [value]="zone.zoneId">{{ zone.zoneId }} - {{ zone.zoneName }}</option>
-                          </select>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <label>Quantity:</label>
-                          <input type="number" [(ngModel)]="newTransaction.quantity" name="quantity" required class="form-control">
-                      </div>
-                      <div class="form-group">
-                          <label>Type:</label>
-                          <select [(ngModel)]="newTransaction.type" name="type" required class="form-control">
-                              <option value="" disabled selected>Select Type</option>
-                              <option value="inbound">Inbound</option>
-                              <option value="outbound">Outbound</option>
-                          </select>
-                      </div>
-                      <div class="form-group">
-                          <label>Price:</label>
-                          <input type="number" [(ngModel)]="newTransaction.price" name="price" required class="form-control">
-                      </div>
-                  </div>
+        <h3>Record New Transaction</h3>
+        <form (ngSubmit)="createTransaction()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Stock:</label>
+                <select [(ngModel)]="newTransaction.stockId" name="stockId" required class="form-control">
+                  <option [value]="0" disabled selected>Select Stock</option>
+                  <option *ngFor="let stock of stocks" [value]="stock.stockId">{{ stock.stockId }} - {{ stock.stockName }}</option>
+                </select>
               </div>
-              <div class="form-group d-flex justify-content-between mt-3">
-                  <button type="submit" class="btn btn-success">Submit</button>
-                  <button type="button" class="btn btn-secondary" (click)="toggleCreateForm()">Cancel</button>
+              <div class="form-group">
+                <label>User ID:</label>
+                <input type="number" [(ngModel)]="newTransaction.userId" name="userId" required class="form-control">
               </div>
-          </form>
+              <div class="form-group">
+                <label>Zone:</label>
+                <select [(ngModel)]="newTransaction.zoneId" name="zoneId" required class="form-control">
+                  <option [value]="0" disabled selected>Select Zone</option>
+                  <option *ngFor="let zone of zones" [value]="zone.zoneId">{{ zone.zoneId }} - {{ zone.zoneName }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Quantity:</label>
+                <input type="number" [(ngModel)]="newTransaction.quantity" name="quantity" required class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Type:</label>
+                <select [(ngModel)]="newTransaction.type" name="type" required class="form-control">
+                  <option value="" disabled selected>Select Type</option>
+                  <option value="inbound">Inbound</option>
+                  <option value="outbound">Outbound</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Price:</label>
+                <input type="number" [(ngModel)]="newTransaction.price" name="price" required class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="form-group d-flex justify-content-between mt-3">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="button" class="btn btn-secondary" (click)="toggleCreateForm()">Cancel</button>
+          </div>
+        </form>
       </div>
-  </div>
-
-  <div *ngIf="activeView === 'table'" class="table-responsive shadow-lg rounded mt-4">
+    </div>
+  
+    <div *ngIf="activeView === 'table'" class="table-responsive shadow-lg rounded mt-4">
       <table class="table table-striped table-bordered transaction-table">
-          <thead class="table-dark text-center">
-              <tr>
-                  <th>ID</th>
-                  <th>Stock ID</th>
-                  <th>User ID</th>
-                  <th>Zone ID</th>
-                  <th>Quantity</th>
-                  <th>Type</th>
-                  <th>Price</th>
-                  <th>Timestamp</th>
-                  <th>Delete</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let transaction of pagedTransactions">
-                  <td class="text-center">{{ transaction.transactionId }}</td>
-                  <td>{{ transaction.stockId }}</td>
-                  <td>{{ transaction.userId }}</td>
-                  <td>{{ transaction.zoneId }}</td>
-                  <td class="text-center"> {{ transaction.quantity }}</td>
-                  <td>{{ transaction.type }}</td>
-                  <td class="text-center">
-                      <span class="highlight-blue">{{ transaction.price | currency:'INR':'symbol' }}</span>
-                  </td>
-                  <td>{{ transaction.timestamp | date:'short' }}</td>
-                  <td class="text-center">
-                      <i class="fas fa-trash text-danger cursor-pointer" (click)="deleteTransaction(transaction)"></i>
-                  </td>
-              </tr>
-          </tbody>
+        <thead class="table-dark text-center">
+          <tr>
+            <th>ID</th>
+            <th>Stock ID</th>
+            <th>User ID</th>
+            <th>Zone ID</th>
+            <th>Quantity</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Timestamp</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of pagedTransactions">
+            <td class="text-center">{{ transaction.transactionId }}</td>
+            <td>{{ transaction.stockId }} - {{ getStockName(transaction.stockId) }}</td>
+            <td>{{ transaction.userId }}</td>
+            <td>{{ transaction.zoneId }} - {{ getZoneName(transaction.zoneId) }}</td>
+            <td class="text-center"> {{ transaction.quantity }}</td>
+            <td>{{ transaction.type | titlecase }}</td>
+            <td class="text-center">
+              <span class="highlight-blue">{{ transaction.price | currency:'INR':'symbol' }}</span>
+            </td>
+            <td>{{ transaction.timestamp | date:'short' }}</td>
+            <td class="text-center">
+              <i class="fas fa-trash text-danger cursor-pointer" (click)="deleteTransaction(transaction)"></i>
+            </td>
+          </tr>
+        </tbody>
       </table>
-      <p *ngIf="pagedTransactions.length === 0" class="text-muted text-center py-3">No transactions found matching your criteria.</p>
-  </div>
-
-  <div *ngIf="activeView === 'timeline'" class="timeline-container mt-2">
+      <p *ngIf="pagedTransactions.length === 0" class="text-muted text-center py-3">No transactions found matching your
+        criteria.</p>
+    </div>
+  
+    <div *ngIf="activeView === 'timeline'" class="timeline-container mt-2">
       <h3 class="text-center text-info mb-4">Transaction History Timeline</h3>
       <div *ngIf="filteredTransactions.length > 0; else noTransactionsForTimeline">
-          <div class="timeline">
-              <div *ngFor="let transaction of filteredTransactions; let i = index" class="timeline-item"
-                   [class.left]="i % 2 === 0" [class.right]="i % 2 !== 0">
-                  <div class="timeline-content shadow p-3 mb-3 rounded">
-                      <span class="timeline-date">{{ transaction.timestamp | date:'short' }}</span>
-                      <h5 class="timeline-title">
-                          <i class="fas" [class.fa-arrow-alt-circle-right]="transaction.type === 'inbound'" [class.fa-arrow-alt-circle-left]="transaction.type === 'outbound'"></i>
-                          {{ transaction.type | titlecase }} Transaction
-                      </h5>
-                      <p class="timeline-body mb-1">
-                          Stock ID: {{ transaction.stockId }} | User ID: {{ transaction.userId }} | Zone ID: {{ transaction.zoneId }}
-                      </p>
-                      <p class="timeline-body mb-1">
-                          Quantity: <strong>{{ transaction.quantity }}</strong> | Price: <span class="highlight-blue">{{ transaction.price | currency:'INR':'symbol' }}</span>
-                      </p>
-                      <p class="timeline-body mb-0 text-muted"><small>ID: {{ transaction.transactionId }}</small></p>
-                      <button class="btn btn-sm btn-outline-danger mt-2" (click)="deleteTransaction(transaction)">Delete</button>
-                  </div>
-              </div>
+        <div class="timeline">
+          <div *ngFor="let transaction of filteredTransactions; let i = index" class="timeline-item"
+            [class.left]="i % 2 === 0" [class.right]="i % 2 !== 0">
+            <div class="timeline-content shadow p-3 mb-3 rounded">
+              <span class="timeline-date">{{ transaction.timestamp | date:'short' }}</span>
+              <h5 class="timeline-title">
+                <i class="fas" [class.fa-arrow-alt-circle-right]="transaction.type === 'inbound'"
+                  [class.fa-arrow-alt-circle-left]="transaction.type === 'outbound'"></i>
+                {{ transaction.type | titlecase }} Transaction
+              </h5>
+              <p class="timeline-body mb-1">
+                Stock: {{ getStockName(transaction.stockId) }} | User ID: {{ transaction.userId }} | Zone: {{ getZoneName(transaction.zoneId) }}
+              </p>
+              <p class="timeline-body mb-1">
+                Quantity: <strong>{{ transaction.quantity }}</strong> | Price: <span class="highlight-blue">{{
+                  transaction.price | currency:'INR':'symbol' }}</span>
+              </p>
+              <p class="timeline-body mb-0 text-muted"><small>ID: {{ transaction.transactionId }}</small></p>
+              <button class="btn btn-sm btn-outline-danger mt-2" (click)="deleteTransaction(transaction)">Delete</button>
+            </div>
           </div>
+        </div>
       </div>
       <ng-template #noTransactionsForTimeline>
-          <p class="text-muted text-center py-5">No transactions found for the timeline based on your filters.</p>
+        <p class="text-muted text-center py-5">No transactions found for the timeline based on your filters.</p>
       </ng-template>
-  </div>
-
-  <div *ngIf="activeView === 'summary'" class="summary-container mt-2">
-      <h3 class="text-center text-info mb-4">Transaction Summary</h3>
-      <div *ngIf="filteredTransactions.length > 0; else noTransactionsForSummary">
-          <div class="row g-4 mb-4">
-              <div class="col-md-4">
-                  <div class="card text-white bg-success summary-card shadow-sm">
-                      <div class="card-body">
-                          <h5 class="card-title"><i class="fas fa-arrow-alt-circle-down"></i> Total Inbound Quantity</h5>
-                          <p class="card-text fs-2">{{ totalInboundQuantity }}</p>
+    </div>
+  
+    <!-- --- NEW: DAILY SUMMARY VIEW with CHARTS --- -->
+    <div *ngIf="activeView === 'daily-summary'" class="daily-summary-container mt-4">
+      <h3 class="text-center text-info mb-4">Daily Transaction Summaries</h3>
+      <div *ngIf="pagedDailySummaries.length > 0; else noDailySummaries">
+        <div class="row g-3">
+          <div class="col-12 col-md-6 col-lg-4" *ngFor="let daySummary of pagedDailySummaries">
+            <mat-card class="daily-summary-card shadow-sm">
+              <mat-card-header class="bg-primary text-white">
+                <mat-card-title>{{ daySummary.date | date:'longDate' }}</mat-card-title>
+                <mat-card-subtitle class="text-white-50">{{ daySummary.totalInboundQuantity + daySummary.totalOutboundQuantity }} Total Items</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content class="daily-summary-card-content">
+                <div class="row w-100 g-2 mb-3">
+                  <div class="col-12">
+                      <h6 class="text-center mb-1">Quantity Overview</h6>
+                      <div class="chart-container-sm">
+                          <canvas id="daily-qty-chart-{{daySummary.date}}"></canvas>
                       </div>
+                      <p class="text-center chart-label">Inbound: {{ daySummary.totalInboundQuantity }} | Outbound: {{ daySummary.totalOutboundQuantity }}</p>
                   </div>
-              </div>
-              <div class="col-md-4">
-                  <div class="card text-white bg-danger summary-card shadow-sm">
-                      <div class="card-body">
-                          <h5 class="card-title"><i class="fas fa-arrow-alt-circle-up"></i> Total Outbound Quantity</h5>
-                          <p class="card-text fs-2">{{ totalOutboundQuantity }}</p>
+                  <div class="col-12">
+                      <h6 class="text-center mb-1">Type Breakdown</h6>
+                      <div class="chart-container-sm">
+                          <canvas id="daily-type-chart-{{daySummary.date}}"></canvas>
                       </div>
+                      <p class="text-center chart-label">
+                        Transactions: 
+                        <span class="text-info">Inbound: {{ daySummary.transactionsByType['inbound'] || 0 }}</span>, 
+                        <span class="text-warning">Outbound: {{ daySummary.transactionsByType['outbound'] || 0 }}</span>
+                      </p>
                   </div>
-              </div>
-              <div class="col-md-4">
-                  <div class="card text-white bg-primary summary-card shadow-sm">
-                      <div class="card-body">
-                          <h5 class="card-title"><i class="fas fa-dollar-sign"></i> Total Transaction Value</h5>
-                          <p class="card-text fs-2">{{ totalTransactionValue | currency:'INR':'symbol' }}</p>
-                      </div>
-                  </div>
-              </div>
+                </div>
+                <p class="text-center fs-5 mt-auto mb-0">
+                  <strong>Value: {{ daySummary.totalTransactionValue | currency:'INR':'symbol' }}</strong>
+                </p>
+              </mat-card-content>
+            </mat-card>
           </div>
-
-          <div class="card shadow-sm p-4">
-              <h5 class="card-title text-info mb-3">Transactions by Type Breakdown</h5>
-              <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center"
-                      *ngFor="let entry of transactionsByType | keyvalue">
-                      {{ entry.key | titlecase }}:
-                      <span class="badge bg-secondary rounded-pill">{{ entry.value }}</span>
-                  </li>
-              </ul>
-          </div>
-
+        </div>
       </div>
-      <ng-template #noTransactionsForSummary>
-          <p class="text-muted text-center py-5">No transactions found for the summary based on your filters.</p>
+      <ng-template #noDailySummaries>
+        <p class="text-muted text-center py-5">No daily transaction summaries found based on your filters.</p>
       </ng-template>
-  </div>
-
-  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+  
+      <mat-paginator 
+        [length]="totalDailySummaries"
+        [pageSize]="dailySummaryPageSize"
+        [pageIndex]="dailySummaryPageIndex"
+        [pageSizeOptions]="[3, 6, 9, 12]" 
+        (page)="onDailySummaryPageChange($event)"
+        aria-label="Select page of daily summaries"
+        class="mt-4">
+      </mat-paginator>
+  
+    </div>
+    <!-- --- END DAILY SUMMARY VIEW with CHARTS --- -->
+  
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
       {{ errorMessage }}
-  </div>
-
-  <div *ngIf="successMessage" class="alert alert-success mt-3">
+    </div>
+  
+    <div *ngIf="successMessage" class="alert alert-success mt-3">
       {{ successMessage }}
+    </div>
+  
+    <nav *ngIf="activeView === 'table' && totalPages > 1" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </li>
+        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index">
+          <button class="page-link" [class.active]="currentPage === i + 1" (click)="changePage(i + 1)">{{ i + 1
+            }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
   </div>
 
-  <nav *ngIf="activeView === 'table' && totalPages > 1" class="mt-4">
-      <ul class="pagination justify-content-center">
-          <li class="page-item" [class.disabled]="currentPage === 1">
-              <button class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-              </button>
-          </li>
-          <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index">
-              <button class="page-link" [class.active]="currentPage === i + 1" (click)="changePage(i + 1)">{{ i + 1 }}</button>
-          </li>
-          <li class="page-item" [class.disabled]="currentPage === totalPages">
-              <button class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-              </button>
-          </li>
-      </ul>
-  </nav>
-
-</div>
+  

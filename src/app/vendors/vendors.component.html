@@ -1,17 +1,13 @@
 <div class="container">
-  <div class="header-with-back-button">
-    <button mat-icon-button routerLink="/dashboard" aria-label="Back to Dashboard">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <h2 class="text-center text-primary mb-4 flex-grow-1">Vendor Management</h2>
-  </div>
+  <h2>Vendor Management</h2>
 
   <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
     <button mat-raised-button color="primary" (click)="toggleCreateForm()">
-      <mat-icon>add</mat-icon> Create Vendor
+      <mat-icon>add</mat-icon> New Vendor
     </button>
     <mat-form-field appearance="outline" class="search-field">
       <mat-label>Search vendors</mat-label>
+      <!-- You can choose to use [formControl]="searchTermControl" here instead of [(ngModel)] and (input) -->
       <input matInput type="text" [(ngModel)]="searchQuery" (input)="searchVendors()" placeholder="Search by name...">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
@@ -55,10 +51,12 @@
         <p><i class="fa-solid fa-envelope"></i> {{ vendor.vendorEmail }}</p>
       </mat-card-content>
       <mat-card-actions class="d-flex justify-content-end gap-2">
-        <button mat-icon-button color="primary" (click)="editVendor(vendor)" aria-label="Edit Vendor">
+        <!-- HIDE EDIT BUTTON IF NOT ADMIN -->
+        <button mat-icon-button color="primary" (click)="editVendor(vendor)" aria-label="Edit Vendor" *ngIf="isAdmin$ | async">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="deleteVendor(vendor)" aria-label="Delete Vendor">
+        <!-- HIDE DELETE BUTTON IF NOT ADMIN -->
+        <button mat-icon-button color="warn" (click)="deleteVendor(vendor)" aria-label="Delete Vendor" *ngIf="isAdmin$ | async">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-card-actions>
@@ -69,13 +67,8 @@
     </div>
   </div>
 
-  <mat-paginator
-    [length]="totalVendors"
-    [pageSize]="pageSize"
-    [pageIndex]="pageIndex"
-    [pageSizeOptions]="[3, 5, 10, 20, 50]"
-    (page)="onPageChange($event)"
-    aria-label="Select page of vendors">
+  <mat-paginator [length]="totalVendors" [pageSize]="pageSize" [pageIndex]="pageIndex"
+    [pageSizeOptions]="[3, 5, 10, 20, 50]" (page)="onPageChange($event)" aria-label="Select page of vendors">
   </mat-paginator>
 
   <div *ngIf="editingVendor" class="overlay">
