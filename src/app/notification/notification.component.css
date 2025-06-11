@@ -1,0 +1,58 @@
+/* Centering for the heading */
+.text-center {
+    text-align: center;
+  }
+  
+  /* Wrapper to center the cards */
+  .center-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers items horizontally */
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  /* Style for the "No notifications" message */
+  .no-notifications {
+    margin-top: 20px; /* Adjust as needed */
+    font-size: 1.1rem;
+  }
+  
+  .notification-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 1rem;
+    background-color: #fff;
+    position: relative;
+    width: 90%; /* Adjust card width as needed */
+    max-width: 500px; /* Maximum width for larger screens */
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .delete-btn {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .card-body {
+    padding-top: 0.5rem;
+  }
+  
+  .card-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+  }

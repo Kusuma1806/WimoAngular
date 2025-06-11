@@ -37,6 +37,53 @@ h2 {
   text-align: center;
   margin-bottom: 10px; /* Space below heading */
 }
+/* In your CSS file (e.g., stock-management.component.css) */
+
+/* Overlay styles (already existing, but good to ensure it's centered) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* Ensure it's above other content */
+}
+
+/* Base modal content styles (adjust as needed for general appearance) */
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-height: 90vh; /* Max height for scrollability */
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  width: 90%; /* Default width for smaller screens */
+}
+
+/* Small modal for Create Stock */
+.modal-content-sm {
+  max-width: 450px; /* Adjust as needed */
+}
+
+/* Medium modal for Update Stock (two columns) */
+.modal-content-md {
+  max-width: 700px; /* Adjust as needed to accommodate two columns comfortably */
+}
+
+/* Form group spacing */
+.form-group {
+  margin-bottom: 1rem; /* Consistent spacing */
+}
+
+/* Ensure form controls take full width within their columns */
+.form-control {
+  width: 100%;
+}
 
 /* Style the stock table */
 .stock-table {

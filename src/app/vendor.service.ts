@@ -31,8 +31,8 @@ export class VendorService {
   }
 
   // 👉 Delete a Vendor
-  deleteVendor(vendorId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/deleteById/${vendorId}`);
+  deleteVendor(vendorId: number): Observable<string> {
+    return this.http.delete<string>(`${this.apiUrl}/deleteById/${vendorId}`,{responseType:'text' as 'json'});
   }
 }
 

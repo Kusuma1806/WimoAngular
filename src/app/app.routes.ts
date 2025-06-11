@@ -12,6 +12,7 @@ import { authGuard } from './auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OverallTransactionSummaryComponent } from './overall-transaction-summary/overall-transaction-summary.component';
 import { ZoneChartsComponent } from './zone-charts/zone-charts.component';
+import { NotificationComponent } from './notification/notification.component';
 
 export const routes: Routes = [
     {path:'',component:LandingComponent},
@@ -20,6 +21,7 @@ export const routes: Routes = [
     {path:'register',component:RegistrationComponent},
     {path:'footer',component:FooterComponent},
     {path:'dashboard',component:DashboardComponent},
+    {path:'notification',component:NotificationComponent},
     { path: 'zones', component: ZoneComponent },
     { path: 'vendors', component: VendorsComponent },
     { path: 'stocks', component: StocksComponent },

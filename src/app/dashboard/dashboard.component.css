@@ -1,220 +1,227 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Make dashboard take full viewport height */
-    background-color: #f0f2f5; /* Light background for the whole page */
-    font-family: 'Inter', sans-serif; /* Using Inter font */
-  }
-  
-  .dashboard-toolbar {
-    background-color: #3f51b5; /* Primary color */
-    color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0 20px;
-    border-radius: 8px; /* Rounded corners */
-  }
-  
-  .spacer {
-    flex: 1 1 auto;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Make dashboard take full viewport height */
+  background-color: #f0f2f5; /* Light background for the whole page */
+  font-family: 'Inter', sans-serif; /* Using Inter font */
+}
+
+.dashboard-toolbar {
+  background-color: #3f51b5; /* Primary color */
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0 20px;
+  border-radius: 8px; /* Rounded corners */
+  display: flex; /* Ensure flex properties apply */
+  align-items: center; /* Vertically align items in the toolbar */
+}
+
+/* Spacer to push content to the right */
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.notification-icon {
+  margin-left: 10px; /* Add some space to the left of the icon */
+  color: #e0e0e0;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-grow: 1; /* Allow container to fill remaining space */
+  padding: 20px;
+  gap: 30px; /* Space between left and right sections */
+  overflow: auto; /* Allow scrolling if content overflows */
+  align-items: flex-start; /* Vertically align items to the top */
+  justify-content: center; /* Horizontally center content if space allows */
+}
+
+/* Left Section: User Profile */
+.profile-card {
+  flex: 0 0 300px; /* Fixed width for profile card */
+  display: flex;
+  flex-direction: column;
+  padding: 15px; /* Reduced padding for a more compact card */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ffffff, #f7f7f7); /* Subtle gradient */
+  display: flex;
+  align-self: flex-start; /* Ensure it stays at the top of the container */
+  text-align: center; /* Center text content inside the card by default */
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally within the card */
+  width: 100%;
+}
+
+.profile-avatar-row {
+  margin-bottom: 10px; /* Space below avatar */
+}
+
+.profile-avatar {
+  background-color: #e0e0e0;
+  color: #616161;
+  border-radius: 50%; /* Circular */
+  padding: 10px;
+  font-size: 48px; /* Larger icon */
+  width: 70px; /* Adjusted size */
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-details-row {
+  margin-bottom: 15px; /* Space below name/role block */
+}
+
+.profile-card .user-name {
+  font-size: 1.5rem; /* Larger font for name */
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px; /* Small gap between name and role */
+}
+
+.profile-card .user-role {
+  color: #777;
+  font-size: 1em; /* Adjusted font size for role */
+  margin-bottom: 0; /* Remove extra margin after role */
+}
+
+.profile-content p {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center email/login time content */
+  margin-bottom: 8px; /* Adjusted margin */
+  color: #555;
+  font-size: 0.95rem; /* Adjusted font size */
+}
+
+.profile-content mat-icon {
+  margin-right: 8px; /* Adjusted margin */
+  color: #616161;
+  font-size: 100px; /* Adjusted icon size */
+}
+
+.profile-content .my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.profile-content .w-full {
+  width: 100%;
+}
+
+.profile-content button {
+  padding: 10px 15px; /* Adjusted padding */
+  border-radius: 8px; /* Rounded corners */
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+.profile-content button mat-icon.mr-2 {
+  margin-right: 8px;
+}
+
+
+/* Right Section: Navigation Grids */
+.navigation-grids {
+  flex: 1; /* Take remaining space */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive grid */
+  gap: 25px; /* Space between grid cards */
+  justify-items: center; /* Horizontally center grid items within their cells */
+  align-content: center; /* Vertically center rows of grid items if space allows */
+}
+
+.nav-grid-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.nav-grid-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav-grid-card .mat-card-header {
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-grid-card .grid-icon {
+  background-color: #c5cae9; /* Light purple */
+  color: #3f51b5; /* Primary color */
+  border-radius: 50%; /* Circular */
+  padding: 10px;
+  margin-right: 15px;
+  font-size: 30px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-grid-card .mat-card-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.nav-grid-card .mat-card-content p {
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  flex-grow: 1; /* Allows content to push button to bottom */
+}
+
+.nav-grid-card .flex {
+  display: flex;
+}
+.nav-grid-card .justify-end {
+  justify-content: flex-end;
+}
+.nav-grid-card .mt-4 {
+  margin-top: 1rem;
+}
+
+.nav-grid-card button {
+  border-radius: 8px; /* Rounded corners */
+  padding: 8px 16px;
+  font-weight: 500;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
   .dashboard-container {
-    display: flex;
-    flex-grow: 1; /* Allow container to fill remaining space */
-    padding: 20px;
-    gap: 30px; /* Space between left and right sections */
-    overflow: auto; /* Allow scrolling if content overflows */
-    align-items: flex-start; /* Vertically align items to the top */
-    justify-content: center; /* Horizontally center content if space allows */
+    flex-direction: column; /* Stack sections vertically */
+    padding: 15px;
+    gap: 20px;
+    align-items: center; /* Center horizontally when stacked */
+    justify-content: flex-start; /* Stacked content usually starts at top */
   }
-  
-  /* Left Section: User Profile */
+
   .profile-card {
-    flex: 0 0 300px; /* Fixed width for profile card */
-    display: flex;
-    flex-direction: column;
-    padding: 15px; /* Reduced padding for a more compact card */
-    border-radius: 12px; /* Rounded corners */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #ffffff, #f7f7f7); /* Subtle gradient */
-    display: flex;
-    align-self: flex-start; /* Ensure it stays at the top of the container */
-    text-align: center; /* Center text content inside the card by default */
-  }
-  
-  .profile-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center content horizontally within the card */
+    flex: 0 0 auto;
     width: 100%;
+    max-width: none;
+    align-self: center; /* Center profile card when stacked */
   }
-  
-  .profile-avatar-row {
-    margin-bottom: 10px; /* Space below avatar */
-  }
-  
-  .profile-avatar {
-    background-color: #e0e0e0;
-    color: #616161;
-    border-radius: 50%; /* Circular */
-    padding: 10px;
-    font-size: 48px; /* Larger icon */
-    width: 70px; /* Adjusted size */
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .profile-details-row {
-    margin-bottom: 15px; /* Space below name/role block */
-  }
-  
-  .profile-card .user-name {
-    font-size: 1.5rem; /* Larger font for name */
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 2px; /* Small gap between name and role */
-  }
-  
-  .profile-card .user-role {
-    color: #777;
-    font-size: 1em; /* Adjusted font size for role */
-    margin-bottom: 0; /* Remove extra margin after role */
-  }
-  
-  .profile-content p {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Center email/login time content */
-    margin-bottom: 8px; /* Adjusted margin */
-    color: #555;
-    font-size: 0.95rem; /* Adjusted font size */
-  }
-  
-  .profile-content mat-icon {
-    margin-right: 8px; /* Adjusted margin */
-    color: #616161;
-    font-size: 100px; /* Adjusted icon size */
-  }
-  
-  .profile-content .my-4 {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .profile-content .w-full {
-    width: 100%;
-  }
-  
-  .profile-content button {
-    padding: 10px 15px; /* Adjusted padding */
-    border-radius: 8px; /* Rounded corners */
-    font-weight: 500;
-    transition: all 0.2s ease-in-out;
-  }
-  .profile-content button mat-icon.mr-2 {
-    margin-right: 8px;
-  }
-  
-  
-  /* Right Section: Navigation Grids */
+
   .navigation-grids {
-    flex: 1; /* Take remaining space */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive grid */
-    gap: 25px; /* Space between grid cards */
-    justify-items: center; /* Horizontally center grid items within their cells */
-    align-content: center; /* Vertically center rows of grid items if space allows */
+    grid-template-columns: 1fr; /* Single column for grids */
+    gap: 20px;
+    justify-items: center; /* Center grid items in single column */
+    align-content: flex-start; /* Start content from top when stacked */
   }
-  
-  .nav-grid-card {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    border-radius: 12px; /* Rounded corners */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  }
-  
-  .nav-grid-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .nav-grid-card .mat-card-header {
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .nav-grid-card .grid-icon {
-    background-color: #c5cae9; /* Light purple */
-    color: #3f51b5; /* Primary color */
-    border-radius: 50%; /* Circular */
-    padding: 10px;
-    margin-right: 15px;
-    font-size: 30px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .nav-grid-card .mat-card-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  .nav-grid-card .mat-card-content p {
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 15px;
-    flex-grow: 1; /* Allows content to push button to bottom */
-  }
-  
-  .nav-grid-card .flex {
-    display: flex;
-  }
-  .nav-grid-card .justify-end {
-    justify-content: flex-end;
-  }
-  .nav-grid-card .mt-4 {
-    margin-top: 1rem;
-  }
-  
-  .nav-grid-card button {
-    border-radius: 8px; /* Rounded corners */
-    padding: 8px 16px;
-    font-weight: 500;
-  }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
-    .dashboard-container {
-      flex-direction: column; /* Stack sections vertically */
-      padding: 15px;
-      gap: 20px;
-      align-items: center; /* Center horizontally when stacked */
-      justify-content: flex-start; /* Stacked content usually starts at top */
-    }
-  
-    .profile-card {
-      flex: 0 0 auto;
-      width: 100%;
-      max-width: none;
-      align-self: center; /* Center profile card when stacked */
-    }
-  
-    .navigation-grids {
-      grid-template-columns: 1fr; /* Single column for grids */
-      gap: 20px;
-      justify-items: center; /* Center grid items in single column */
-      align-content: flex-start; /* Start content from top when stacked */
-    }
-  }
-  
+}

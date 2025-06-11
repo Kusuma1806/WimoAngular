@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { NgForm } from '@angular/forms'; // Import NgForm
 import { Stock, StockService } from '../stock.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ZoneService } from '../zone.service';
 import { VendorService } from '../vendor.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { Observable, Subject } from 'rxjs'; // Import Subject and Observable
+import { takeUntil } from 'rxjs/operators'; // Import takeUntil
+
+// Import CommonService
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-stock',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterModule,MatIconModule,MatButtonModule],
+  imports: [CommonModule, FormsModule, RouterModule, MatIconModule, MatButtonModule, TitleCasePipe],
   templateUrl: './stocks.component.html',
   styleUrls: ['./stocks.component.css']
 })
-export class StocksComponent implements OnInit {
+export class StocksComponent implements OnInit, OnDestroy { // Implement OnDestroy
+
+  isAdmin$: Observable<boolean>; // Declare isAdmin$ observable
   stocks: Stock[] = []; // Stores all stock items
   filteredStocks: Stock[] = []; // Stores search/filter-applied stocks (before pagination)
   pagedStocks: Stock[] = []; // Stocks currently displayed on the current page (for both table and cards)
@@ -46,25 +54,49 @@ export class StocksComponent implements OnInit {
     'Meat': 'meat.jpg',
     'Fruits': 'fruits.jpg',
     'Groceries': 'groceries.jpg',
+    'Snacks': 'snacks.jpg',
+    'Dairy': 'dairy.jpg',
     'Vegetables': 'vegetables.jpg',
-    // Add more categories and their corresponding image paths
+    'Default': 'default.jpg' // Added a default image for categories not listed
   };
+
+  @ViewChild('createStockForm') createStockForm!: NgForm; // Reference to the create form
+  @ViewChild('updateStockForm') updateStockForm!: NgForm; // Reference to the update form
+
+  private destroy$ = new Subject<void>(); // Added for RxJS teardown
 
   constructor(
     private stockService: StockService,
     private router: Router,
     private zoneService: ZoneService,
-    private vendorService: VendorService
-  ) {}
+    private vendorService: VendorService,
+    private commonService: CommonService // Injected CommonService
+  ) {
+    this.isAdmin$ = this.commonService.isAdmin$; // Initialize isAdmin$
+  }
 
   ngOnInit(): void {
+    // Subscribe to admin status changes and handle component destruction
+    this.isAdmin$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(isAdminStatus => {
+        console.log('StocksComponent: Admin status updated:', isAdminStatus);
+      });
+
     this.loadStocks();
     this.loadZones();
     this.loadVendors();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(); // Emit a value to signal completion
+    this.destroy$.complete(); // Complete the subject
+  }
+
   loadStocks(): void {
-    this.stockService.getStockItems().subscribe(
+    this.stockService.getStockItems().pipe(
+      takeUntil(this.destroy$) // Ensure subscription is cleaned up
+    ).subscribe(
       data => {
         this.stocks = data;
         this.currentPage = 1;
@@ -75,7 +107,9 @@ export class StocksComponent implements OnInit {
   }
 
   loadZones(): void {
-    this.zoneService.getZones().subscribe({
+    this.zoneService.getZones().pipe(
+      takeUntil(this.destroy$) // Ensure subscription is cleaned up
+    ).subscribe({
       next: (data) => {
         this.zones = data;
       },
@@ -84,7 +118,9 @@ export class StocksComponent implements OnInit {
   }
 
   loadVendors(): void {
-    this.vendorService.getVendors().subscribe({
+    this.vendorService.getVendors().pipe(
+      takeUntil(this.destroy$) // Ensure subscription is cleaned up
+    ).subscribe({
       next: (data) => {
         this.vendors = data;
       },
@@ -166,6 +202,11 @@ export class StocksComponent implements OnInit {
     this.editingStock = null;
     if (this.showCreateForm) {
       this.newStock = new Stock(0, '', '', 0, 0, 0);
+      // Reset form validity and touched state when opening the form
+      // Only reset if the form view child is available (i.e., form is rendered)
+      if (this.createStockForm) {
+        this.createStockForm.resetForm(new Stock(0, '', '', 0, 0, 0));
+      }
     }
   }
 
@@ -173,20 +214,33 @@ export class StocksComponent implements OnInit {
     this.selectedZone = this.zones.find(zone => zone.zoneId === zoneId) || null;
   }
 
-  createStock(): void {
+  createStock(form: NgForm): void {
+    // Client-side validation: if the form is invalid, mark all controls as touched and stop submission.
+    if (form.invalid) {
+      Object.keys(form.controls).forEach(key => {
+        form.controls[key].markAsTouched();
+      });
+      // No alert() here, messages are displayed directly in the template.
+      return;
+    }
+
     this.newStock.zoneId = Number(this.newStock.zoneId);
     this.newStock.vendorId = Number(this.newStock.vendorId);
     this.newStock.stockQuantity = Number(this.newStock.stockQuantity);
 
-    this.stockService.createStock(this.newStock).subscribe(
+    this.stockService.createStock(this.newStock).pipe(
+      takeUntil(this.destroy$) // Ensure subscription is cleaned up
+    ).subscribe(
       response => {
         console.log("✅ Stock created successfully:", response);
-        alert(response);
+        // Use a more user-friendly message display if you have one, or just reload
+        alert("Stock created successfully!"); // Keeping alert for now as no custom message box was provided
         this.loadStocks();
-        this.toggleCreateForm();
+        this.toggleCreateForm(); // Close form on success
       },
       error => {
         console.error("❌ Error creating stock:", error);
+        alert("Error creating stock: " + (error.error || error.message)); // Keeping alert for error
       }
     );
   }
@@ -194,21 +248,40 @@ export class StocksComponent implements OnInit {
   // --- Edit/Update Stock ---
   editStock(stock: Stock): void {
     this.editingStock = { ...stock };
-    this.showCreateForm = false;
+    this.showCreateForm = false; // Ensure create form is hidden
+    // Reset update form validity and touched state when opening
+    // This is important if you close and reopen the edit form without submitting
+    setTimeout(() => { // Use setTimeout to ensure form is rendered
+      if (this.updateStockForm) {
+        // Reset the form using the current editingStock values
+        this.updateStockForm.resetForm(this.editingStock);
+      }
+    });
   }
 
-  updateStock(): void {
+  updateStock(form: NgForm): void {
+    // Client-side validation: if the form is invalid, mark all controls as touched and stop submission.
+    if (form.invalid) {
+      Object.keys(form.controls).forEach(key => {
+        form.controls[key].markAsTouched();
+      });
+      // No alert() here, messages are displayed directly in the template.
+      return;
+    }
+
     if (this.editingStock) {
-      this.stockService.updateStock(this.editingStock).subscribe(
+      this.stockService.updateStock(this.editingStock).pipe(
+        takeUntil(this.destroy$) // Ensure subscription is cleaned up
+      ).subscribe(
         response => {
           console.log("✅ Stock updated successfully:", response);
-          alert('Stock updated successfully!');
+          alert('Stock updated successfully!'); // Keeping alert for now
           this.loadStocks();
-          this.cancelEdit();
+          this.cancelEdit(); // Close form on success
         },
         error => {
           console.error("❌ Error updating stock:", error);
-          alert('Error updating stock: ' + (error.error || error.message));
+          alert('Error updating stock: ' + (error.error || error.message)); // Keeping alert for error
         }
       );
     }
@@ -216,20 +289,27 @@ export class StocksComponent implements OnInit {
 
   cancelEdit(): void {
     this.editingStock = null;
+    // Reset update form state when canceled
+    if (this.updateStockForm) {
+      this.updateStockForm.resetForm();
+    }
   }
 
   // --- Delete Stock ---
   deleteStock(stock: Stock): void {
+    // Keeping confirm as it's a critical action and alert is not suitable for confirmation
     if (confirm(`Are you sure you want to delete ${stock.stockName} (ID: ${stock.stockId})?`)) {
-      this.stockService.deleteStock(stock.stockId).subscribe(
+      this.stockService.deleteStock(stock.stockId).pipe(
+        takeUntil(this.destroy$) // Ensure subscription is cleaned up
+      ).subscribe(
         response => {
           console.log("✅ Stock deleted successfully:", response);
-          alert(response);
+          alert(response); // Keeping alert for now
           this.loadStocks();
         },
         error => {
           console.error("❌ Error deleting stock:", error);
-          alert('Error deleting stock: ' + (error.error || error.message));
+          alert('Error deleting stock: ' + (error.error || error.message)); // Keeping alert for error
         }
       );
     }
@@ -241,12 +321,12 @@ export class StocksComponent implements OnInit {
     this.applyFilters(); // Re-apply filters to ensure data for the new view starts from page 1
   }
 
-  // This method remains, as it's used for the image
   getStockImage(category: string): string {
     const imageUrl = this.categoryImages[category];
+    // Ensure the path is correct relative to your `assets` folder
     if (imageUrl) {
-      return imageUrl;
+      return  imageUrl; // Prepend 'assets/images/'
     }
-    return this.categoryImages['Default'] || 'assets/images/default.jpg';
+    return 'assets/images/default.jpg';
   }
 }

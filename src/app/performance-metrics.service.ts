@@ -17,7 +17,7 @@ export class PerformanceMetricsService {
 
   // ✅ Trigger Backend Metrics Calculation
   calculateMetrics(): Observable<string> {
-    return this.http.get<string>(`${this.apiUrl}/calmetrics`);
+    return this.http.get<string>(`${this.apiUrl}/calmetrics`,{responseType:'text' as 'json'});
   }
 }
 

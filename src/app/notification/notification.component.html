@@ -1,0 +1,16 @@
+<h1 class=" mt-2 pt-2 text-center">Notifications</h1> <div class="notification-wrapper center-wrapper"> <div *ngIf="notifications.length === 0" class="text-muted no-notifications"> No notifications
+</div>
+
+<div *ngFor="let notification of notifications" class="notification-card">
+  <div class="card-header">
+    <button class="delete-btn" (click)="deleteNotification(notification.notificationId)">❌</button>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ notification.stockName }} - {{ notification.stockQuantity }} units</h5>
+    <p class="card-text">
+      <strong>Vendor:</strong> {{ notification.vendorName }} ({{ notification.vendorEmail }})<br>
+      <strong>Zone:</strong> {{ notification.zoneName }}
+    </p>
+  </div>
+</div>
+</div>

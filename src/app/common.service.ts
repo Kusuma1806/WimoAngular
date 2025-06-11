@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs'; 
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
-  userName = localStorage.getItem("username"); 
+  // Change username to a BehaviorSubject to make it reactive
+  private usernameSubject = new BehaviorSubject<string | null>(localStorage.getItem("username"));
+  username$: Observable<string | null> = this.usernameSubject.asObservable();
+
   public isLoggedIn = false;
 
   private isAdminSubject = new BehaviorSubject<boolean>(this.determineIsAdmin());
@@ -32,7 +35,8 @@ export class CommonService {
    */
   removeToken(): boolean {
     sessionStorage.removeItem('token');
-    this.isAdminSubject.next(false); 
+    this.isAdminSubject.next(false);
+    this.usernameSubject.next(null); // Clear username immediately on token removal
     return true;
   }
 
@@ -43,10 +47,11 @@ export class CommonService {
    * The actual logout logic is handled by `performLogout()` after the user confirms the modal.
    * @returns void, as its primary purpose is to trigger a UI action.
    */
-  // <<< THIS METHOD IS NOW CORRECTLY NAMED initiateLogoutConfirmation() >>>
   initiateLogoutConfirmation(): void {
-    console.log(`Logout confirmation initiated for user: ${this.userName}`);
-    this.logoutMessageSource.next(`Thanks for your Service ${this.userName || 'User'} ❤ `);
+    // Access the current username from the BehaviorSubject
+    const currentUsername = this.usernameSubject.getValue();
+    console.log(`Logout confirmation initiated for user: ${currentUsername}`);
+    this.logoutMessageSource.next(`Thanks for your Service ${currentUsername || 'User'} ❤ `);
   }
 
   /**
@@ -55,11 +60,13 @@ export class CommonService {
    * @returns The updated `isLoggedIn` status.
    */
   performLogout(): boolean {
-    console.log(`Performing actual logout for user: ${this.userName}`);
-    sessionStorage.clear(); 
-    this.isLoggedIn = false; 
-    this.router.navigate(['/landing']); 
-    this.isAdminSubject.next(false); 
+    console.log(`Performing actual logout for user: ${this.usernameSubject.getValue()}`);
+    sessionStorage.clear();
+    localStorage.removeItem("username");
+    this.usernameSubject.next(null); // Ensure username is cleared in the subject
+    this.isLoggedIn = false;
+    this.router.navigate(['/landing']);
+    this.isAdminSubject.next(false);
     this.logoutMessageSource.next(null); // Clear the message to hide the modal
 
     return this.isLoggedIn;
@@ -128,6 +135,7 @@ export class CommonService {
     this.isLoggedIn = !!this.getToken(); // Updates isLoggedIn based on token presence
     const newAdminStatus = this.determineIsAdmin(); // Re-evaluates admin status
     this.isAdminSubject.next(newAdminStatus); // EMITS THE NEW STATUS to all subscribers
+    this.usernameSubject.next(localStorage.getItem("username")); // Ensure username subject reflects current localStorage
     console.log(`CommonService: Admin status re-evaluated to: ${newAdminStatus}`); // DEBUG LOG
   }
 }

@@ -1,56 +1,60 @@
-<mat-toolbar color="primary" class="dashboard-toolbar">
-    <span>Admin Dashboard</span>
-  </mat-toolbar>
-  
-  <div class="dashboard-container">
-    <!-- Left Section: User Profile -->
-    <mat-card class="profile-card mat-elevation-z4">
-      <mat-card-content class="profile-content">
-        <div class="profile-avatar-row">
-          <mat-icon class="profile-avatar">account_circle</mat-icon>
+<mat-toolbar color="primary" class="dashboard-toolbar mt-4 pt-4">
+  <span>Admin Dashboard</span>
+
+  <span class="toolbar-spacer"></span> 
+
+  <button mat-icon-button class="notification-icon" routerLink="/notification">
+    <mat-icon
+      [matBadge]="(notificationCount$ | async)"
+      matBadgeColor="warn"
+      [matBadgeHidden]="(notificationCount$ | async) === 0"
+    >notifications</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="dashboard-container">
+  <mat-card class="profile-card mat-elevation-z4">
+    <mat-card-content class="profile-content">
+      <div class="profile-avatar-row">
+        <mat-icon class="profile-avatar">account_circle</mat-icon>
+      </div>
+      <div class="profile-details-row">
+        <mat-card-title class="user-name">{{ userProfile.name }}</mat-card-title>
+        <mat-card-subtitle class="user-role">{{ userProfile.role }}</mat-card-subtitle>
+      </div>
+      <p> Last Login: {{ userProfile.lastLogin | date:'medium' }}</p>
+      <button mat-stroked-button color="primary" (click)="logout()" class="w-full">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="navigation-grids">
+    <mat-card class="nav-grid-card mat-elevation-z4" routerLink="/zonessummary">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="grid-icon">storage</mat-icon>
+        <mat-card-title>Zones Overview</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>View all storage zones, including capacity, utilization, and status details. Analyze performance and space allocation.</p>
+        <div class="flex justify-end mt-4">
+          <button mat-flat-button color="primary">View</button>
         </div>
-        <div class="profile-details-row">
-          <mat-card-title class="user-name">{{ userProfile.name }}</mat-card-title>
-          <mat-card-subtitle class="user-role">{{ userProfile.role }}</mat-card-subtitle>
-        </div>
-        <p> Last Login: {{ userProfile.lastLogin | date:'medium' }}</p>
-        <button mat-stroked-button color="primary"  routerLink="/landing" class="w-full">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
       </mat-card-content>
     </mat-card>
-  
-    <!-- Right Section: Navigation Grids -->
-    <div class="navigation-grids">
-      <!-- Zone Grid -->
-      <mat-card class="nav-grid-card mat-elevation-z4" routerLink="/zonessummary">
-        <mat-card-header>
-          <mat-icon mat-card-avatar class="grid-icon">storage</mat-icon>
-          <mat-card-title>Zones Overview</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>View all storage zones, including capacity, utilization, and status details. Analyze performance and space allocation.</p>
-          <div class="flex justify-end mt-4">
-            <button mat-flat-button color="primary">View</button>
-          </div>
-        </mat-card-content>
-      </mat-card>
-  
-      <!-- Transaction Grid -->
-      <mat-card class="nav-grid-card mat-elevation-z4" routerLink="/transactionssummary">
-        <mat-card-header>
-          <mat-icon mat-card-avatar class="grid-icon">receipt_long</mat-icon>
-          <mat-card-title>Transaction Overview</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Access a comprehensive summary of all incoming and outgoing transactions.</p>
-          <div class="flex justify-end mt-4">
-            <button mat-flat-button color="primary">View</button>
-          </div>
-        </mat-card-content>
-      </mat-card>
-  
-      <!-- You can add more grids here as needed -->
+
+    <mat-card class="nav-grid-card mat-elevation-z4" routerLink="/transactionssummary">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="grid-icon">receipt_long</mat-icon>
+        <mat-card-title>Transaction Overview</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Access a comprehensive summary of all incoming and outgoing transactions.</p>
+        <div class="flex justify-end mt-4">
+          <button mat-flat-button color="primary">View</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
     </div>
-  </div>
-  
+</div>
