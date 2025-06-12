@@ -279,12 +279,6 @@ export class ZoneComponent implements OnInit, OnDestroy {
     this.editingZone = { ...zone }; // Create a copy to avoid direct mutation
     this.showCreateForm = false; // Hide create form if it's open
     this.clearMessages(); // Clear messages when entering edit mode
-    // You might want to reset the edit form state here if re-opening for the same zone
-    // setTimeout(() => { // Use setTimeout to ensure form is rendered before resetting
-    //   if (this.editZoneFormRef) {
-    //     this.editZoneFormRef.resetForm(this.editingZone); // Pass editingZone to reset with values
-    //   }
-    // });
   }
 
   /**
@@ -307,14 +301,17 @@ export class ZoneComponent implements OnInit, OnDestroy {
     // Additional custom validation logic (as you had before)
     if (this.newZone.totalCapacity <= 0) {
       this.setErrorMessage('Total Capacity must be positive.');
+      this.showCreateForm = false;
       return;
     }
     if (this.newZone.storedCapacity < 0) {
       this.setErrorMessage('Stored Capacity cannot be negative.');
+      this.showCreateForm = false;
       return;
     }
     if (this.newZone.storedCapacity > this.newZone.totalCapacity) {
         this.setErrorMessage('Stored Capacity cannot exceed Total Capacity.');
+        this.showCreateForm = false;
         return;
     }
 
