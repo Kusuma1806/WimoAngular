@@ -49,7 +49,7 @@ export class StocksComponent implements OnInit, OnDestroy { // Implement OnDestr
   // --- Image mapping for categories (customize these URLs!) ---
   private categoryImages: { [category: string]: string } = {
     'Gadgets': 'Gadgets.jpg',
-    'Clothing': 'clothes.jpg',
+    'Clothes': 'clothes.jpg',
     'Books': 'books.jpg',
     'Meat': 'meat.jpg',
     'Fruits': 'fruits.jpg',
