@@ -323,10 +323,9 @@ export class StocksComponent implements OnInit, OnDestroy { // Implement OnDestr
 
   getStockImage(category: string): string {
     const imageUrl = this.categoryImages[category];
-    // Ensure the path is correct relative to your `assets` folder
     if (imageUrl) {
-      return  imageUrl; // Prepend 'assets/images/'
+      return  imageUrl; 
     }
-    return 'assets/images/default.jpg';
+    return 'default.jpg';
   }
 }
